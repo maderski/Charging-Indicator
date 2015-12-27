@@ -7,7 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /*  Created by Jason Maderski
-    Date: December 2015
+    Date: 12/6/2015
 
     App gives users with wireless chargers a clearer indicator that the phone is chargering
     by creating a notification when Power is connected to the phone.
