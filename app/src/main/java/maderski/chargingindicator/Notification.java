@@ -3,6 +3,7 @@ package maderski.chargingindicator;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 
 
 /**
@@ -23,6 +24,7 @@ public class Notification {
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher)
+                .setOngoing(true)
                 .setAutoCancel(false);
         nManager.notify(nTAG, nID, builder.build());
     }
@@ -31,7 +33,11 @@ public class Notification {
     public static void removeChargingMessage(Context context){
         NotificationManager nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        nManager.cancel(nTAG, nID);
+        try{
+            nManager.cancel(nTAG, nID);
+        }catch(Exception e){
+            Log.e(nTAG, e.getMessage());
+        }
     }
 
 }
