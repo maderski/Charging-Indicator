@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015
@@ -18,7 +19,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startService(new Intent(this, CIService.class));
+        if(!CIService.isReceiverStarted)
+            startService(new Intent(this, CIService.class));
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+
     }
 
     @Override
@@ -39,11 +47,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    //Starts the Charging Indicator Service when program is destroyed
     @Override
     protected void onDestroy(){
         super.onDestroy();
-        startService(new Intent(this, CIService.class));
     }
 
     //Launches the About Activity with about is selected

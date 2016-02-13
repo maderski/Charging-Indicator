@@ -12,15 +12,16 @@ import android.util.Log;
 public class Notification {
 
     private static final String title = "Charging Indicator";
-    private static final String message = "Phone is CHARGING";
     private static final String nTAG = Notification.class.getName();
     private static final int nID = 607;
+    private static NotificationManager nManager;
+    private static NotificationCompat.Builder builder;
 
     //Notification to display phone is charging
-    public static void chargingMessage(Context context){
-        NotificationManager nManager = (NotificationManager)context
+    public static void createChargingMessage(Context context, String message){
+        nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
+        builder = new NotificationCompat.Builder(context)
                 .setContentTitle(title)
                 .setContentText(message)
                 .setSmallIcon(R.mipmap.ic_launcher)
@@ -29,9 +30,14 @@ public class Notification {
         nManager.notify(nTAG, nID, builder.build());
     }
 
+    public static void updateChargingMessage(String message){
+        builder.setContentText(message);
+        nManager.notify(nTAG, nID, builder.build());
+    }
+
     //Remove notification message
     public static void removeChargingMessage(Context context){
-        NotificationManager nManager = (NotificationManager)context
+        nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         try{
             nManager.cancel(nTAG, nID);
