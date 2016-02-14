@@ -12,8 +12,6 @@ import java.text.NumberFormat;
  */
 public class Battery {
 
-    //public static Intent batteryStatus;
-
     public static boolean isBatteryCharging(Intent batteryStatus){
         return (batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING);
     }

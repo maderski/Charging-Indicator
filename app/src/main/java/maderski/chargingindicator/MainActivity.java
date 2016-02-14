@@ -10,7 +10,7 @@ import android.widget.Toast;
 /*  Created by Jason Maderski
     Date: 12/6/2015
 
-    App gives users with wireless chargers a clearer indicator that the phone is chargering
+    App gives users with wireless chargers a clearer indicator that the phone is charging
     by creating a notification when Power is connected to the phone.
 */
 public class MainActivity extends AppCompatActivity {
@@ -19,8 +19,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        if(!CIService.isReceiverStarted)
-            startService(new Intent(this, CIService.class));
+
+        if(!CIService.isReceiverStarted) {
+            SharedObjects.serviceIntent = new Intent(this, CIService.class);
+            startService(SharedObjects.serviceIntent);
+        }
     }
 
     @Override

@@ -15,8 +15,8 @@ public class AutostartCIService extends BroadcastReceiver{
 
     //Automatically starts the CIService on boot
     public void onReceive(Context context, Intent intent){
-        intent = new Intent(context, CIService.class);
-        context.startService(intent);
+        SharedObjects.serviceIntent = new Intent(context, CIService.class);
+        context.startService(SharedObjects.serviceIntent);
         Log.i(TAG, "CIService AUTO-STARTED");
     }
 }

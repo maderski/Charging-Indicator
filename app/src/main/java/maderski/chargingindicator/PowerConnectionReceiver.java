@@ -17,12 +17,13 @@ import java.text.NumberFormat;
 public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
-    private static String message = "None";
-    
+
+    public static String message = "None";
     public static boolean powerConnected = false;
+
     @Override
     public void onReceive(Context context, Intent intent){
-        Intent batteryIntent = intent;
+
         String action = "No Action";
         if(intent != null)
             if(intent.getAction() != null)
@@ -32,16 +33,12 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(action.equalsIgnoreCase(Intent.ACTION_POWER_CONNECTED)){
             powerConnected = true;
 
-            if(Battery.isBatteryCharging(batteryIntent)){
-                message = "Level: " + Battery.batteryLevel(batteryIntent);
-            }else
-                message = "Battery is Charged!";
+            //message = "Checking...";
 
-            Notification.createChargingMessage(context, message);
+            //Notification.createChargingMessage(context, message);
             Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
 
-            Log.i(TAG, "Charging: " + Boolean.toString(Battery.isBatteryCharging(batteryIntent)));
-            Log.i(TAG, "Level: " + Battery.batteryLevel(batteryIntent));
+            Log.i(TAG, "Power Connected");
         }
 
         //If ACTION_POWER_DISCONNECTED is received remove notification and display toast message
@@ -49,14 +46,18 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             powerConnected = false;
             Notification.removeChargingMessage(context);
             Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
+            Log.i(TAG, "Power Disconnected");
         }
 
         if(action.equalsIgnoreCase(Intent.ACTION_BATTERY_CHANGED)){
+            Log.i(TAG, "ACTION BATTERY CHANGED");
+            powerConnected = Battery.isPluggedIn(intent);
             if(powerConnected) {
-                if (Battery.isBatteryCharging(batteryIntent)) {
+                Notification.createChargingMessage(context, PowerConnectionReceiver.message);
+                if (Battery.isBatteryCharging(intent)) {
                     //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
-                    Log.i(TAG, Battery.batteryLevel(batteryIntent));
-                    message = "Battery Level: " + Battery.batteryLevel(batteryIntent);
+                    Log.i(TAG, Battery.batteryLevel(intent));
+                    message = "Battery Level: " + Battery.batteryLevel(intent);
                 } else {
                     //Toast.makeText(context, "Battery Charged!", Toast.LENGTH_LONG).show();
                     Log.i(TAG, "Battery Charged!");
@@ -66,19 +67,4 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             }
         }
     }
-    //Creates the Charging Indicator notification if the phone is already plugged in
-    /*public void ifPluggedInAlready(Context context){
-        powerConnected = true;
-
-        if(battery.isBatteryCharging()){
-            message = "Battery Level: " + battery.batteryLevel();
-        }else
-            message = "Battery is Charged!";
-
-        Notification.createChargingMessage(context, message);
-        Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
-
-        Log.i(TAG, "Charging: " + Boolean.toString(battery.isBatteryCharging()));
-        Log.i(TAG, "Level: " + battery.batteryLevel());
-    }*/
 }
