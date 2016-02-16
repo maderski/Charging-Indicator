@@ -24,18 +24,6 @@
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".AutostartCIService">
-             
-
-            <intent-filter>
-                 
-
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                 
-
-            </intent-filter>
-             
-        </receiver>
 
         <service android:name=".CIService" />
 

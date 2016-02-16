@@ -22,16 +22,16 @@ public class Notification {
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context)
-                .setContentTitle(title)
-                .setContentText(message)
+                .setContentTitle(message)
+                .setContentText(title)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setOngoing(true)
+                .setOngoing(false)
                 .setAutoCancel(false);
         nManager.notify(nTAG, nID, builder.build());
     }
 
     public static void updateChargingMessage(String message){
-        builder.setContentText(message);
+        builder.setContentTitle(message);
         nManager.notify(nTAG, nID, builder.build());
     }
 

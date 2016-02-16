@@ -1,5 +1,6 @@
 package maderski.chargingindicator;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -21,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         if(!CIService.isReceiverStarted) {
-            SharedObjects.serviceIntent = new Intent(this, CIService.class);
-            startService(SharedObjects.serviceIntent);
+            Intent intent = new Intent(this, CIService.class);
+            startService(intent);
         }
     }
 
@@ -61,5 +62,4 @@ public class MainActivity extends AppCompatActivity {
         startActivity(i);
         overridePendingTransition(0, R.animator.fadeout);
     }
-
 }

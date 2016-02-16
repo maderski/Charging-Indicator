@@ -2,6 +2,7 @@ package maderski.chargingindicator;
 
 import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
@@ -20,7 +21,7 @@ public class CIService extends Service {
     //Called by the system every time a client explicitly starts the service by calling startService(Intent)
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
         Log.i(TAG, "CIService Started");
         isReceiverStarted = true;
 
