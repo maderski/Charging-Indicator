@@ -29,7 +29,7 @@ public class Notification {
                 .setAutoCancel(false);
         nManager.notify(nTAG, nID, builder.build());
     }
-
+    //Updates Notification
     public static void updateChargingMessage(String message, int icon){
         builder.setContentTitle(message)
                 .setSmallIcon(icon);

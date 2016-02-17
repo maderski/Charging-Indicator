@@ -18,7 +18,7 @@ public class CIService extends Service {
 
     public static boolean isReceiverStarted = false;
 
-    //Called by the system every time a client explicitly starts the service by calling startService(Intent)
+    //Instantiation of PowerConnectionReceiver and Registers receiver for ACTION_BATTERY_CHANGED
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
