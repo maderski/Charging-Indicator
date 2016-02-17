@@ -18,20 +18,21 @@ public class Notification {
     private static NotificationCompat.Builder builder;
 
     //Notification to display phone is charging
-    public static void createChargingMessage(Context context, String message){
+    public static void createChargingMessage(Context context, String message, int icon){
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context)
                 .setContentTitle(message)
                 .setContentText(title)
-                .setSmallIcon(R.mipmap.ic_launcher)
+                .setSmallIcon(icon)
                 .setOngoing(false)
                 .setAutoCancel(false);
         nManager.notify(nTAG, nID, builder.build());
     }
 
-    public static void updateChargingMessage(String message){
-        builder.setContentTitle(message);
+    public static void updateChargingMessage(String message, int icon){
+        builder.setContentTitle(message)
+                .setSmallIcon(icon);
         nManager.notify(nTAG, nID, builder.build());
     }
 

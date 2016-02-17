@@ -38,7 +38,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
 
         switch (action){
             case Intent.ACTION_BOOT_COMPLETED:
-                Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
                 setNotifMessage(context, intent);
                 break;
 
@@ -88,11 +88,27 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             }
 
             if (!messageCreated) {
-                Notification.createChargingMessage(context, notifMessage);
+                Notification.createChargingMessage(context, notifMessage, getIcon(intent));
                 messageCreated = true;
             } else
-                Notification.updateChargingMessage(notifMessage);
+                Notification.updateChargingMessage(notifMessage, getIcon(intent));
         }
+    }
+
+    private int getIcon(Intent intent){
+        final int CHARGING_ICON = R.mipmap.ic_launcher;
+        final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
+
+        boolean isCharging = Battery.isBatteryCharging(intent);
+        String batteryLevel = Battery.batteryLevel(intent);
+
+
+        if(!isCharging){
+            return FULL_BATTERY_ICON;
+        }else if(batteryLevel.equalsIgnoreCase("100%")){
+            return FULL_BATTERY_ICON;
+        }else
+            return CHARGING_ICON;
     }
 
 
