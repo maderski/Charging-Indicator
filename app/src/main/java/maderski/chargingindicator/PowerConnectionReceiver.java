@@ -22,8 +22,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
     public static boolean powerConnected = false;
     public static boolean messageCreated = false;
 
-    private String notifMessage = "None";
-
     @Override
     public void onReceive(Context context, Intent intent){
 
@@ -39,6 +37,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         }
 
         switch (action){
+            case Intent.ACTION_BOOT_COMPLETED:
+                Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
+                setNotifMessage(context, intent);
+                break;
+
             case Intent.ACTION_POWER_CONNECTED:
                 powerConnected = true;
 
@@ -65,8 +68,10 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
     }
 
     private void setNotifMessage(Context context, Intent intent){
-        powerConnected = Battery.isPluggedIn(intent);
+        String notifMessage;
         boolean isCharging = Battery.isBatteryCharging(intent);
+
+        powerConnected = Battery.isPluggedIn(intent);
 
         Log.i(TAG, "setNotifMessage");
         if(powerConnected) {
