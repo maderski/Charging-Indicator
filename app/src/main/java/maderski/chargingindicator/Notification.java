@@ -3,6 +3,7 @@ package maderski.chargingindicator;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 
 
@@ -19,6 +20,8 @@ public class Notification {
 
     //Notification to display phone is charging
     public static void createChargingMessage(Context context, String message, int icon){
+        int color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
+
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context)
@@ -26,6 +29,7 @@ public class Notification {
                 .setContentText(title)
                 .setSmallIcon(icon)
                 .setOngoing(false)
+                .setColor(color)
                 .setAutoCancel(false);
         nManager.notify(nTAG, nID, builder.build());
     }

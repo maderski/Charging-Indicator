@@ -31,8 +31,9 @@ public class Battery {
         int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
         boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
+        boolean wirelessCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_WIRELESS;
 
-        if(usbCharge || acCharge)
+        if(usbCharge || acCharge || wirelessCharge)
             return true;
         else
             return false;
