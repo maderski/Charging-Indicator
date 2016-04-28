@@ -78,15 +78,10 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(powerConnected) {
             Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
             Log.i(TAG, Battery.batteryLevel(intent));
-            if (isCharging) {
-                Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
-                //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
-                notifMessage = "Battery Level: " + Battery.batteryLevel(intent);
-            } else {
-                //Toast.makeText(context, "Battery Charged!", Toast.LENGTH_LONG).show();
-                Log.i(TAG, "Battery Charged!");
-                notifMessage = "Battery Charged!";
-            }
+
+            Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
+            //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
+            notifMessage = "Battery Level: " + Battery.batteryLevel(intent);
 
             if (!messageCreated) {
                 Notification.createChargingMessage(context, notifMessage, getIcon(intent));
