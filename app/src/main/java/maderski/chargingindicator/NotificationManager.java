@@ -11,7 +11,7 @@ public class NotificationManager {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    public static boolean messageCreated = false;
+    private static boolean messageCreated = false;
 
     //Create notification message with battery percentage
     public static void setNotifMessage(Context context, Intent intent){
@@ -26,13 +26,12 @@ public class NotificationManager {
 
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
-            String notifMessage = "Battery Level: " + getMessage(intent); //Battery.batteryLevel(intent);
             Notification notification = new Notification(context);
             if (!messageCreated) {
-                notification.createChargingMessage(context, notifMessage, getIcon(intent));
+                notification.createChargingMessage(context, getMessage(intent), getIcon(intent));
                 messageCreated = true;
             } else
-                notification.updateChargingMessage(notifMessage, getIcon(intent));
+                notification.updateChargingMessage(getMessage(intent), getIcon(intent));
         }
     }
     //Set type of icon depending on whether or not the phone is charging
@@ -43,7 +42,6 @@ public class NotificationManager {
         boolean isCharging = Battery.isBatteryCharging(intent);
         String batteryLevel = Battery.batteryLevel(intent);
 
-
         if(!isCharging && batteryLevel.equalsIgnoreCase("100%")){
             return FULL_BATTERY_ICON;
         }else
@@ -52,16 +50,20 @@ public class NotificationManager {
     //Set message depending on whether or not the phone is charging
     private static String getMessage(Intent intent){
         String batteryLvl = Battery.batteryLevel(intent);
-        if(batteryLvl.equalsIgnoreCase("100%")){
+        boolean isCharging = Battery.isBatteryCharging(intent);
+
+        if(!isCharging && batteryLvl.equalsIgnoreCase("100%")){
             return "Battery is charged!";
         }else{
-            return batteryLvl;
+            return "Battery Level: " + batteryLvl;
         }
     }
 
     public static void removeNotifMessage(Context context){
-        Notification notification = new Notification(context);
-        notification.removeChargingMessage(context);
-        messageCreated = false;
+        if(messageCreated) {
+            Notification notification = new Notification(context);
+            notification.removeChargingMessage(context);
+            messageCreated = false;
+        }
     }
 }

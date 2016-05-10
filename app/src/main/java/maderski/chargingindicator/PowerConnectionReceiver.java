@@ -46,11 +46,9 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                if(NotificationManager.messageCreated) {
-                    NotificationManager.removeNotifMessage(context);
-                    Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
-                    Log.i(TAG, "Power Disconnected");
-                }
+                NotificationManager.removeNotifMessage(context);
+                Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
+                Log.i(TAG, "Power Disconnected");
                 break;
             //When BATTERY CHANGED is received run setNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
