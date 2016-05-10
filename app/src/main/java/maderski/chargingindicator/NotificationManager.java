@@ -26,7 +26,7 @@ public class NotificationManager {
 
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
-            String notifMessage = "Battery Level: " + Battery.batteryLevel(intent);
+            String notifMessage = "Battery Level: " + getMessage(intent); //Battery.batteryLevel(intent);
             Notification notification = new Notification(context);
             if (!messageCreated) {
                 notification.createChargingMessage(context, notifMessage, getIcon(intent));
@@ -48,6 +48,15 @@ public class NotificationManager {
             return FULL_BATTERY_ICON;
         }else
             return CHARGING_ICON;
+    }
+    //Set message depending on whether or not the phone is charging
+    private static String getMessage(Intent intent){
+        String batteryLvl = Battery.batteryLevel(intent);
+        if(batteryLvl.equalsIgnoreCase("100%")){
+            return "Battery is charged!";
+        }else{
+            return batteryLvl;
+        }
     }
 
     public static void removeNotifMessage(Context context){
