@@ -17,6 +17,7 @@ public class CIService extends Service {
     private String TAG = CIService.class.getName();
 
     public static boolean isReceiverStarted = false;
+    private PowerConnectionReceiver pcr;
 
     //Instantiation of PowerConnectionReceiver and Registers receiver for ACTION_BATTERY_CHANGED
     @Override
@@ -25,9 +26,9 @@ public class CIService extends Service {
         Log.i(TAG, "CIService Started");
         isReceiverStarted = true;
 
-        SharedObjects.pcr = new PowerConnectionReceiver();
-        SharedObjects.pcr.onReceive(this, intent);
-        this.registerReceiver(SharedObjects.pcr, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        pcr = new PowerConnectionReceiver();
+        pcr.onReceive(this, intent);
+        this.registerReceiver(pcr, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         return Service.START_STICKY;
     }
@@ -36,7 +37,7 @@ public class CIService extends Service {
     public void onDestroy(){
         super.onDestroy();
         Log.i(TAG, "Service DESTROYED");
-        this.unregisterReceiver(SharedObjects.pcr);
+        this.unregisterReceiver(pcr);
         isReceiverStarted = false;
     }
 

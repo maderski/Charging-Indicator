@@ -11,14 +11,13 @@ public class NotificationManager {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    public static boolean powerConnected = false;
     public static boolean messageCreated = false;
 
     //Create notification message with battery percentage
     public static void setNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
 
-        powerConnected = Battery.isPluggedIn(intent);
+        boolean powerConnected = Battery.isPluggedIn(intent);
 
         Log.i(TAG, "setNotifMessage");
         if(powerConnected) {
@@ -28,16 +27,16 @@ public class NotificationManager {
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
             String notifMessage = "Battery Level: " + Battery.batteryLevel(intent);
-
+            Notification notification = new Notification(context);
             if (!messageCreated) {
-                Notification.createChargingMessage(context, notifMessage, getIcon(intent));
+                notification.createChargingMessage(context, notifMessage, getIcon(intent));
                 messageCreated = true;
             } else
-                Notification.updateChargingMessage(notifMessage, getIcon(intent));
+                notification.updateChargingMessage(notifMessage, getIcon(intent));
         }
     }
     //Set type of icon depending on whether or not the phone is charging
-    public static int getIcon(Intent intent){
+    private static int getIcon(Intent intent){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
@@ -45,11 +44,15 @@ public class NotificationManager {
         String batteryLevel = Battery.batteryLevel(intent);
 
 
-        if(!isCharging){
-            return FULL_BATTERY_ICON;
-        }else if(batteryLevel.equalsIgnoreCase("100%")){
+        if(!isCharging && batteryLevel.equalsIgnoreCase("100%")){
             return FULL_BATTERY_ICON;
         }else
             return CHARGING_ICON;
+    }
+
+    public static void removeNotifMessage(Context context){
+        Notification notification = new Notification(context);
+        notification.removeChargingMessage(context);
+        messageCreated = false;
     }
 }

@@ -12,18 +12,22 @@ import android.util.Log;
  */
 public class Notification {
 
-    private static final String title = "Charging Indicator";
-    private static final String nTAG = Notification.class.getName();
-    private static final int nID = 607;
+    private final String title = "Charging Indicator";
+    private final String nTAG = Notification.class.getName();
+    private final int nID = 607;
+
     private static NotificationManager nManager;
     private static NotificationCompat.Builder builder;
 
-    //Notification to display phone is charging
-    public static void createChargingMessage(Context context, String message, int icon){
-        int color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
-
+    public Notification(Context context){
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    //Notification to display phone is charging
+    public void createChargingMessage(Context context, String message, int icon){
+        int color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
+
         builder = new NotificationCompat.Builder(context)
                 .setContentTitle(message)
                 .setContentText(title)
@@ -34,16 +38,14 @@ public class Notification {
         nManager.notify(nTAG, nID, builder.build());
     }
     //Updates Notification
-    public static void updateChargingMessage(String message, int icon){
+    public void updateChargingMessage(String message, int icon){
         builder.setContentTitle(message)
                 .setSmallIcon(icon);
         nManager.notify(nTAG, nID, builder.build());
     }
 
     //Remove notification message
-    public static void removeChargingMessage(Context context){
-        nManager = (NotificationManager)context
-                .getSystemService(Context.NOTIFICATION_SERVICE);
+    public void removeChargingMessage(Context context){
         try{
             nManager.cancel(nTAG, nID);
         }catch(Exception e){
