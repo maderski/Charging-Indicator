@@ -14,6 +14,7 @@ public class CIPreferences {
 
     public static final String CHANGE_ICON_KEY = "changeIcon";
     public static final String VIBRATE_KEY = "vibrate";
+    public static final String PLAY_SOUND_KEY = "playSound";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -53,6 +54,15 @@ public class CIPreferences {
     }
 
     public static boolean GetVibrateWhenPluggedIn(Context context){
-        return reader(context).getBoolean(VIBRATE_KEY, true);
+        return reader(context).getBoolean(VIBRATE_KEY, false);
+    }
+
+    public static void SetPlaySound(Context context, boolean enabled){
+        editor(context).putBoolean(PLAY_SOUND_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean GetPlaySound(Context context){
+        return reader(context).getBoolean(PLAY_SOUND_KEY, false);
     }
 }
