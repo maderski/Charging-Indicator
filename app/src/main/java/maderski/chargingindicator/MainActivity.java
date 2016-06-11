@@ -9,7 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
-import android.widget.Toast;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015

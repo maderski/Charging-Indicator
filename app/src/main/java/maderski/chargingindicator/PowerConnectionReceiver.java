@@ -3,14 +3,8 @@ package maderski.chargingindicator;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.os.BatteryManager;
-import android.os.CountDownTimer;
-import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
-
-import java.text.NumberFormat;
 
 /**
  * Created by Jason on 12/6/15.
