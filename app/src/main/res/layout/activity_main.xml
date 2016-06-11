@@ -26,7 +26,8 @@
         android:textStyle="bold"
         android:onClick="ChangeIconSwitch"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:textColor="#666565" />
 
 
 </RelativeLayout>
