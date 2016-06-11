@@ -112,10 +112,10 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetPlaySound(this, true);
-            Log.i(TAG, "VibrateSwitch is ON");
+            Log.i(TAG, "PlaySoundSwitch is ON");
         } else {
             CIPreferences.SetPlaySound(this, false);
-            Log.i(TAG, "VibrateSwitch is OFF");
+            Log.i(TAG, "PlaySoundSwitch is OFF");
         }
     }
 }
