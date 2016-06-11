@@ -76,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.GetChangeIcon(context);
         setting_switch = (Switch) findViewById(R.id.change_icon_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.GetVibrateWhenPluggedIn(context);
+        setting_switch = (Switch) findViewById(R.id.vibrate_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void ChangeIconSwitch(View view){
@@ -89,4 +93,14 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void VibrateSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.SetVibrateWhenPluggedIn(this, true);
+            Log.i(TAG, "VibrateSwitch is ON");
+        } else {
+            CIPreferences.SetVibrateWhenPluggedIn(this, false);
+            Log.i(TAG, "VibrateSwitch is OFF");
+        }
+    }
 }

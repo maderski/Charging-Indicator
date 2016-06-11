@@ -2,6 +2,9 @@ package maderski.chargingindicator;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.PowerManager;
+import android.os.Vibrator;
 import android.util.Log;
 
 /**
@@ -29,6 +32,7 @@ public class NotificationManager {
             Notification notification = new Notification(context);
             if (!messageCreated) {
                 notification.createChargingMessage(context, getMessage(intent), getIcon(intent, context));
+                vibrate(context);
                 messageCreated = true;
             } else
                 notification.updateChargingMessage(getMessage(intent), getIcon(intent, context));
@@ -69,5 +73,10 @@ public class NotificationManager {
             notification.removeChargingMessage(context);
             messageCreated = false;
         }
+    }
+
+    private void vibrate(Context context){
+        Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+        vibrator.vibrate(500);
     }
 }
