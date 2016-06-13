@@ -27,11 +27,13 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             context.startService(serviceIntent);
         }
 
+        NotificationManager notificationManager = new NotificationManager();
+
         switch (action){
             //When on BOOT_COMPLETED message is received run setNotifMessage
             case Intent.ACTION_BOOT_COMPLETED:
                 //Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
-                NotificationManager.setNotifMessage(context, intent);
+                notificationManager.setNotifMessage(context, intent);
                 break;
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
@@ -40,14 +42,14 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                NotificationManager.removeNotifMessage(context);
+                notificationManager.removeNotifMessage(context);
                 Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Power Disconnected");
                 break;
             //When BATTERY CHANGED is received run setNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
                 Log.i(TAG, "ACTION BATTERY CHANGED");
-                NotificationManager.setNotifMessage(context, intent);
+                notificationManager.setNotifMessage(context, intent);
                 break;
         }
     }

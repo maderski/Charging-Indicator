@@ -18,7 +18,7 @@ public class NotificationManager {
     private static boolean messageCreated = false;
 
     //Create notification message with battery percentage
-    public static void setNotifMessage(Context context, Intent intent){
+    public void setNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
         boolean powerConnected = Battery.isPluggedIn(intent);
         boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
@@ -46,7 +46,7 @@ public class NotificationManager {
         }
     }
     //Set type of icon depending on whether or not the phone is charging
-    private static int getIcon(Intent intent, Context context){
+    private int getIcon(Intent intent, Context context){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
@@ -64,7 +64,7 @@ public class NotificationManager {
         }
     }
     //Set message depending on whether or not the phone is charging
-    private static String getMessage(Intent intent){
+    private String getMessage(Intent intent){
         String batteryLvl = Battery.batteryLevel(intent);
         boolean isCharging = Battery.isBatteryCharging(intent);
 
@@ -75,7 +75,7 @@ public class NotificationManager {
         }
     }
 
-    public static void removeNotifMessage(Context context){
+    public void removeNotifMessage(Context context){
         if(messageCreated) {
             Notification notification = new Notification(context);
             notification.removeChargingMessage(context);
@@ -83,12 +83,12 @@ public class NotificationManager {
         }
     }
 
-    private static void vibrate(Context context){
+    private void vibrate(Context context){
         Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(500);
     }
 
-    private static void playSound(Context context){
+    private void playSound(Context context){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
         ringtone.play();
