@@ -16,13 +16,11 @@ public class NotificationManager {
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
     //Create notification message with battery percentage
-    public void setNotifMessage(Context context, Intent intent){
+    public void SetNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
         boolean powerConnected = Battery.isPluggedIn(intent);
-        boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
-        boolean canPlaySound = CIPreferences.GetPlaySound(context);
 
-        Log.i(TAG, "setNotifMessage");
+        Log.i(TAG, "SetNotifMessage");
         if(powerConnected) {
             Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
             Log.i(TAG, Battery.batteryLevel(intent));
@@ -33,16 +31,22 @@ public class NotificationManager {
             if (!CIService.messageCreated) {
                 notification.createChargingMessage(context, getMessage(intent), getIcon(intent, context));
                 CIService.messageCreated = true;
-
-                if(canPlaySound)
-                    playSound(context);
-
-                if(canVibrate)
-                    vibrate(context);
             } else
                 notification.updateChargingMessage(getMessage(intent), getIcon(intent, context));
         }
     }
+
+    public void DoVibrateAndSound(Context context){
+        boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
+        boolean canPlaySound = CIPreferences.GetPlaySound(context);
+
+        if(canPlaySound)
+            playSound(context);
+
+        if(canVibrate)
+            vibrate(context);
+    }
+
     //Set type of icon depending on whether or not the phone is charging
     private int getIcon(Intent intent, Context context){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
@@ -73,7 +77,7 @@ public class NotificationManager {
         }
     }
 
-    public void removeNotifMessage(Context context){
+    public void RemoveNotifMessage(Context context){
         if(CIService.messageCreated) {
             Notification notification = new Notification(context);
             notification.removeChargingMessage(context);
