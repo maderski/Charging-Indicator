@@ -27,30 +27,28 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             context.startService(serviceIntent);
         }
 
-        NotificationManager notificationManager = new NotificationManager();
-
         switch (action){
             //When on BOOT_COMPLETED message is received run SetNotifMessage
             case Intent.ACTION_BOOT_COMPLETED:
                 //Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
-                notificationManager.SetNotifMessage(context, intent);
+                NotificationManager.SetNotifMessage(context, intent);
                 break;
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
                 Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
-                notificationManager.DoVibrateAndSound(context);
+                NotificationManager.DoVibrateAndSound(context);
                 Log.i(TAG, "Power Connected");
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                notificationManager.RemoveNotifMessage(context);
+                NotificationManager.RemoveNotifMessage(context);
                 Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
                 Log.i(TAG, "Power Disconnected");
                 break;
             //When BATTERY CHANGED is received run SetNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
                 Log.i(TAG, "ACTION BATTERY CHANGED");
-                notificationManager.SetNotifMessage(context, intent);
+                NotificationManager.SetNotifMessage(context, intent);
                 break;
         }
     }

@@ -16,7 +16,7 @@ public class NotificationManager {
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
     //Create notification message with battery percentage
-    public void SetNotifMessage(Context context, Intent intent){
+    public static void SetNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
         boolean powerConnected = Battery.isPluggedIn(intent);
 
@@ -36,7 +36,7 @@ public class NotificationManager {
         }
     }
 
-    public void DoVibrateAndSound(Context context){
+    public static void DoVibrateAndSound(Context context){
         boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
         boolean canPlaySound = CIPreferences.GetPlaySound(context);
 
@@ -48,7 +48,7 @@ public class NotificationManager {
     }
 
     //Set type of icon depending on whether or not the phone is charging
-    private int getIcon(Intent intent, Context context){
+    private static int getIcon(Intent intent, Context context){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
@@ -66,7 +66,7 @@ public class NotificationManager {
         }
     }
     //Set message depending on whether or not the phone is charging
-    private String getMessage(Intent intent){
+    private static String getMessage(Intent intent){
         String batteryLvl = Battery.batteryLevel(intent);
         boolean isCharging = Battery.isBatteryCharging(intent);
 
@@ -77,7 +77,7 @@ public class NotificationManager {
         }
     }
 
-    public void RemoveNotifMessage(Context context){
+    public static void RemoveNotifMessage(Context context){
         if(CIService.messageCreated) {
             Notification notification = new Notification(context);
             notification.removeChargingMessage(context);
@@ -85,12 +85,12 @@ public class NotificationManager {
         }
     }
 
-    private void vibrate(Context context){
+    private static void vibrate(Context context){
         Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(500);
     }
 
-    private void playSound(Context context){
+    private static void playSound(Context context){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
         ringtone.play();

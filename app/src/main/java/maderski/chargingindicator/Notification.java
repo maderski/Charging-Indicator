@@ -16,20 +16,20 @@ public class Notification {
     private final String nTAG = Notification.class.getName();
     private final int nID = 607;
 
-    private static NotificationManager nManager;
-    private static NotificationCompat.Builder builder;
+    private NotificationManager nManager;
+    private NotificationCompat.Builder builder;
 
     public Notification(Context context){
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
+        builder = new NotificationCompat.Builder(context);
     }
 
     //Notification to display phone is charging
     public void createChargingMessage(Context context, String message, int icon){
         int color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
 
-        builder = new NotificationCompat.Builder(context)
-                .setContentTitle(message)
+        builder.setContentTitle(message)
                 .setContentText(title)
                 .setSmallIcon(icon)
                 .setOngoing(false)
