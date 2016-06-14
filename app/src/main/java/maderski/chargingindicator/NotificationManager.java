@@ -28,11 +28,8 @@ public class NotificationManager {
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
             Notification notification = new Notification(context);
-            if (!CIService.messageCreated) {
-                notification.createChargingMessage(context, getMessage(intent), getIcon(intent, context));
-                CIService.messageCreated = true;
-            } else
-                notification.updateChargingMessage(getMessage(intent), getIcon(intent, context));
+            notification.createChargingMessage(getMessage(intent), getIcon(intent, context));
+
         }
     }
 
@@ -78,11 +75,8 @@ public class NotificationManager {
     }
 
     public static void RemoveNotifMessage(Context context){
-        if(CIService.messageCreated) {
-            Notification notification = new Notification(context);
-            notification.removeChargingMessage(context);
-            CIService.messageCreated = false;
-        }
+        Notification notification = new Notification(context);
+        notification.removeChargingMessage(context);
     }
 
     private static void vibrate(Context context){

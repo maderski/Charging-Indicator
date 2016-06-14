@@ -16,6 +16,8 @@ public class Notification {
     private final String nTAG = Notification.class.getName();
     private final int nID = 607;
 
+    private int color;
+
     private NotificationManager nManager;
     private NotificationCompat.Builder builder;
 
@@ -23,24 +25,17 @@ public class Notification {
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context);
+        color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
     }
 
     //Notification to display phone is charging
-    public void createChargingMessage(Context context, String message, int icon){
-        int color = ContextCompat.getColor(context, R.color.colorPrimaryDark);
-
+    public void createChargingMessage(String message, int icon){
         builder.setContentTitle(message)
                 .setContentText(title)
                 .setSmallIcon(icon)
                 .setOngoing(false)
                 .setColor(color)
                 .setAutoCancel(false);
-        nManager.notify(nTAG, nID, builder.build());
-    }
-    //Updates Notification
-    public void updateChargingMessage(String message, int icon){
-        builder.setContentTitle(message)
-                .setSmallIcon(icon);
         nManager.notify(nTAG, nID, builder.build());
     }
 
