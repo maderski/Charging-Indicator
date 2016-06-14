@@ -20,7 +20,7 @@
     <Switch
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Change ICON when 100% charged"
+        android:text="Change ICON when charging is done"
         android:id="@+id/change_icon_switch"
         android:checked="false"
         android:textStyle="bold"
