@@ -15,8 +15,6 @@ public class NotificationManager {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    private static boolean messageCreated = false;
-
     //Create notification message with battery percentage
     public void setNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
@@ -32,9 +30,9 @@ public class NotificationManager {
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
             Notification notification = new Notification(context);
-            if (!messageCreated) {
+            if (!CIService.messageCreated) {
                 notification.createChargingMessage(context, getMessage(intent), getIcon(intent, context));
-                messageCreated = true;
+                CIService.messageCreated = true;
 
                 if(canPlaySound)
                     playSound(context);
@@ -76,10 +74,10 @@ public class NotificationManager {
     }
 
     public void removeNotifMessage(Context context){
-        if(messageCreated) {
+        if(CIService.messageCreated) {
             Notification notification = new Notification(context);
             notification.removeChargingMessage(context);
-            messageCreated = false;
+            CIService.messageCreated = false;
         }
     }
 

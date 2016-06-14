@@ -14,6 +14,8 @@ public class CIService extends Service {
     private String TAG = CIService.class.getName();
 
     public static boolean isReceiverStarted = false;
+    public static boolean messageCreated = false;
+
     private PowerConnectionReceiver pcr;
 
     //Instantiation of PowerConnectionReceiver and Registers receiver for ACTION_BATTERY_CHANGED
