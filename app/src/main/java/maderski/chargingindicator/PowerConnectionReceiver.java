@@ -28,11 +28,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         }
 
         switch (action){
-            //When on BOOT_COMPLETED message is received run SetNotifMessage
-            case Intent.ACTION_BOOT_COMPLETED:
-                //Toast.makeText(context,"BOOT COMPLETED", Toast.LENGTH_LONG).show();
-                NotificationManager.SetNotifMessage(context, intent);
-                break;
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
                 NotificationManager.DoVibrateAndSound(context);
