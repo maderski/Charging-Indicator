@@ -13,8 +13,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    public static Intent PCRIntent;
-
     @Override
     public void onReceive(Context context, Intent intent){
 
@@ -28,8 +26,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             Intent serviceIntent = new Intent(context, CIService.class);
             context.startService(serviceIntent);
         }
-
-        PCRIntent = intent;
 
         switch (action){
             //When on BOOT_COMPLETED message is received run SetNotifMessage

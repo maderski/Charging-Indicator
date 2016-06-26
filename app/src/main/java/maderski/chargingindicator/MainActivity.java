@@ -142,7 +142,6 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            NotificationManager.SetNotifMessage(this, PowerConnectionReceiver.PCRIntent);
             Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
             NotificationManager.RemoveNotifMessage(this);
