@@ -150,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetShowNotification(this, true);
+            CIService.RestartReceiver();
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
