@@ -25,10 +25,10 @@
         android:checked="false"
         android:textStyle="bold"
         android:onClick="ChangeIconSwitch"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="true"
         android:textColor="#666565"
-        android:paddingBottom="10dp" />
+        android:paddingBottom="20dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
     <Switch
         android:layout_width="fill_parent"
@@ -39,9 +39,9 @@
         android:textStyle="bold"
         android:onClick="VibrateSwitch"
         android:textColor="#666565"
-        android:layout_above="@+id/change_icon_switch"
-        android:layout_centerHorizontal="true"
-        android:paddingBottom="20dp" />
+        android:paddingBottom="20dp"
+        android:layout_above="@+id/show_toast_switch"
+        android:layout_alignParentStart="true" />
 
     <Switch
         android:layout_width="fill_parent"
@@ -54,7 +54,20 @@
         android:textColor="#666565"
         android:paddingBottom="20dp"
         android:layout_above="@+id/vibrate_switch"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentStart="true" />
+
+    <Switch
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="MESSAGE pop up on connect/disconnect"
+        android:id="@+id/show_toast_switch"
+        android:checked="false"
+        android:textStyle="bold"
+        android:onClick="ShowToastSwitch"
+        android:textColor="#666565"
+        android:paddingBottom="20dp"
+        android:layout_above="@+id/change_icon_switch"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

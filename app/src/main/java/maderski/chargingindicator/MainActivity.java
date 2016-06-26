@@ -83,6 +83,10 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.GetPlaySound(context);
         setting_switch = (Switch) findViewById(R.id.play_sound_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.GetShowToast(context);
+        setting_switch = (Switch) findViewById(R.id.show_toast_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void ChangeIconSwitch(View view){
@@ -115,6 +119,17 @@ public class MainActivity extends AppCompatActivity {
         } else {
             CIPreferences.SetPlaySound(this, false);
             Log.i(TAG, "PlaySoundSwitch is OFF");
+        }
+    }
+
+    public void ShowToastSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.SetShowToast(this, true);
+            Log.i(TAG, "ShowToastSwitch is ON");
+        } else {
+            CIPreferences.SetShowToast(this, false);
+            Log.i(TAG, "ShowToastSwitch is OFF");
         }
     }
 }
