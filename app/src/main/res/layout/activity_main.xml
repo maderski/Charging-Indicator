@@ -32,7 +32,8 @@
         android:onClick="VibrateSwitch"
         android:textColor="#666565"
         android:paddingBottom="20dp"
-        android:layout_below="@+id/play_sound_switch"
+        android:layout_marginBottom="24dp"
+        android:layout_above="@+id/textView2"
         android:layout_alignParentStart="true" />
 
     <Switch
@@ -45,7 +46,7 @@
         android:onClick="PlaySoundSwitch"
         android:textColor="#666565"
         android:paddingBottom="20dp"
-        android:layout_below="@+id/show_notification_switch"
+        android:layout_above="@+id/vibrate_switch"
         android:layout_alignParentStart="true" />
 
     <Switch
@@ -58,9 +59,9 @@
         android:onClick="ShowToastSwitch"
         android:textColor="#666565"
         android:paddingBottom="20dp"
+        android:paddingTop="10dp"
         android:layout_above="@+id/change_icon_switch"
-        android:layout_alignParentStart="true"
-        android:paddingTop="10dp" />
+        android:layout_alignParentEnd="true" />
 
     <ImageView
         android:layout_gravity="center_horizontal"
@@ -72,9 +73,9 @@
         android:background="@color/colorAccent"
         android:paddingLeft="150dp"
         android:paddingRight="60dp"
-        android:layout_alignBottom="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:id="@+id/imageView" />
+        android:id="@+id/imageView"
+        android:layout_above="@+id/show_notification_switch"
+        android:layout_alignEnd="@+id/textView" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -83,7 +84,7 @@
         android:text="When power is connected"
         android:id="@+id/textView"
         android:paddingBottom="10dp"
-        android:layout_alignParentTop="true"
+        android:layout_above="@+id/imageView"
         android:layout_alignParentStart="true" />
 
     <Switch
@@ -96,9 +97,9 @@
         android:onClick="PlaySoundSwitch"
         android:textColor="#666565"
         android:paddingBottom="20dp"
-        android:layout_below="@+id/imageView"
-        android:layout_alignParentStart="true"
-        android:paddingTop="10dp" />
+        android:paddingTop="10dp"
+        android:layout_above="@+id/play_sound_switch"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -107,7 +108,7 @@
         android:text="Other"
         android:id="@+id/textView2"
         android:paddingBottom="10dp"
-        android:layout_above="@+id/show_toast_switch"
+        android:layout_above="@+id/imageView2"
         android:layout_alignParentStart="true" />
 
     <ImageView
@@ -127,12 +128,12 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_below="@+id/vibrate_switch"
-        android:layout_alignParentStart="true"
+        android:id="@+id/imageView4"
         android:src="@drawable/chargingbolt2"
-        android:layout_above="@+id/textView2"
-        android:layout_alignEnd="@+id/vibrate_switch" />
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/textView"
+        android:layout_alignEnd="@+id/show_notification_switch" />
 
 
 </RelativeLayout>
