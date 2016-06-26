@@ -3,6 +3,7 @@ package maderski.chargingindicator;
 import android.app.Service;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Debug;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -21,7 +22,9 @@ public class CIService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
-        Log.i(TAG, "CIService Started");
+        if(BuildConfig.DEBUG)
+            Log.i(TAG, "CIService Started");
+
         isReceiverStarted = true;
 
         pcr = new PowerConnectionReceiver();
@@ -34,7 +37,9 @@ public class CIService extends Service {
     @Override
     public void onDestroy(){
         super.onDestroy();
-        Log.i(TAG, "Service DESTROYED");
+        if(BuildConfig.DEBUG)
+            Log.i(TAG, "Service stopped");
+
         this.unregisterReceiver(pcr);
         isReceiverStarted = false;
     }

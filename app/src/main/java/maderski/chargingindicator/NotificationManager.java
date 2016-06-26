@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Vibrator;
 import android.util.Log;
 
@@ -21,11 +22,15 @@ public class NotificationManager {
         boolean powerConnected = Battery.isPluggedIn(intent);
         boolean showNotification = CIPreferences.GetShowNotification(context);
 
-        Log.i(TAG, "SetNotifMessage");
+        if(BuildConfig.DEBUG)
+            Log.i(TAG, "SetNotifMessage");
+
         if(powerConnected && showNotification) {
-            Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
-            Log.i(TAG, Battery.batteryLevel(intent));
-            Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
+            if(BuildConfig.DEBUG) {
+                Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
+                Log.i(TAG, Battery.batteryLevel(intent));
+                Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
+            }
             Notification notification = new Notification(context);
             notification.createChargingMessage(getMessage(intent), getIcon(intent, context));
         }

@@ -39,7 +39,8 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 if(CIPreferences.GetShowToast(context))
                     Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
 
-                Log.i(TAG, "Power Connected");
+                if(BuildConfig.DEBUG)
+                    Log.i(TAG, "Power Connected");
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
@@ -47,11 +48,14 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 if(CIPreferences.GetShowToast(context))
                     Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
 
-                Log.i(TAG, "Power Disconnected");
+                if(BuildConfig.DEBUG)
+                    Log.i(TAG, "Power Disconnected");
                 break;
             //When BATTERY CHANGED is received run SetNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
-                Log.i(TAG, "ACTION BATTERY CHANGED");
+                if(BuildConfig.DEBUG)
+                    Log.i(TAG, "ACTION BATTERY CHANGED");
+
                 NotificationManager.SetNotifMessage(context, intent);
                 break;
         }

@@ -98,10 +98,12 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetChangeIcon(this, true);
-            Log.i(TAG, "ChangeIconSwitch is ON");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ChangeIconSwitch is ON");
         } else {
             CIPreferences.SetChangeIcon(this, false);
-            Log.i(TAG, "ChangeIconSwitch is OFF");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ChangeIconSwitch is OFF");
         }
     }
 
@@ -109,10 +111,12 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetVibrateWhenPluggedIn(this, true);
-            Log.i(TAG, "VibrateSwitch is ON");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "VibrateSwitch is ON");
         } else {
             CIPreferences.SetVibrateWhenPluggedIn(this, false);
-            Log.i(TAG, "VibrateSwitch is OFF");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "VibrateSwitch is OFF");
         }
     }
 
@@ -120,10 +124,12 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetPlaySound(this, true);
-            Log.i(TAG, "PlaySoundSwitch is ON");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "PlaySoundSwitch is ON");
         } else {
             CIPreferences.SetPlaySound(this, false);
-            Log.i(TAG, "PlaySoundSwitch is OFF");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "PlaySoundSwitch is OFF");
         }
     }
 
@@ -131,10 +137,12 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetShowToast(this, true);
-            Log.i(TAG, "ShowToastSwitch is ON");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ShowToastSwitch is ON");
         } else {
             CIPreferences.SetShowToast(this, false);
-            Log.i(TAG, "ShowToastSwitch is OFF");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ShowToastSwitch is OFF");
         }
     }
 
@@ -142,11 +150,13 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            Log.i(TAG, "ShowNotificationSwitch is ON");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
             NotificationManager.RemoveNotifMessage(this);
             CIPreferences.SetShowNotification(this, false);
-            Log.i(TAG, "ShowNotificationSwitch is OFF");
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "ShowNotificationSwitch is OFF");
         }
     }
 }
