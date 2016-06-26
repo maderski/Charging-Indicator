@@ -16,6 +16,7 @@ public class CIPreferences {
     public static final String VIBRATE_KEY = "vibrate";
     public static final String PLAY_SOUND_KEY = "playSound";
     public static final String SHOW_TOAST_KEY = "showToast";
+    public static final String SHOW_NOTIFICATION_KEY = "showNotification";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -74,5 +75,14 @@ public class CIPreferences {
 
     public static boolean GetShowToast(Context context){
         return reader(context).getBoolean(SHOW_TOAST_KEY, true);
+    }
+
+    public static void SetShowNotification(Context context, boolean enabled){
+        editor(context).putBoolean(SHOW_NOTIFICATION_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean GetShowNotification(Context context){
+        return reader(context).getBoolean(SHOW_NOTIFICATION_KEY, true);
     }
 }

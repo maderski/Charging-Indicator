@@ -1,5 +1,6 @@
 package maderski.chargingindicator;
 
+import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -87,6 +88,10 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.GetShowToast(context);
         setting_switch = (Switch) findViewById(R.id.show_toast_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.GetShowNotification(context);
+        setting_switch = (Switch) findViewById(R.id.show_notification_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void ChangeIconSwitch(View view){
@@ -130,6 +135,19 @@ public class MainActivity extends AppCompatActivity {
         } else {
             CIPreferences.SetShowToast(this, false);
             Log.i(TAG, "ShowToastSwitch is OFF");
+        }
+    }
+
+    public void ShowNotificationSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.SetShowNotification(this, true);
+            NotificationManager.SetNotifMessage(this, PowerConnectionReceiver.PCRIntent);
+            Log.i(TAG, "ShowNotificationSwitch is ON");
+        } else {
+            NotificationManager.RemoveNotifMessage(this);
+            CIPreferences.SetShowNotification(this, false);
+            Log.i(TAG, "ShowNotificationSwitch is OFF");
         }
     }
 }

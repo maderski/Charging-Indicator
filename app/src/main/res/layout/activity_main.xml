@@ -94,7 +94,7 @@
         android:id="@+id/show_notification_switch"
         android:checked="false"
         android:textStyle="bold"
-        android:onClick="PlaySoundSwitch"
+        android:onClick="ShowNotificationSwitch"
         android:textColor="#666565"
         android:paddingBottom="20dp"
         android:paddingTop="10dp"

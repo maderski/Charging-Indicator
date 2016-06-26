@@ -19,17 +19,15 @@ public class NotificationManager {
     public static void SetNotifMessage(Context context, Intent intent){
         boolean isCharging = Battery.isBatteryCharging(intent);
         boolean powerConnected = Battery.isPluggedIn(intent);
+        boolean showNotification = CIPreferences.GetShowNotification(context);
 
         Log.i(TAG, "SetNotifMessage");
-        if(powerConnected) {
+        if(powerConnected && showNotification) {
             Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
             Log.i(TAG, Battery.batteryLevel(intent));
-
             Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
-            //Toast.makeText(context, battery.batteryLevel(), Toast.LENGTH_LONG).show();
             Notification notification = new Notification(context);
             notification.createChargingMessage(getMessage(intent), getIcon(intent, context));
-
         }
     }
 
@@ -75,8 +73,12 @@ public class NotificationManager {
     }
 
     public static void RemoveNotifMessage(Context context){
-        Notification notification = new Notification(context);
-        notification.removeChargingMessage(context);
+        boolean showNotifcation = CIPreferences.GetShowNotification(context);
+
+        if(showNotifcation) {
+            Notification notification = new Notification(context);
+            notification.removeChargingMessage(context);
+        }
     }
 
     private static void vibrate(Context context){
