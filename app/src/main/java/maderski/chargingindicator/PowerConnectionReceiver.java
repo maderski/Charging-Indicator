@@ -30,10 +30,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                NotificationManager.DoVibrateAndSound(context);
-                if(CIPreferences.GetShowToast(context))
-                    Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
-
+                if(Battery.isPluggedIn(intent)) {
+                    NotificationManager.DoVibrateAndSound(context);
+                    if (CIPreferences.GetShowToast(context))
+                        Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
+                }
                 if(BuildConfig.DEBUG)
                     Log.i(TAG, "Power Connected");
                 break;
