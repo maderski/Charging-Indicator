@@ -36,17 +36,6 @@ public class NotificationManager {
         }
     }
 
-    public static void DoVibrateAndSound(Context context){
-        boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
-        boolean canPlaySound = CIPreferences.GetPlaySound(context);
-
-        if(canPlaySound)
-            playSound(context);
-
-        if(canVibrate)
-            vibrate(context);
-    }
-
     //Set type of icon depending on whether or not the phone is charging
     private static int getIcon(Intent intent, Context context){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
@@ -86,15 +75,5 @@ public class NotificationManager {
         }
     }
 
-    private static void vibrate(Context context){
-        Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
-        vibrator.vibrate(500);
-    }
 
-    private static void playSound(Context context){
-        Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
-        ringtone.play();
-
-    }
 }
