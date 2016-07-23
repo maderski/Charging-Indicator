@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
+    private NotificationManager notificationManager;
 
     @Override
     public void onReceive(Context context, Intent intent){
@@ -19,8 +20,10 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         String action = "No Action";
 
         if(intent != null)
-            if(intent.getAction() != null)
+            if(intent.getAction() != null) {
                 action = intent.getAction();
+                notificationManager = new NotificationManager(new Battery());
+            }
 
         if(!CIService.isReceiverStarted) {
             Intent serviceIntent = new Intent(context, CIService.class);
@@ -34,19 +37,20 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                VibrateAndSound.start(context);
+                VibrateAndSound vibrateAndSound = new VibrateAndSound();
+                vibrateAndSound.start(context);
                 if (CIPreferences.GetShowToast(context))
                     Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                NotificationManager.RemoveNotifMessage(context);
+                notificationManager.RemoveNotifMessage(context);
                 if(CIPreferences.GetShowToast(context))
                     Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
                 break;
             //When BATTERY CHANGED is received run SetNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
-                NotificationManager.SetNotifMessage(context, intent);
+                notificationManager.SetNotifMessage(context, intent);
                 break;
         }
     }

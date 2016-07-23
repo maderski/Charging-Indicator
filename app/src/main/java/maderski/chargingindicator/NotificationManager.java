@@ -16,10 +16,16 @@ public class NotificationManager {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
+    private Battery _battery;
+
+    public NotificationManager(Battery battery){
+        _battery = battery;
+    }
+
     //Create notification message with battery percentage
-    public static void SetNotifMessage(Context context, Intent intent){
-        boolean isCharging = Battery.isBatteryCharging(intent);
-        boolean powerConnected = Battery.isPluggedIn(intent);
+    public void SetNotifMessage(Context context, Intent intent){
+        boolean isCharging = _battery.isBatteryCharging(intent);
+        boolean powerConnected = _battery.isPluggedIn(intent);
         boolean showNotification = CIPreferences.GetShowNotification(context);
 
         if(BuildConfig.DEBUG)
@@ -28,7 +34,7 @@ public class NotificationManager {
         if(powerConnected && showNotification) {
             if(BuildConfig.DEBUG) {
                 Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
-                Log.i(TAG, Battery.batteryLevel(intent));
+                Log.i(TAG, _battery.batteryLevel(intent));
                 Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             }
             Notification notification = new Notification(context);
@@ -37,13 +43,13 @@ public class NotificationManager {
     }
 
     //Set type of icon depending on whether or not the phone is charging
-    private static int getIcon(Intent intent, Context context){
+    private int getIcon(Intent intent, Context context){
         final int CHARGING_ICON = R.mipmap.ic_launcher;
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
-        boolean isCharging = Battery.isBatteryCharging(intent);
+        boolean isCharging = _battery.isBatteryCharging(intent);
         boolean canChangeIcon = CIPreferences.GetChangeIcon(context);
-        String batteryLevel = Battery.batteryLevel(intent);
+        String batteryLevel = _battery.batteryLevel(intent);
 
         if(canChangeIcon) {
             if (!isCharging && batteryLevel.equalsIgnoreCase("100%")) {
@@ -55,9 +61,9 @@ public class NotificationManager {
         }
     }
     //Set message depending on whether or not the phone is charging
-    private static String getMessage(Intent intent){
-        String batteryLvl = Battery.batteryLevel(intent);
-        boolean isCharging = Battery.isBatteryCharging(intent);
+    private String getMessage(Intent intent){
+        String batteryLvl = _battery.batteryLevel(intent);
+        boolean isCharging = _battery.isBatteryCharging(intent);
 
         if(!isCharging && batteryLvl.equalsIgnoreCase("100%")){
             return "Battery is charged!";
@@ -66,7 +72,7 @@ public class NotificationManager {
         }
     }
 
-    public static void RemoveNotifMessage(Context context){
+    public void RemoveNotifMessage(Context context){
         boolean showNotifcation = CIPreferences.GetShowNotification(context);
 
         if(showNotifcation) {

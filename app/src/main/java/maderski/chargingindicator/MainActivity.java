@@ -154,7 +154,8 @@ public class MainActivity extends AppCompatActivity {
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            NotificationManager.RemoveNotifMessage(this);
+            NotificationManager notificationManager = new NotificationManager(new Battery());
+            notificationManager.RemoveNotifMessage(this);
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");

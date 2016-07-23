@@ -10,7 +10,8 @@ import android.os.Vibrator;
  * Created by Jason on 7/13/16.
  */
 public class VibrateAndSound {
-    public static void start(Context context){
+
+    public void start(Context context){
         boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
         boolean canPlaySound = CIPreferences.GetPlaySound(context);
 
@@ -22,13 +23,13 @@ public class VibrateAndSound {
     }
 
     //Vibrate phone
-    private static void vibrate(Context context){
+    private void vibrate(Context context){
         Vibrator vibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(500);
     }
 
     //Play default notification Sound
-    private static void playSound(Context context){
+    private void playSound(Context context){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
         ringtone.play();
