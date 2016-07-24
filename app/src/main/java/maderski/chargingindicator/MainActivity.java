@@ -1,5 +1,6 @@
 package maderski.chargingindicator;
 
+import android.app.ActivityManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +11,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
+
+import java.util.List;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015
@@ -26,9 +30,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!CIService.isReceiverStarted) {
-            Intent intent = new Intent(this, CIService.class);
-            startService(intent);
+        if(!isServiceRunning(CIService.class)){
+            Intent serviceIntent = new Intent(this, CIService.class);
+            startService(serviceIntent);
         }
     }
 
@@ -148,17 +152,32 @@ public class MainActivity extends AppCompatActivity {
 
     public void ShowNotificationSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        NotificationManager notificationManager = new NotificationManager(new Battery());
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            CIService.RestartReceiver();
+            Intent serviceIntent = new Intent(this, CIService.class);
+            if(isServiceRunning(CIService.class))
+                stopService(serviceIntent);
+            startService(serviceIntent);
+
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            NotificationManager notificationManager = new NotificationManager(new Battery());
             notificationManager.RemoveNotifMessage(this);
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");
         }
+    }
+    private boolean isServiceRunning(Class<?> serviceClass){
+        ActivityManager activityManager = (ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
+
+        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
+            if (runningServiceInfo.service.getClassName().equals(serviceClass.getName())){
+                return true;
+            }
+        }
+        return false;
     }
 }
