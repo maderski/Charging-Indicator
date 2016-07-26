@@ -11,9 +11,7 @@ import android.os.Vibrator;
  */
 public class VibrateAndSound {
 
-    public void start(Context context){
-        boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
-        boolean canPlaySound = CIPreferences.GetPlaySound(context);
+    public void start(Context context, boolean canPlaySound, boolean canVibrate){
 
         if(canPlaySound)
             playSound(context);

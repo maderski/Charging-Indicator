@@ -40,8 +40,10 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
+                boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
+                boolean canPlaySound = CIPreferences.GetPlaySound(context);
                 VibrateAndSound vibrateAndSound = new VibrateAndSound();
-                vibrateAndSound.start(context);
+                vibrateAndSound.start(context, canPlaySound, canVibrate);
                 if (CIPreferences.GetShowToast(context))
                     Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
                 break;
