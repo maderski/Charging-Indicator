@@ -15,8 +15,6 @@ public class CIService extends Service {
 
     private PowerConnectionReceiver _pcr;
 
-    //public static boolean isReceiverStarted = false;
-
     public CIService(){
         _pcr = new PowerConnectionReceiver();
     }
@@ -31,8 +29,6 @@ public class CIService extends Service {
         if(BuildConfig.DEBUG)
             Log.i(TAG, "CIService Started");
 
-        //isReceiverStarted = true;
-
         return Service.START_STICKY;
     }
 
@@ -43,7 +39,6 @@ public class CIService extends Service {
             Log.i(TAG, "Service stopped");
 
         this.unregisterReceiver(_pcr);
-        //isReceiverStarted = false;
     }
 
     @Override
