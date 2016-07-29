@@ -2,11 +2,6 @@ package maderski.chargingindicator;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Vibrator;
 import android.util.Log;
 
 /**
@@ -16,16 +11,16 @@ public class NotificationManager {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    private Battery _battery;
+    private Battery battery;
 
     public NotificationManager(Battery battery){
-        _battery = battery;
+        this.battery = battery;
     }
 
     //Create notification message with battery percentage
     public void SetNotifMessage(Context context, Intent intent){
-        boolean isCharging = _battery.isBatteryCharging(intent);
-        boolean powerConnected = _battery.isPluggedIn(intent);
+        boolean isCharging = battery.isBatteryCharging(intent);
+        boolean powerConnected = battery.isPluggedIn(intent);
         boolean showNotification = CIPreferences.GetShowNotification(context);
 
         if(BuildConfig.DEBUG)
@@ -34,7 +29,7 @@ public class NotificationManager {
         if(powerConnected && showNotification) {
             if(BuildConfig.DEBUG) {
                 Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
-                Log.i(TAG, _battery.batteryLevel(intent));
+                Log.i(TAG, battery.batteryLevel(intent));
                 Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             }
             Notification notification = new Notification(context);
@@ -47,9 +42,9 @@ public class NotificationManager {
         final int CHARGING_ICON = R.mipmap.ic_launcher;
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
-        boolean isCharging = _battery.isBatteryCharging(intent);
+        boolean isCharging = battery.isBatteryCharging(intent);
         boolean canChangeIcon = CIPreferences.GetChangeIcon(context);
-        String batteryLevel = _battery.batteryLevel(intent);
+        String batteryLevel = battery.batteryLevel(intent);
 
         if(canChangeIcon) {
             if (!isCharging && batteryLevel.equalsIgnoreCase("100%")) {
@@ -62,8 +57,8 @@ public class NotificationManager {
     }
     //Set message depending on whether or not the phone is charging
     private String getMessage(Intent intent){
-        String batteryLvl = _battery.batteryLevel(intent);
-        boolean isCharging = _battery.isBatteryCharging(intent);
+        String batteryLvl = battery.batteryLevel(intent);
+        boolean isCharging = battery.isBatteryCharging(intent);
 
         if(!isCharging && batteryLvl.equalsIgnoreCase("100%")){
             return "Battery is charged!";

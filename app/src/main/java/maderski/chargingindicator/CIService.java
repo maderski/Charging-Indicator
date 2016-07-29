@@ -13,18 +13,18 @@ public class CIService extends Service {
 
     private static final String TAG = CIService.class.getName();
 
-    private PowerConnectionReceiver _pcr;
+    private PowerConnectionReceiver pcr;
 
     public CIService(){
-        _pcr = new PowerConnectionReceiver();
+        pcr = new PowerConnectionReceiver();
     }
 
     //Instantiation of PowerConnectionReceiver and Registers receiver for ACTION_BATTERY_CHANGED
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
         //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
-        _pcr.onReceive(this, intent);
-        this.registerReceiver(_pcr, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        pcr.onReceive(this, intent);
+        this.registerReceiver(pcr, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         if(BuildConfig.DEBUG)
             Log.i(TAG, "CIService Started");
@@ -38,7 +38,7 @@ public class CIService extends Service {
         if(BuildConfig.DEBUG)
             Log.i(TAG, "Service stopped");
 
-        this.unregisterReceiver(_pcr);
+        this.unregisterReceiver(pcr);
     }
 
     @Override
