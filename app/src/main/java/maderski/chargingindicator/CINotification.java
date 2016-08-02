@@ -10,10 +10,10 @@ import android.util.Log;
 /**
  * Created by Jason on 12/6/15.
  */
-public class Notification {
+public class CINotification {
 
     private final String title = "Charging Indicator";
-    private final String nTAG = Notification.class.getName();
+    private final String nTAG = CINotification.class.getName();
     private final int nID = 607;
 
     private int color;
@@ -21,7 +21,7 @@ public class Notification {
     private NotificationManager nManager;
     private NotificationCompat.Builder builder;
 
-    public Notification(Context context){
+    public CINotification(Context context){
         nManager = (NotificationManager)context
                 .getSystemService(Context.NOTIFICATION_SERVICE);
         builder = new NotificationCompat.Builder(context);

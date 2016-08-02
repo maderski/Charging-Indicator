@@ -15,7 +15,7 @@ import java.util.List;
 public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
-    private NotificationManager notificationManager;
+    private PerformActions performActions;
 
     @Override
     public void onReceive(Context context, Intent intent){
@@ -25,7 +25,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(intent != null)
             if(intent.getAction() != null) {
                 action = intent.getAction();
-                notificationManager = new NotificationManager(new Battery());
+                performActions = new PerformActions(context, new Battery(intent));
             }
 
         if(!isServiceRunning(context, CIService.class)) {
@@ -40,22 +40,18 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
-                boolean canPlaySound = CIPreferences.GetPlaySound(context);
-                VibrateAndSound vibrateAndSound = new VibrateAndSound();
-                vibrateAndSound.start(context, canPlaySound, canVibrate);
-                if (CIPreferences.GetShowToast(context))
-                    Toast.makeText(context, "Power Connected", Toast.LENGTH_LONG).show();
+                performActions.vibrate();
+                performActions.makeSound();
+                performActions.showToast("Power Connected");
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                notificationManager.RemoveNotifMessage(context);
-                if(CIPreferences.GetShowToast(context))
-                    Toast.makeText(context, "Power Disconnected", Toast.LENGTH_LONG).show();
+                performActions.removeNotification();
+                performActions.showToast("Power Disconnected");
                 break;
             //When BATTERY CHANGED is received run SetNotifMessage
             case Intent.ACTION_BATTERY_CHANGED:
-                notificationManager.SetNotifMessage(context, intent);
+                performActions.showNotification();
                 break;
         }
     }

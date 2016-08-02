@@ -152,10 +152,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void ShowNotificationSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        NotificationManager notificationManager = new NotificationManager(new Battery());
+        Intent serviceIntent = new Intent(this, CIService.class);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            Intent serviceIntent = new Intent(this, CIService.class);
             if(isServiceRunning(CIService.class))
                 stopService(serviceIntent);
             startService(serviceIntent);
@@ -163,7 +162,8 @@ public class MainActivity extends AppCompatActivity {
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            notificationManager.RemoveNotifMessage(this);
+            PerformActions performActions = new PerformActions(this, new Battery(serviceIntent));
+            performActions.removeNotification();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");

@@ -9,12 +9,17 @@ import java.text.NumberFormat;
  * Created by Jason on 2/13/16.
  */
 public class Battery {
-    //Returns true or false depending if battery is chargine
-    public boolean isBatteryCharging(Intent batteryStatus){
+    private Intent batteryStatus;
+
+    public Battery(Intent intent){
+        batteryStatus = intent;
+    }
+    //Returns true or false depending if battery is charging
+    public boolean isBatteryCharging(){
         return (batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING);
     }
     //Returns battery percentage as string
-    public String batteryLevel(Intent batteryStatus){
+    public String batteryLevel(){
         int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
         int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
         float percent = level/(float)scale;
@@ -24,7 +29,7 @@ public class Battery {
         return percentFormat.format(percent);
     }
     //Returns true or false depending if battery is plugged in
-    public boolean isPluggedIn(Intent batteryStatus){
+    public boolean isPluggedIn(){
         int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
         boolean usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB;
         boolean acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC;
