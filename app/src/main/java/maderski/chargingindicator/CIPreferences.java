@@ -22,7 +22,7 @@ public class CIPreferences {
     private static SharedPreferences.Editor editor(Context context){
 
         if(_editor == null){
-            _editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_MULTI_PROCESS).edit();
+            _editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE).edit();
             _editor.commit();
         }
 
@@ -32,7 +32,7 @@ public class CIPreferences {
     //Reads SharedPreferences value
     private static SharedPreferences reader(Context context){
 
-        return context.getSharedPreferences(MY_PREFS_NAME, context.MODE_MULTI_PROCESS);
+        return context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE);
     }
 
     //Commits write to SharedPreferences
