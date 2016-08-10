@@ -25,7 +25,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(intent != null)
             if(intent.getAction() != null) {
                 action = intent.getAction();
-                performActions = new PerformActions(context, new Battery(intent));
+                performActions = new PerformActions(context, new NotificationManager(context));
             }
 
         if(!isServiceRunning(context, CIService.class)) {
@@ -43,15 +43,13 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 performActions.vibrate();
                 performActions.makeSound();
                 performActions.showToast("Power Connected");
+                context.startService(new Intent(context, BatteryService.class));
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
                 performActions.removeNotification();
                 performActions.showToast("Power Disconnected");
-                break;
-            //When BATTERY CHANGED is received run SetNotifMessage
-            case Intent.ACTION_BATTERY_CHANGED:
-                performActions.showNotification();
+                context.stopService(new Intent(context, BatteryService.class));
                 break;
         }
     }

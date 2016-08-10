@@ -29,7 +29,10 @@
             </intent-filter>
         </receiver>
 
+        <receiver android:name=".BatteryReceiver"></receiver>
+
         <service android:name=".CIService" />
+        <service android:name=".BatteryService" />
 
         <activity android:name=".AboutActivity"></activity>
     </application>

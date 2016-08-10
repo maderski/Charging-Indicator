@@ -7,6 +7,6 @@ public interface Actions {
     void vibrate();
     void makeSound();
     void showToast(String message);
-    void showNotification();
+    void showNotification(Battery battery);
     void removeNotification();
 }

@@ -14,9 +14,9 @@ public class PerformActions implements Actions {
     private Context context;
     private NotificationManager notificationManager;
 
-    public PerformActions(Context context, Battery battery){
+    public PerformActions(Context context, NotificationManager notificationManager){
         this.context = context;
-        notificationManager = new NotificationManager(context, battery);
+        this.notificationManager = notificationManager;
     }
     @Override
     public void vibrate() {
@@ -44,7 +44,7 @@ public class PerformActions implements Actions {
     }
 
     @Override
-    public void showNotification() { notificationManager.SetNotifMessage(); }
+    public void showNotification(Battery battery) { notificationManager.SetNotifMessage(battery); }
 
     @Override
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }

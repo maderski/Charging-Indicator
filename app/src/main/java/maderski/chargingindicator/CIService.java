@@ -24,7 +24,6 @@ public class CIService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId){
         //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
         pcr.onReceive(this, intent);
-        this.registerReceiver(pcr, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
         if(BuildConfig.DEBUG)
             Log.i(TAG, "CIService Started");
@@ -37,8 +36,6 @@ public class CIService extends Service {
         super.onDestroy();
         if(BuildConfig.DEBUG)
             Log.i(TAG, "Service stopped");
-
-        this.unregisterReceiver(pcr);
     }
 
     @Override

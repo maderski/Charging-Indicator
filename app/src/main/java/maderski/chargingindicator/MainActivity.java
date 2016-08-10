@@ -4,6 +4,7 @@ import android.app.ActivityManager;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         setButtonPreferences(this);
-
+        restartBatteryService();
     }
 
     @Override
@@ -152,17 +153,14 @@ public class MainActivity extends AppCompatActivity {
 
     public void ShowNotificationSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        Intent serviceIntent = new Intent(this, CIService.class);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            if(isServiceRunning(CIService.class))
-                stopService(serviceIntent);
-            startService(serviceIntent);
+            restartBatteryService();
 
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            PerformActions performActions = new PerformActions(this, new Battery(serviceIntent));
+            PerformActions performActions = new PerformActions(this, new NotificationManager(this));
             performActions.removeNotification();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
@@ -179,5 +177,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         return false;
+    }
+
+    private void restartBatteryService(){
+        Battery battery = new Battery(this.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
+        if(battery.isPluggedIn()) {
+            Intent serviceIntent = new Intent(this, BatteryService.class);
+            if (isServiceRunning(BatteryService.class))
+                stopService(serviceIntent);
+            startService(serviceIntent);
+        }
     }
 }
