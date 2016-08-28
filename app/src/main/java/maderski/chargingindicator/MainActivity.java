@@ -99,6 +99,23 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.GetShowNotification(context);
         setting_switch = (Switch) findViewById(R.id.show_notification_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.GetShowChargingStateIcon(context);
+        setting_switch = (Switch) findViewById(R.id.show_chargingstate_switch);
+        setting_switch.setChecked(btnState);
+    }
+
+    public void IncreasingDecreasingIconSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setShowChargingStateIcon(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "IncreasingDecreasingIconSwitch is ON");
+        } else {
+            CIPreferences.setShowChargingStateIcon(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
+        }
     }
 
     public void ChangeIconSwitch(View view){

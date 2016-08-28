@@ -9,131 +9,155 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="maderski.chargingindicator.MainActivity">
 
-    <Switch
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Change ICON when charging is done"
-        android:id="@+id/change_icon_switch"
-        android:checked="false"
-        android:textStyle="bold"
-        android:onClick="ChangeIconSwitch"
-        android:textColor="#666565"
-        android:paddingBottom="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView"
+        android:fillViewport="false">
 
-    <Switch
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="VIBRATE"
-        android:id="@+id/vibrate_switch"
-        android:checked="false"
-        android:textStyle="bold"
-        android:onClick="VibrateSwitch"
-        android:textColor="#666565"
-        android:paddingBottom="20dp"
-        android:layout_marginBottom="24dp"
-        android:layout_above="@+id/textView2"
-        android:layout_alignParentStart="true" />
+        <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <Switch
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Play SOUND"
-        android:id="@+id/play_sound_switch"
-        android:checked="false"
-        android:textStyle="bold"
-        android:onClick="PlaySoundSwitch"
-        android:textColor="#666565"
-        android:paddingBottom="20dp"
-        android:layout_above="@+id/vibrate_switch"
-        android:layout_alignParentStart="true" />
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView4"
+                android:src="@drawable/chargingboltsplash"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:layout_above="@+id/textView"
+                android:layout_alignEnd="@+id/show_notification_switch" />
 
-    <Switch
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Pop up MESSAGE on connect/disconnect"
-        android:id="@+id/show_toast_switch"
-        android:checked="false"
-        android:textStyle="bold"
-        android:onClick="ShowToastSwitch"
-        android:textColor="#666565"
-        android:paddingBottom="20dp"
-        android:paddingTop="10dp"
-        android:layout_above="@+id/change_icon_switch"
-        android:layout_alignParentEnd="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="When power is connected"
+                android:id="@+id/textView"
+                android:paddingBottom="10dp"
+                android:layout_above="@+id/imageView"
+                android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@android:drawable/divider_horizontal_bright"
-        android:background="@color/colorAccent"
-        android:paddingLeft="150dp"
-        android:paddingRight="60dp"
-        android:id="@+id/imageView"
-        android:layout_above="@+id/show_notification_switch"
-        android:layout_alignEnd="@+id/textView" />
+            <ImageView
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/divider_horizontal_bright"
+                android:background="@color/colorAccent"
+                android:paddingLeft="150dp"
+                android:paddingRight="60dp"
+                android:id="@+id/imageView"
+                android:layout_above="@+id/show_notification_switch"
+                android:layout_alignEnd="@+id/textView" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="When power is connected"
-        android:id="@+id/textView"
-        android:paddingBottom="10dp"
-        android:layout_above="@+id/imageView"
-        android:layout_alignParentStart="true" />
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Show NOTIFICATION"
+                android:id="@+id/show_notification_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="ShowNotificationSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:layout_above="@+id/play_sound_switch"
+                android:layout_alignParentStart="true" />
 
-    <Switch
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="Show NOTIFICATION"
-        android:id="@+id/show_notification_switch"
-        android:checked="false"
-        android:textStyle="bold"
-        android:onClick="ShowNotificationSwitch"
-        android:textColor="#666565"
-        android:paddingBottom="20dp"
-        android:paddingTop="10dp"
-        android:layout_above="@+id/play_sound_switch"
-        android:layout_alignParentStart="true" />
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Play SOUND"
+                android:id="@+id/play_sound_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="PlaySoundSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:layout_above="@+id/vibrate_switch"
+                android:layout_alignParentStart="true" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Other"
-        android:id="@+id/textView2"
-        android:paddingBottom="10dp"
-        android:layout_above="@+id/imageView2"
-        android:layout_alignParentStart="true" />
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="VIBRATE"
+                android:id="@+id/vibrate_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="VibrateSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:layout_marginBottom="24dp"
+                android:layout_above="@+id/textView2"
+                android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="1dp"
-        android:paddingBottom="1dp"
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@android:drawable/divider_horizontal_bright"
-        android:background="@color/colorAccent"
-        android:paddingLeft="40dp"
-        android:paddingRight="10dp"
-        android:id="@+id/imageView2"
-        android:layout_above="@+id/show_toast_switch"
-        android:layout_alignParentStart="true" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Other"
+                android:id="@+id/textView2"
+                android:paddingBottom="10dp"
+                android:layout_above="@+id/imageView2"
+                android:layout_alignParentStart="true" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
-        android:src="@drawable/chargingbolt2"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"
-        android:layout_above="@+id/textView"
-        android:layout_alignEnd="@+id/show_notification_switch" />
+            <ImageView
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:src="@android:drawable/divider_horizontal_bright"
+                android:background="@color/colorAccent"
+                android:paddingLeft="40dp"
+                android:paddingRight="10dp"
+                android:id="@+id/imageView2"
+                android:layout_above="@+id/show_toast_switch"
+                android:layout_alignParentStart="true" />
 
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Pop up MESSAGE on connect/disconnect"
+                android:id="@+id/show_toast_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="ShowToastSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:layout_above="@+id/change_icon_switch"
+                android:layout_alignParentEnd="true" />
 
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Show up/down arrow on icon"
+                android:id="@+id/show_chargingstate_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="IncreasingDecreasingIconSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:paddingTop="10dp"
+                android:layout_above="@+id/change_icon_switch"
+                android:layout_alignParentEnd="true" />
+
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="Change ICON when charging is done"
+                android:id="@+id/change_icon_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="ChangeIconSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentEnd="true" />
+
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

@@ -58,18 +58,20 @@ public class NotificationManager extends CINotification{
     }
 
     private int chargingStateIcon(Battery battery){
-        int chargingState = battery.isBatteryLevelIncreasing();
         int stateIcon = R.drawable.standardbolt;
 
-        switch(chargingState){
-            case -1:
-                stateIcon = R.drawable.decreasingbolt;
-                break;
-            case 0:
-                break;
-            case 1:
-                stateIcon = R.drawable.increasingbolt;
-                break;
+        if(CIPreferences.GetShowChargingStateIcon(context)) {
+            int chargingState = battery.isBatteryLevelIncreasing();
+            switch (chargingState) {
+                case -1:
+                    stateIcon = R.drawable.decreasingbolt;
+                    break;
+                case 0:
+                    break;
+                case 1:
+                    stateIcon = R.drawable.increasingbolt;
+                    break;
+            }
         }
 
         return stateIcon;

@@ -17,6 +17,7 @@ public class CIPreferences {
     public static final String PLAY_SOUND_KEY = "playSound";
     public static final String SHOW_TOAST_KEY = "showToast";
     public static final String SHOW_NOTIFICATION_KEY = "showNotification";
+    public static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -39,6 +40,15 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setShowChargingStateIcon(Context context, boolean enabled){
+        editor(context).putBoolean(SHOW_INCREASING_DECREASING_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean GetShowChargingStateIcon(Context context){
+        return reader(context).getBoolean(SHOW_INCREASING_DECREASING_KEY, true);
     }
 
     public static void SetChangeIcon(Context context, boolean enabled){
