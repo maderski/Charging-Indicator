@@ -10,6 +10,7 @@ import java.text.NumberFormat;
  */
 public class Battery {
     private Intent batteryStatus;
+    private float previousPercent = 0;
 
     public Battery(Intent intent){
         batteryStatus = intent;
@@ -20,14 +21,18 @@ public class Battery {
     }
     //Returns battery percentage as string
     public String batteryLevel(){
-        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
-        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
-        float percent = level/(float)scale;
-
+        float percent = batteryPercent();
         NumberFormat percentFormat = NumberFormat.getPercentInstance();
         percentFormat.setMaximumFractionDigits(1);
         return percentFormat.format(percent);
     }
+
+    private float batteryPercent(){
+        int level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
+        int scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
+        return level/(float)scale;
+    }
+
     //Returns true or false depending if battery is plugged in
     public boolean isPluggedIn(){
         int chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1);
@@ -39,5 +44,23 @@ public class Battery {
             return true;
         else
             return false;
+    }
+
+    public int isBatteryLevelIncreasing(){
+        float currentPercent = batteryPercent();
+        //Is decreasing
+        int state = -1;
+
+        //Is increasing
+        if(currentPercent > previousPercent)
+            state = 1;
+
+        //Is the same
+        else if(currentPercent == previousPercent)
+            state = 0;
+
+        previousPercent = currentPercent;
+
+        return state;
     }
 }

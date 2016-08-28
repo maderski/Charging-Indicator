@@ -40,7 +40,7 @@ public class NotificationManager extends CINotification{
 
     //Set type of icon depending on whether or not the phone is charging
     private int getIcon(Battery battery){
-        final int CHARGING_ICON = R.mipmap.ic_launcher;
+        final int CHARGING_ICON = chargingStateIcon(battery);
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
         boolean isCharging = battery.isBatteryCharging();
@@ -56,6 +56,25 @@ public class NotificationManager extends CINotification{
             return CHARGING_ICON;
         }
     }
+
+    private int chargingStateIcon(Battery battery){
+        int chargingState = battery.isBatteryLevelIncreasing();
+        int stateIcon = R.drawable.standardbolt;
+
+        switch(chargingState){
+            case -1:
+                stateIcon = R.drawable.decreasingbolt;
+                break;
+            case 0:
+                break;
+            case 1:
+                stateIcon = R.drawable.increasingbolt;
+                break;
+        }
+
+        return stateIcon;
+    }
+
     //Set message depending on whether or not the phone is charging
     private String getMessage(Battery battery){
         String batteryLvl = battery.batteryLevel();

@@ -1,7 +1,6 @@
 package maderski.chargingindicator;
 
 import android.app.ActivityManager;
-import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -12,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,10 +29,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if(!isServiceRunning(CIService.class)){
-            Intent serviceIntent = new Intent(this, CIService.class);
-            startService(serviceIntent);
-        }
+        checkIfCIServiceIsRunning();
     }
 
     @Override
@@ -42,6 +37,13 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         setButtonPreferences(this);
         restartBatteryService();
+    }
+
+    private void checkIfCIServiceIsRunning(){
+        if(!isServiceRunning(CIService.class)){
+            Intent serviceIntent = new Intent(this, CIService.class);
+            startService(serviceIntent);
+        }
     }
 
     @Override

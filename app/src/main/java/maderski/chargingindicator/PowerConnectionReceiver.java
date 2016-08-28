@@ -15,24 +15,20 @@ import java.util.List;
 public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
-    private PerformActions performActions;
 
     @Override
     public void onReceive(Context context, Intent intent){
 
-        String action = "No Action";
-
         if(intent != null)
             if(intent.getAction() != null) {
-                action = intent.getAction();
-                performActions = new PerformActions(context, new NotificationManager(context));
+                String action = intent.getAction();
+                PerformActions performActions = new PerformActions(context,
+                        new NotificationManager(context));
+                actionReceived(context, action, performActions);
             }
+    }
 
-        if(!isServiceRunning(context, CIService.class)) {
-            Intent serviceIntent = new Intent(context, CIService.class);
-            context.startService(serviceIntent);
-        }
-
+    private void actionReceived(Context context, String action, PerformActions performActions){
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "Action: " + action);
         }
@@ -52,17 +48,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
                 context.stopService(new Intent(context, BatteryService.class));
                 break;
         }
-    }
 
-    private boolean isServiceRunning(Context context, Class<?> serviceClass){
-        ActivityManager activityManager = (ActivityManager)context.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
-
-        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
-            if (runningServiceInfo.service.getClassName().equals(serviceClass.getName())){
-                return true;
-            }
-        }
-        return false;
     }
 }
