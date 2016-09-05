@@ -202,12 +202,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restartBatteryService(){
-        Battery battery = new Battery(this.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED)));
-        if(battery.isPluggedIn()) {
-            Intent serviceIntent = new Intent(this, BatteryService.class);
-            if (isServiceRunning(BatteryService.class))
-                stopService(serviceIntent);
-            startService(serviceIntent);
-        }
+        Intent serviceIntent = new Intent(this, BatteryService.class);
+        if (isServiceRunning(BatteryService.class))
+            stopService(serviceIntent);
+        startService(serviceIntent);
     }
 }

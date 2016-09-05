@@ -10,7 +10,11 @@ import android.content.Intent;
 public class BatteryReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        PerformActions performActions = new PerformActions(context, new NotificationManager(context, new Battery(intent)));
-        performActions.showNotification();
+        Battery battery = new Battery(intent);
+
+        if(battery.isPluggedIn()) {
+            PerformActions performActions = new PerformActions(context, new NotificationManager(context, battery));
+            performActions.showNotification();
+        }
     }
 }
