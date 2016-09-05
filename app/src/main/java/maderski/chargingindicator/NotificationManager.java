@@ -12,14 +12,16 @@ public class NotificationManager extends CINotification{
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
     private Context context;
+    private Battery battery;
 
-    public NotificationManager(Context context){
+    public NotificationManager(Context context, Battery battery){
         super(context);
         this.context = context;
+        this.battery = battery;
     }
 
     //Create notification message with battery percentage
-    public void SetNotifMessage(Battery battery){
+    public void SetNotifMessage(){
         boolean isCharging = battery.isBatteryCharging();
         boolean powerConnected = battery.isPluggedIn();
         boolean showNotification = CIPreferences.GetShowNotification(context);
@@ -34,13 +36,13 @@ public class NotificationManager extends CINotification{
                 Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             }
 
-            createChargingMessage(getMessage(battery), getIcon(battery));
+            createChargingMessage(getMessage(), getIcon());
         }
     }
 
     //Set type of icon depending on whether or not the phone is charging
-    private int getIcon(Battery battery){
-        final int CHARGING_ICON = chargingStateIcon(battery);
+    private int getIcon(){
+        final int CHARGING_ICON = chargingStateIcon();
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
         boolean isCharging = battery.isBatteryCharging();
@@ -57,7 +59,7 @@ public class NotificationManager extends CINotification{
         }
     }
 
-    private int chargingStateIcon(Battery battery){
+    private int chargingStateIcon(){
         int stateIcon = R.drawable.standardbolt;
 
         if(CIPreferences.GetShowChargingStateIcon(context)) {
@@ -78,7 +80,7 @@ public class NotificationManager extends CINotification{
     }
 
     //Set message depending on whether or not the phone is charging
-    private String getMessage(Battery battery){
+    private String getMessage(){
         String batteryLvl = battery.batteryLevel();
         boolean isCharging = battery.isBatteryCharging();
 

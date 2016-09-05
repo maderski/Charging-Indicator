@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/white_rounded"
+        android:background="@drawable/yellow_rounded"
         android:paddingTop="12dp"
         android:paddingBottom="10dp"
         android:paddingRight="15dp"

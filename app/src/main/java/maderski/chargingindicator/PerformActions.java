@@ -44,7 +44,7 @@ public class PerformActions implements Actions {
     }
 
     @Override
-    public void showNotification(Battery battery) { notificationManager.SetNotifMessage(battery); }
+    public void showNotification() { notificationManager.SetNotifMessage(); }
 
     @Override
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }

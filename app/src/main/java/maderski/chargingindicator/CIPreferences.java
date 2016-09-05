@@ -10,7 +10,7 @@ public class CIPreferences {
 
     private static SharedPreferences.Editor _editor;
 
-    public static String MY_PREFS_NAME = "CIPreferences";
+    public static final String MY_PREFS_NAME = "CIPreferences";
 
     public static final String CHANGE_ICON_KEY = "changeIcon";
     public static final String VIBRATE_KEY = "vibrate";

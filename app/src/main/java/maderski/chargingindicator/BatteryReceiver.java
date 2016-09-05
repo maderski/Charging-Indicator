@@ -10,7 +10,7 @@ import android.content.Intent;
 public class BatteryReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        PerformActions performActions = new PerformActions(context, new NotificationManager(context));
-        performActions.showNotification(new Battery(intent));
+        PerformActions performActions = new PerformActions(context, new NotificationManager(context, new Battery(intent)));
+        performActions.showNotification();
     }
 }

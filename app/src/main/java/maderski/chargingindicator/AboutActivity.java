@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 public class AboutActivity extends AppCompatActivity {
 
-    private String TAG = AboutActivity.class.getName();
+    private static final String TAG = AboutActivity.class.getName();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

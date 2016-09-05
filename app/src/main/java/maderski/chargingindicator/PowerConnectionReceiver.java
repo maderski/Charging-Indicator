@@ -23,7 +23,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             if(intent.getAction() != null) {
                 String action = intent.getAction();
                 PerformActions performActions = new PerformActions(context,
-                        new NotificationManager(context));
+                        new NotificationManager(context, new Battery(intent)));
                 actionReceived(context, action, performActions);
             }
     }

@@ -2,6 +2,7 @@ package maderski.chargingindicator;
 
 import android.content.Intent;
 import android.os.BatteryManager;
+import android.util.Log;
 
 import java.text.NumberFormat;
 
@@ -9,8 +10,11 @@ import java.text.NumberFormat;
  * Created by Jason on 2/13/16.
  */
 public class Battery {
+    private static final String TAG = Battery.class.getName();
+
+    private static float previousPercent = 0;
+
     private Intent batteryStatus;
-    private float previousPercent = 0;
 
     public Battery(Intent intent){
         batteryStatus = intent;
@@ -48,6 +52,8 @@ public class Battery {
 
     public int isBatteryLevelIncreasing(){
         float currentPercent = batteryPercent();
+        if(BuildConfig.DEBUG)
+            Log.i(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
         //Is decreasing
         int state = -1;
 

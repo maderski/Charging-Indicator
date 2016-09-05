@@ -5,11 +5,14 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 /**
  * Created by Jason on 8/9/16.
  */
 public class BatteryService extends Service {
+    private static final String TAG = BatteryService.class.getName();
+
     private BatteryReceiver batteryReceiver;
 
     public BatteryService(){ batteryReceiver = new BatteryReceiver(); }
@@ -24,7 +27,11 @@ public class BatteryService extends Service {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        this.unregisterReceiver(batteryReceiver);
+        if(batteryReceiver != null) {
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "Battery Reciever NOT NULL!");
+            this.unregisterReceiver(batteryReceiver);
+        }
     }
 
     @Override

@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -109,12 +110,14 @@ public class MainActivity extends AppCompatActivity {
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.setShowChargingStateIcon(this, true);
+            Toast.makeText(this, "Show Up/Down Arrow ENABLED", Toast.LENGTH_SHORT).show();
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "IncreasingDecreasingIconSwitch is ON");
         } else {
             CIPreferences.setShowChargingStateIcon(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
+            restartBatteryService();
         }
     }
 
@@ -179,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            PerformActions performActions = new PerformActions(this, new NotificationManager(this));
+            PerformActions performActions = new PerformActions(this, new NotificationManager(this, new Battery(this.getIntent())));
             performActions.removeNotification();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
