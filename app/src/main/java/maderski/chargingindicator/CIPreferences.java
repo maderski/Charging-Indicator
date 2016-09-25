@@ -10,14 +10,14 @@ public class CIPreferences {
 
     private static SharedPreferences.Editor _editor;
 
-    public static final String MY_PREFS_NAME = "CIPreferences";
+    private static final String MY_PREFS_NAME = "CIPreferences";
 
-    public static final String CHANGE_ICON_KEY = "changeIcon";
-    public static final String VIBRATE_KEY = "vibrate";
-    public static final String PLAY_SOUND_KEY = "playSound";
-    public static final String SHOW_TOAST_KEY = "showToast";
-    public static final String SHOW_NOTIFICATION_KEY = "showNotification";
-    public static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
+    private static final String CHANGE_ICON_KEY = "changeIcon";
+    private static final String VIBRATE_KEY = "vibrate";
+    private static final String PLAY_SOUND_KEY = "playSound";
+    private static final String SHOW_TOAST_KEY = "showToast";
+    private static final String SHOW_NOTIFICATION_KEY = "showNotification";
+    private static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
