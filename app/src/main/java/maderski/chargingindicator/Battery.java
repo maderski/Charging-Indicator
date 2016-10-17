@@ -69,4 +69,6 @@ public class Battery {
 
         return state;
     }
+
+    public static void resetPreviousPercent(){ previousPercent = 0; }
 }

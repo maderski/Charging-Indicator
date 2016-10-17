@@ -1,10 +1,6 @@
 package maderski.chargingindicator;
 
 import android.content.Context;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Vibrator;
 import android.widget.Toast;
 
 /**
@@ -13,28 +9,47 @@ import android.widget.Toast;
 public class PerformActions implements Actions {
     private Context context;
     private NotificationManager notificationManager;
+    private Vibration vibration;
+    private Sounds playSound;
 
     public PerformActions(Context context, NotificationManager notificationManager){
         this.context = context;
         this.notificationManager = notificationManager;
+        this.vibration = new Vibration(context);
+        this.playSound = new Sounds(context);
     }
+
     @Override
-    public void vibrate() {
-        boolean canVibrate = CIPreferences.GetVibrateWhenPluggedIn(context);
-        if(canVibrate) {
-            Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-            vibrator.vibrate(500);
+    public void connectVibrate() {
+        if(CIPreferences.GetVibrateWhenPluggedIn(context))
+        {
+            if (CIPreferences.getDiffVibrations(context))
+                vibration.onConnectPattern();
+            else
+                vibration.standardVibration();
         }
     }
 
     @Override
-    public void makeSound() {
-        boolean canPlaySound = CIPreferences.GetPlaySound(context);
-        if(canPlaySound) {
-            Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-            Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
-            ringtone.play();
+    public void disconnectVibrate() {
+        if(CIPreferences.getVibrateOnDisconnect(context)) {
+            if (CIPreferences.getDiffVibrations(context))
+                vibration.onDisconnectPattern();
+            else
+                vibration.standardVibration();
         }
+    }
+
+    @Override
+    public void connectSound() {
+        if(CIPreferences.GetPlaySound(context))
+            playSound.playDefaultNotificationSound();
+    }
+
+    @Override
+    public void disconnectSound() {
+        if(CIPreferences.getDisconnectPlaySound(context))
+            playSound.playDefaultNotificationSound();
     }
 
     @Override

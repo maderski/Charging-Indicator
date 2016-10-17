@@ -31,19 +31,20 @@
                 android:layout_alignEnd="@+id/show_notification_switch" />
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Power Connected"
-                android:id="@+id/textView"
+                android:id="@+id/textView4"
                 android:layout_above="@+id/imageView"
                 android:layout_alignParentStart="true"
                 android:paddingBottom="10dp"
                 android:autoText="true"
                 android:textSize="22dp"
                 android:typeface="monospace"
+                android:textStyle="bold"
                 android:layout_gravity="center_horizontal"
-                android:textStyle="bold" />
+                android:gravity="center_horizontal" />
 
             <ImageView
                 android:paddingTop="1dp"
@@ -79,7 +80,7 @@
                 android:id="@+id/play_sound_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="PlaySoundSwitch"
+                android:onClick="ConnectSoundSwitch"
                 android:textColor="#666565"
                 android:paddingBottom="20dp"
                 android:layout_above="@+id/vibrate_switch"
@@ -93,6 +94,62 @@
                 android:checked="false"
                 android:textStyle="bold"
                 android:onClick="VibrateSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:layout_marginBottom="24dp"
+                android:layout_above="@+id/textView2"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Power Disconnected"
+                android:id="@+id/textView"
+                android:layout_above="@+id/imageView"
+                android:layout_alignParentStart="true"
+                android:paddingBottom="10dp"
+                android:autoText="true"
+                android:textSize="22dp"
+                android:typeface="monospace"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:src="@android:drawable/divider_horizontal_bright"
+                android:background="@color/colorAccent"
+                android:paddingLeft="150dp"
+                android:paddingRight="60dp"
+                android:id="@+id/imageView3"
+                android:layout_above="@+id/show_notification_switch"
+                android:layout_alignEnd="@+id/textView" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Play Sound"
+                android:id="@+id/disconnect_playsound_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="DisconnectSoundSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:paddingTop="15dp"
+                android:layout_above="@+id/play_sound_switch"
+                android:layout_alignParentStart="true" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="VIBRATE"
+                android:id="@+id/disconnect_vibrate_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="DisconnectVibrateSwitch"
                 android:textColor="#666565"
                 android:paddingBottom="20dp"
                 android:layout_marginBottom="24dp"
@@ -164,7 +221,50 @@
                 android:textColor="#666565"
                 android:paddingBottom="20dp"
                 android:layout_alignParentBottom="true"
-                android:layout_alignParentEnd="true" />
+                android:layout_alignParentEnd="true"
+                android:layout_marginBottom="24dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Other"
+                android:id="@+id/textView7"
+                android:paddingBottom="10dp"
+                android:layout_above="@+id/imageView2"
+                android:layout_alignParentStart="true"
+                android:layout_gravity="center_horizontal"
+                android:textStyle="bold"
+                android:textSize="22dp"
+                android:typeface="monospace"
+                android:gravity="center_horizontal" />
+
+            <ImageView
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:src="@android:drawable/divider_horizontal_bright"
+                android:background="@color/colorAccent"
+                android:paddingLeft="40dp"
+                android:paddingRight="10dp"
+                android:id="@+id/imageView6"
+                android:layout_above="@+id/show_toast_switch"
+                android:layout_alignParentStart="true" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Connect/Disconnect Vibrate differently"
+                android:id="@+id/diff_vibrations_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="DiffVibrateSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="15dp"
+                android:layout_above="@+id/change_icon_switch"
+                android:layout_alignParentEnd="true"
+                android:paddingTop="20dp" />
 
         </LinearLayout>
     </ScrollView>

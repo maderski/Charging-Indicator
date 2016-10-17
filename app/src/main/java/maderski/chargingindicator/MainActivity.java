@@ -104,6 +104,18 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.GetShowChargingStateIcon(context);
         setting_switch = (Switch) findViewById(R.id.show_chargingstate_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getDisconnectPlaySound(context);
+        setting_switch = (Switch) findViewById(R.id.disconnect_playsound_switch);
+        setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getDiffVibrations(context);
+        setting_switch = (Switch) findViewById(R.id.diff_vibrations_switch);
+        setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getVibrateOnDisconnect(context);
+        setting_switch = (Switch) findViewById(R.id.disconnect_vibrate_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void IncreasingDecreasingIconSwitch(View view){
@@ -147,16 +159,55 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void PlaySoundSwitch(View view){
+    public void DisconnectVibrateSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setVibrateOnDisconnect(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "DisconnectVibrateSwitch is ON");
+        } else {
+            CIPreferences.setVibrateOnDisconnect(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "VibrateSwitch is OFF");
+        }
+    }
+
+    public void DiffVibrateSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setDiffVibrations(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "DiffVibrateSwitch is ON");
+        } else {
+            CIPreferences.setDiffVibrations(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "DiffVibrateSwitch is OFF");
+        }
+    }
+
+    public void ConnectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         if (on) {
             CIPreferences.SetPlaySound(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "PlaySoundSwitch is ON");
+                Log.i(TAG, "ConnectSoundSwitch is ON");
         } else {
             CIPreferences.SetPlaySound(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "PlaySoundSwitch is OFF");
+                Log.i(TAG, "ConnectSoundSwitch is OFF");
+        }
+    }
+
+    public void DisconnectSoundSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setDisconnectPlaySound(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "DisconnectSoundSwitch is ON");
+        } else {
+            CIPreferences.setDisconnectPlaySound(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "DisconnectSoundSwitch is OFF");
         }
     }
 

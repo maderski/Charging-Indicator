@@ -14,7 +14,10 @@ public class CIPreferences {
 
     private static final String CHANGE_ICON_KEY = "changeIcon";
     private static final String VIBRATE_KEY = "vibrate";
+    private static final String DISCONNECT_VIBRATE_KEY = "disconnectVibrateKey";
+    private static final String DIFF_VIBRATIONS_KEY = "differentVibrationsKey";
     private static final String PLAY_SOUND_KEY = "playSound";
+    private static final String DISCONNECT_PLAY_SOUND_KEY = "disconnectPlaySound";
     private static final String SHOW_TOAST_KEY = "showToast";
     private static final String SHOW_NOTIFICATION_KEY = "showNotification";
     private static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
@@ -40,6 +43,33 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setDisconnectPlaySound(Context context, boolean enabled){
+        editor(context).putBoolean(DISCONNECT_PLAY_SOUND_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean getDisconnectPlaySound(Context context){
+        return reader(context).getBoolean(DISCONNECT_PLAY_SOUND_KEY, false);
+    }
+
+    public static void setVibrateOnDisconnect(Context context, boolean enabled){
+        editor(context).putBoolean(DISCONNECT_VIBRATE_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean getVibrateOnDisconnect(Context context){
+        return reader(context).getBoolean(DISCONNECT_VIBRATE_KEY, false);
+    }
+
+    public static void setDiffVibrations(Context context, boolean enabled){
+        editor(context).putBoolean(DIFF_VIBRATIONS_KEY, enabled);
+        commit(context);
+    }
+
+    public static boolean getDiffVibrations(Context context){
+        return reader(context).getBoolean(DIFF_VIBRATIONS_KEY, true);
     }
 
     public static void setShowChargingStateIcon(Context context, boolean enabled){

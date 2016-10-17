@@ -1,14 +1,10 @@
 package maderski.chargingindicator;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
-
-import java.util.List;
 
 /**
  * Created by Jason on 12/6/15.
@@ -37,13 +33,12 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                new AsyncConnectedActions(performActions).execute();
-                context.startService(new Intent(context, BatteryService.class));
+                Battery.resetPreviousPercent();
+                new AsyncConnectedActions(context, performActions).execute();
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                new AsyncDisconnectedActions(performActions).execute();
-                context.stopService(new Intent(context, BatteryService.class));
+                new AsyncDisconnectedActions(context, performActions).execute();
                 break;
         }
 
@@ -52,9 +47,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
     private class AsyncConnectedActions extends AsyncTask<Void, Void, Void>{
 
         private PerformActions performActions;
+        private Context context;
 
-        public AsyncConnectedActions(PerformActions performActions){
+        public AsyncConnectedActions(Context context, PerformActions performActions){
             this.performActions = performActions;
+            this.context = context;
         }
 
         @Override
@@ -64,9 +61,15 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         }
 
         @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            context.startService(new Intent(context, BatteryService.class));
+        }
+
+        @Override
         protected Void doInBackground(Void... params) {
-            performActions.vibrate();
-            performActions.makeSound();
+            performActions.connectVibrate();
+            performActions.connectSound();
             return null;
         }
     }
@@ -74,9 +77,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
     private class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void>{
 
         private PerformActions performActions;
+        private Context context;
 
-        public AsyncDisconnectedActions(PerformActions performActions){
+        public AsyncDisconnectedActions(Context context, PerformActions performActions){
             this.performActions = performActions;
+            this.context = context;
         }
         @Override
         protected void onPreExecute() {
@@ -86,7 +91,15 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         }
 
         @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+            context.stopService(new Intent(context, BatteryService.class));
+        }
+
+        @Override
         protected Void doInBackground(Void... params) {
+            performActions.disconnectVibrate();
+            performActions.disconnectSound();
             performActions.removeNotification();
             return null;
         }
