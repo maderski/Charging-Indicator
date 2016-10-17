@@ -96,7 +96,6 @@ public class NotificationManager extends CINotification{
 
         if(showNotifcation) {
             removeChargingMessage(context);
-            Battery.resetPreviousPercent();
         }
     }
 
