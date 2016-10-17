@@ -33,7 +33,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                Battery.resetPreviousPercent();
                 new AsyncConnectedActions(context, performActions).execute();
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
