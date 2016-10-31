@@ -21,6 +21,8 @@ public class CIPreferences {
     private static final String SHOW_TOAST_KEY = "showToast";
     private static final String SHOW_NOTIFICATION_KEY = "showNotification";
     private static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
+    private static final String CHOSEN_DISCONNECT_SOUND_KEY = "chosenDisconnectSound";
+    private static final String CHOSEN_CONNECT_SOUND_KEY = "chosenConnectSound";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -43,6 +45,24 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setChosenDisconnectSound(Context context, String chosenSound){
+        editor(context).putString(CHOSEN_DISCONNECT_SOUND_KEY, chosenSound);
+        commit(context);
+    }
+
+    public static String getChosenDisconnectSound(Context context){
+        return reader(context).getString(CHOSEN_DISCONNECT_SOUND_KEY, "None");
+    }
+
+    public static void setChosenConnectSound(Context context, String chosenSound){
+        editor(context).putString(CHOSEN_CONNECT_SOUND_KEY, chosenSound);
+        commit(context);
+    }
+
+    public static String getChosenConnectSound(Context context){
+        return reader(context).getString(CHOSEN_CONNECT_SOUND_KEY, "None");
     }
 
     public static void setDisconnectPlaySound(Context context, boolean enabled){

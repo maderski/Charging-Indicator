@@ -1,9 +1,12 @@
 package maderski.chargingindicator;
 
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -75,6 +78,43 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this, AboutActivity.class);
         startActivity(i);
         overridePendingTransition(0, R.animator.fadeout);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(resultCode == Activity.RESULT_OK){
+            if(requestCode == 1) {
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                CIPreferences.setChosenConnectSound(this, uri.toString());
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, uri.toString());
+                    Log.i(TAG, "Connect Sound Set");
+                }
+            }else if(requestCode == 2){
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                CIPreferences.setChosenDisconnectSound(this, uri.toString());
+                if (BuildConfig.DEBUG) {
+                    Log.i(TAG, uri.toString());
+                    Log.i(TAG, "Disconnect Sound Set");
+                }
+            }
+        }
+    }
+
+    public void connectSetSound(View view){
+        String chosenRingtone = CIPreferences.getChosenConnectSound(this);
+
+        Sounds sounds = new Sounds(this);
+        sounds.notificationList(this, chosenRingtone, 1);
+    }
+
+    public void disconnectSetSound(View view){
+        String chosenRingtone = CIPreferences.getChosenDisconnectSound(this);
+
+        Sounds sounds = new Sounds(this);
+        sounds.notificationList(this, chosenRingtone, 2);
     }
 
     private void setButtonPreferences(Context context){
@@ -258,4 +298,6 @@ public class MainActivity extends AppCompatActivity {
             stopService(serviceIntent);
         startService(serviceIntent);
     }
+
+
 }
