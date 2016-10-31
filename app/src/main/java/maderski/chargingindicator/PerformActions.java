@@ -1,6 +1,7 @@
 package maderski.chargingindicator;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.Toast;
 
 /**
@@ -43,14 +44,22 @@ public class PerformActions implements Actions {
 
     @Override
     public void connectSound() {
-        if(CIPreferences.GetPlaySound(context))
-            playSound.playDefaultNotificationSound();
+        if(CIPreferences.GetPlaySound(context)){
+            if(CIPreferences.getChosenConnectSound(context).equalsIgnoreCase("None"))
+                playSound.playDefaultNotificationSound();
+            else
+                playSound.playNotificationSound(Uri.parse(CIPreferences.getChosenConnectSound(context)));
+        }
     }
 
     @Override
     public void disconnectSound() {
-        if(CIPreferences.getDisconnectPlaySound(context))
-            playSound.playDefaultNotificationSound();
+        if(CIPreferences.getDisconnectPlaySound(context)){
+            if(CIPreferences.getChosenDisconnectSound(context).equalsIgnoreCase("None"))
+                playSound.playDefaultNotificationSound();
+            else
+                playSound.playNotificationSound(Uri.parse(CIPreferences.getChosenDisconnectSound(context)));
+        }
     }
 
     @Override

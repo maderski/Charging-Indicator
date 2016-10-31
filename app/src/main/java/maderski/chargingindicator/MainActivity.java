@@ -87,17 +87,21 @@ public class MainActivity extends AppCompatActivity {
         if(resultCode == Activity.RESULT_OK){
             if(requestCode == 1) {
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                if(uri == null)
+                    uri = Uri.parse("None");
                 CIPreferences.setChosenConnectSound(this, uri.toString());
                 if (BuildConfig.DEBUG) {
                     Log.i(TAG, uri.toString());
-                    Log.i(TAG, "Connect Sound Set");
+                    Log.i(TAG, "Connect Sound Set: " + uri.toString());
                 }
             }else if(requestCode == 2){
                 Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                if(uri == null)
+                    uri = Uri.parse("None");
                 CIPreferences.setChosenDisconnectSound(this, uri.toString());
                 if (BuildConfig.DEBUG) {
                     Log.i(TAG, uri.toString());
-                    Log.i(TAG, "Disconnect Sound Set");
+                    Log.i(TAG, "Disconnect Sound Set: " + uri.toString());
                 }
             }
         }
