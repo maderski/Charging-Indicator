@@ -287,10 +287,35 @@
                 android:textStyle="bold"
                 android:onClick="DiffVibrateSwitch"
                 android:textColor="#666565"
-                android:paddingBottom="15dp"
+                android:paddingBottom="20dp"
                 android:layout_above="@+id/change_icon_switch"
                 android:layout_alignParentEnd="true"
-                android:paddingTop="20dp" />
+                android:paddingTop="15dp" />
+
+            <Switch
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Play sound when battery charged"
+                android:id="@+id/battery_charged_sound_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="batteryChargedSoundSwitch"
+                android:textColor="#666565"
+                android:paddingBottom="20dp"
+                android:layout_above="@+id/change_icon_switch"
+                android:layout_alignParentEnd="true" />
+
+            <Button
+                android:text="@string/set_sound_button_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/set_sound_battery_charged_button"
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:onClick="batteryChargedSetSound"
+                android:background="@drawable/on_state"
+                android:paddingLeft="60dp"
+                android:paddingRight="60dp"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>

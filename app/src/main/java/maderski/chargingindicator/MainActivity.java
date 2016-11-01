@@ -103,6 +103,15 @@ public class MainActivity extends AppCompatActivity {
                     Log.i(TAG, uri.toString());
                     Log.i(TAG, "Disconnect Sound Set: " + uri.toString());
                 }
+            }else if(requestCode == 3){
+                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+                if(uri == null)
+                    uri = Uri.parse("None");
+                CIPreferences.setChosenBatteryChargedSound(this, uri.toString());
+                if(BuildConfig.DEBUG){
+                    Log.i(TAG, uri.toString());
+                    Log.i(TAG, "Battery Charged Sound set: " + uri.toString());
+                }
             }
         }
     }
@@ -119,6 +128,13 @@ public class MainActivity extends AppCompatActivity {
 
         Sounds sounds = new Sounds(this);
         sounds.notificationList(this, chosenRingtone, 2);
+    }
+
+    public void batteryChargedSetSound(View view){
+        String chosenRingtone = CIPreferences.getChosenBatteryChargedSound(this);
+
+        Sounds sounds = new Sounds(this);
+        sounds.notificationList(this, chosenRingtone, 3);
     }
 
     private void setButtonPreferences(Context context){
@@ -160,6 +176,10 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.getVibrateOnDisconnect(context);
         setting_switch = (Switch) findViewById(R.id.disconnect_vibrate_switch);
         setting_switch.setChecked(btnState);
+    }
+
+    public void batteryChargedSoundSwitch(View view){
+
     }
 
     public void IncreasingDecreasingIconSwitch(View view){
