@@ -13,6 +13,7 @@ public class Battery {
     private static final String TAG = Battery.class.getName();
 
     private static float previousPercent = 0;
+    private static float currentPercent = 0;
 
     private Intent batteryStatus;
 
@@ -51,7 +52,7 @@ public class Battery {
     }
 
     public int isBatteryLevelIncreasing(){
-        float currentPercent = batteryPercent();
+        currentPercent = batteryPercent();
         if(BuildConfig.DEBUG)
             Log.i(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
 
@@ -72,7 +73,7 @@ public class Battery {
     }
 
     public static boolean isPreviousPercentZero(){
-        if(previousPercent == 0)
+        if(previousPercent == 0 && currentPercent == 1.0)
             return true;
         else
             return false;
