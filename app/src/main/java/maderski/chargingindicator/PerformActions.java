@@ -44,21 +44,34 @@ public class PerformActions implements Actions {
 
     @Override
     public void connectSound() {
-        if(CIPreferences.GetPlaySound(context)){
-            if(CIPreferences.getChosenConnectSound(context).equalsIgnoreCase("None"))
-                playSound.playDefaultNotificationSound();
-            else
-                playSound.playNotificationSound(Uri.parse(CIPreferences.getChosenConnectSound(context)));
-        }
+        boolean canPlaySound = CIPreferences.GetPlaySound(context);
+        String chosenPlaySound = CIPreferences.getChosenConnectSound(context);
+
+        playSoundHandler(canPlaySound, chosenPlaySound);
     }
 
     @Override
     public void disconnectSound() {
-        if(CIPreferences.getDisconnectPlaySound(context)){
-            if(CIPreferences.getChosenDisconnectSound(context).equalsIgnoreCase("None"))
+        boolean canPlaySound = CIPreferences.getDisconnectPlaySound(context);
+        String chosenPlaySound = CIPreferences.getChosenDisconnectSound(context);
+
+        playSoundHandler(canPlaySound, chosenPlaySound);
+    }
+
+    @Override
+    public void batteryChargedSound(){
+        boolean canPlaySound = CIPreferences.getBatteryChargedPlaySound(context);
+        String chosenPlaySound = CIPreferences.getChosenBatteryChargedSound(context);
+
+        playSoundHandler(canPlaySound, chosenPlaySound);
+    }
+
+    private void playSoundHandler(boolean canPlaySound, String chosenPlaySound){
+        if(canPlaySound){
+            if(chosenPlaySound.equalsIgnoreCase("None"))
                 playSound.playDefaultNotificationSound();
             else
-                playSound.playNotificationSound(Uri.parse(CIPreferences.getChosenDisconnectSound(context)));
+                playSound.playNotificationSound(Uri.parse(chosenPlaySound));
         }
     }
 

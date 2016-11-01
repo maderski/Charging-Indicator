@@ -54,6 +54,7 @@ public class Battery {
         float currentPercent = batteryPercent();
         if(BuildConfig.DEBUG)
             Log.i(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
+
         //Is decreasing
         int state = -1;
 

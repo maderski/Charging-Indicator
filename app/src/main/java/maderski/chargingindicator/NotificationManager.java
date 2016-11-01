@@ -84,7 +84,7 @@ public class NotificationManager extends CINotification{
         String batteryLvl = battery.batteryLevel();
         boolean isCharging = battery.isBatteryCharging();
 
-        if(!isCharging && batteryLvl.equalsIgnoreCase("100%")){
+        if(isCharging && batteryLvl.equalsIgnoreCase("100%")){
             return "Battery is charged!";
         }else{
             return "Battery Level: " + batteryLvl;

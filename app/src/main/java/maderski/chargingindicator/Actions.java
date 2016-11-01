@@ -8,6 +8,7 @@ public interface Actions {
     void disconnectVibrate();
     void connectSound();
     void disconnectSound();
+    void batteryChargedSound();
     void showToast(String message);
     void showNotification();
     void removeNotification();

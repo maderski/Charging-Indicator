@@ -176,10 +176,23 @@ public class MainActivity extends AppCompatActivity {
         btnState = CIPreferences.getVibrateOnDisconnect(context);
         setting_switch = (Switch) findViewById(R.id.disconnect_vibrate_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getBatteryChargedPlaySound(context);
+        setting_switch = (Switch) findViewById(R.id.battery_charged_sound_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void batteryChargedSoundSwitch(View view){
-
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setBatteryChargedPlaySound(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "BatteryChargedPlaySoundSwitch is ON");
+        } else {
+            CIPreferences.setBatteryChargedPlaySound(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "BatteryChargedPlaySoundSwitch is OFF");
+        }
     }
 
     public void IncreasingDecreasingIconSwitch(View view){

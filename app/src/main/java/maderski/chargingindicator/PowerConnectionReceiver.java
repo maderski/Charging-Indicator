@@ -19,8 +19,9 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(intent != null)
             if(intent.getAction() != null) {
                 String action = intent.getAction();
+                Battery battery = new Battery(intent);
                 PerformActions performActions = new PerformActions(context,
-                        new NotificationManager(context, new Battery(intent)));
+                        new NotificationManager(context, battery));
                 actionReceived(context, action, performActions);
             }
     }
@@ -69,6 +70,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         protected Void doInBackground(Void... params) {
             performActions.connectVibrate();
             performActions.connectSound();
+
             return null;
         }
     }
