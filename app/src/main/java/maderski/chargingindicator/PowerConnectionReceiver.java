@@ -69,8 +69,12 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         @Override
         protected Void doInBackground(Void... params) {
             performActions.connectVibrate();
-            if(Battery.isPreviousPercentZero())
+            if(CIPreferences.getBatteryChargedPlaySound(context)){
+                if(!Battery.isPreviousPercentZero())
+                    performActions.connectSound();
+            }else{
                 performActions.connectSound();
+            }
 
             return null;
         }
