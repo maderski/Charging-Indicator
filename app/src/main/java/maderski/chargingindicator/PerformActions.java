@@ -18,7 +18,6 @@ public class PerformActions implements Actions {
         this.notificationManager = notificationManager;
         this.vibration = new Vibration(context);
         this.playSound = new Sounds(context);
-        Battery.resetPreviousPercent();
     }
 
     @Override

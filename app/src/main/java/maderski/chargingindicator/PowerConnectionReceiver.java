@@ -69,7 +69,8 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         @Override
         protected Void doInBackground(Void... params) {
             performActions.connectVibrate();
-            performActions.connectSound();
+            if(Battery.isPreviousPercentZero())
+                performActions.connectSound();
 
             return null;
         }
@@ -102,6 +103,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             performActions.disconnectVibrate();
             performActions.disconnectSound();
             performActions.removeNotification();
+            Battery.resetPreviousPercent();
             return null;
         }
     }

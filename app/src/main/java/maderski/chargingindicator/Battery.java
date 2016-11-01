@@ -71,5 +71,11 @@ public class Battery {
         return state;
     }
 
+    public static boolean isPreviousPercentZero(){
+        if(previousPercent == 0)
+            return true;
+        else
+            return false;
+    }
     public static void resetPreviousPercent(){ previousPercent = 0; }
 }
