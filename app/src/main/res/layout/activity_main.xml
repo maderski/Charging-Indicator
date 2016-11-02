@@ -295,7 +295,7 @@
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Play sound when battery charged"
+                android:text="Play sound when battery is charged"
                 android:id="@+id/battery_charged_sound_switch"
                 android:checked="false"
                 android:textStyle="bold"
