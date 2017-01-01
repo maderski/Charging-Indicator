@@ -26,7 +26,6 @@
         <receiver android:name=".BatteryReceiver" />
 
         <service android:name=".CIService" />
-        <service android:name=".BatteryService" />
 
         <activity android:name=".AboutActivity" />
         <activity android:name=".SplashActivity"

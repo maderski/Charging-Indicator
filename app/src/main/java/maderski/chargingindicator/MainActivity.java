@@ -32,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         checkIfCIServiceIsRunning();
     }
 
@@ -310,7 +309,7 @@ public class MainActivity extends AppCompatActivity {
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            PerformActions performActions = new PerformActions(this, new NotificationManager(this, new Battery(this.getIntent())));
+            PerformActions performActions = new PerformActions(this, new NotificationManager(this, new BatteryManager(this.getIntent())));
             performActions.removeNotification();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
@@ -330,8 +329,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restartBatteryService(){
-        Intent serviceIntent = new Intent(this, BatteryService.class);
-        if (isServiceRunning(BatteryService.class))
+        Intent serviceIntent = new Intent(this, CIService.class);
+        if (isServiceRunning(CIService.class))
             stopService(serviceIntent);
         startService(serviceIntent);
     }

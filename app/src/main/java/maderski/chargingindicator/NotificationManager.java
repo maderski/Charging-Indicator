@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import java.util.Calendar;
+import java.util.Timer;
+
 /**
  * Created by Jason on 5/1/16.
  */
@@ -12,18 +15,18 @@ public class NotificationManager extends CINotification{
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
     private Context context;
-    private Battery battery;
+    private BatteryManager batteryManager;
 
-    public NotificationManager(Context context, Battery battery){
+    public NotificationManager(Context context, BatteryManager batteryManager){
         super(context);
         this.context = context;
-        this.battery = battery;
+        this.batteryManager = batteryManager;
     }
 
     //Create notification message with battery percentage
     public void SetNotifMessage(){
-        boolean isCharging = battery.isBatteryCharging();
-        boolean powerConnected = battery.isPluggedIn();
+        boolean isCharging = batteryManager.isBatteryCharging();
+        boolean powerConnected = batteryManager.isPluggedIn();
         boolean showNotification = CIPreferences.GetShowNotification(context);
 
         if(BuildConfig.DEBUG)
@@ -32,11 +35,11 @@ public class NotificationManager extends CINotification{
         if(powerConnected && showNotification) {
             if(BuildConfig.DEBUG) {
                 Log.i(TAG, "Power Connected: " + Boolean.toString(powerConnected));
-                Log.i(TAG, battery.batteryLevel());
+                Log.i(TAG, batteryManager.batteryLevel());
                 Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             }
 
-            createChargingMessage(getMessage(), getIcon());
+            createChargingMessage(getTitle(), getMessage(), getIcon());
         }
     }
 
@@ -45,9 +48,9 @@ public class NotificationManager extends CINotification{
         final int CHARGING_ICON = chargingStateIcon();
         final int FULL_BATTERY_ICON = android.R.drawable.ic_lock_idle_charging;
 
-        boolean isCharging = battery.isBatteryCharging();
+        boolean isCharging = batteryManager.isBatteryCharging();
         boolean canChangeIcon = CIPreferences.GetChangeIcon(context);
-        String batteryLevel = battery.batteryLevel();
+        String batteryLevel = batteryManager.batteryLevel();
 
         if(canChangeIcon) {
             if (!isCharging && batteryLevel.equalsIgnoreCase("100%")) {
@@ -61,9 +64,8 @@ public class NotificationManager extends CINotification{
 
     private int chargingStateIcon(){
         int stateIcon = R.drawable.standardbolt;
-
         if(CIPreferences.GetShowChargingStateIcon(context)) {
-            int chargingState = battery.isBatteryLevelIncreasing();
+            int chargingState = batteryManager.getBatteryChargingState();
             switch (chargingState) {
                 case -1:
                     stateIcon = R.drawable.decreasingbolt;
@@ -79,10 +81,14 @@ public class NotificationManager extends CINotification{
         return stateIcon;
     }
 
+    private String getTitle(){
+        return "Charging Indicator";
+    }
+
     //Set message depending on whether or not the phone is charging
     private String getMessage(){
-        String batteryLvl = battery.batteryLevel();
-        boolean isCharging = battery.isBatteryCharging();
+        String batteryLvl = batteryManager.batteryLevel();
+        boolean isCharging = batteryManager.isBatteryCharging();
 
         if(isCharging && batteryLvl.equalsIgnoreCase("100%")){
             return "Battery is charged!";

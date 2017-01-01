@@ -12,7 +12,6 @@ import android.util.Log;
  */
 public class CINotification {
 
-    private final String title = "Charging Indicator";
     private final String nTAG = CINotification.class.getName();
     private final int nID = 607;
 
@@ -29,7 +28,7 @@ public class CINotification {
     }
 
     //Notification to display phone is charging
-    public void createChargingMessage(String message, int icon){
+    public void createChargingMessage(String title, String message, int icon){
         builder.setContentTitle(message)
                 .setContentText(title)
                 .setSmallIcon(icon)
