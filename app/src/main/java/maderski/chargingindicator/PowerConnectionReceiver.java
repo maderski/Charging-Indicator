@@ -34,6 +34,7 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
             }
     }
 
+    // Checks if battery manager is NULL and if so create a new instance
     private void batteryManagerNullCheck(Intent intent){
         if(batteryManager == null) {
             batteryManager = new BatteryManager(intent);
