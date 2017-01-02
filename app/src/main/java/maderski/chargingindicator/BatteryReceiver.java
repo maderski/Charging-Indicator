@@ -22,13 +22,14 @@ public class BatteryReceiver extends BroadcastReceiver {
         if(batteryManager.isPluggedIn()) {
             PerformActions performActions = new PerformActions(context, new NotificationManager(context, batteryManager));
             performActions.showNotification();
-            makeBatteryChargedSound(performActions, batteryManager);
+            makeBatteryChargedSound(context, performActions, batteryManager);
         }
     }
 
-    private void makeBatteryChargedSound(PerformActions performActions, BatteryManager batteryManager){
-
-        if(batteryManager.isBatteryAt100() && canPlaySound){
+    private void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
+        if(batteryManager.isBatteryAt100()
+                && canPlaySound
+                && CIPreferences.getBatteryChargedPlaySound(context)){
             performActions.batteryChargedSound();
             canPlaySound = false;
         }

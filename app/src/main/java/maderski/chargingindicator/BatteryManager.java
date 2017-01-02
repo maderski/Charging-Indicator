@@ -20,9 +20,9 @@ public class BatteryManager extends Battery {
     public boolean isBatteryAt100(){
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "Battery Percent is: " + Float.toString(batteryPercent()));
-            Log.i(TAG, "Battery is at 100? " + Boolean.toString(batteryPercent() == 1 && isBatteryCharging()));
+            Log.i(TAG, "Battery is at 100? " + Boolean.toString(batteryPercent() == 1.0));
         }
-        return batteryPercent() == 1 && isBatteryCharging();
+        return batteryPercent() == 1.0;
     }
 
     public int getBatteryChargingState(){

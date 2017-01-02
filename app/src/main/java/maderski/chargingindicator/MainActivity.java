@@ -329,8 +329,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void restartBatteryService(){
-        Intent serviceIntent = new Intent(this, CIService.class);
-        if (isServiceRunning(CIService.class))
+        Intent serviceIntent = new Intent(this, BatteryService.class);
+        if (isServiceRunning(BatteryService.class))
             stopService(serviceIntent);
         startService(serviceIntent);
     }
