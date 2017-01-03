@@ -11,7 +11,8 @@ public class BatteryManager extends Battery {
 
     private static final String TAG = BatteryManager.class.getName();
 
-    private float previousPercent;
+    private float[] previousPercents = new float[7];
+    private int index = 0;
 
     public BatteryManager(Intent intent){
         super(intent);
@@ -27,6 +28,10 @@ public class BatteryManager extends Battery {
 
     public int getBatteryChargingState(){
         float currentPercent = batteryPercent();
+        float previousPercent = getPreviousPercent(currentPercent);
+        System.out.println("AVERAGE: " + previousPercent);
+        System.out.println("INDEX: " + index);
+
         if(BuildConfig.DEBUG)
             Log.i(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
 
@@ -42,8 +47,32 @@ public class BatteryManager extends Battery {
             state = 0;
         }
 
-        previousPercent = currentPercent;
-
         return state;
+    }
+
+    private float getPreviousPercent(float currentPercent) {
+        if(index > previousPercents.length - 1) {
+            index = 0;
+        }
+
+        previousPercents[index] = currentPercent;
+        if(index >= 1) {
+            if (currentPercent < previousPercents[index - 1]) {
+                return previousPercents[index - 1];
+            }
+        }
+
+        float sum = 0;
+        int numOfDivisibleElements = previousPercents.length;
+        for(int i = 0; i < previousPercents.length; i++) {
+            sum += previousPercents[i];
+            System.out.println("Sum: " + sum + " Elements: " + previousPercents[i] + " divide by: " + numOfDivisibleElements);
+        }
+        index++;
+
+        float avg = (sum / numOfDivisibleElements);
+
+        System.out.println("AVG: " + avg);
+        return avg;
     }
 }
