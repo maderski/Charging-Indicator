@@ -14,8 +14,6 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
-    public PowerConnectionReceiver() {}
-
     @Override
     public void onReceive(Context context, Intent intent){
 
