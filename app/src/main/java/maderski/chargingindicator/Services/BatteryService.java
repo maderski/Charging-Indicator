@@ -17,24 +17,26 @@ import maderski.chargingindicator.BuildConfig;
 public class BatteryService extends Service {
     private static final String TAG = BatteryService.class.getName();
 
-    private BatteryReceiver batteryReceiver;
+    private BatteryReceiver mBatteryReceiver;
+    private BatteryManager mBatteryManager;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        batteryReceiver = new BatteryReceiver();
-        batteryReceiver.onReceive(this, intent);
-        this.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        mBatteryManager = new BatteryManager(intent);
+        mBatteryReceiver = new BatteryReceiver(mBatteryManager);
+        mBatteryReceiver.onReceive(this, intent);
+        this.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(batteryReceiver != null) {
+        if(mBatteryReceiver != null) {
             if(BuildConfig.DEBUG) {
                 Log.i(TAG, "Battery Reciever NOT NULL!");
             }
-            this.unregisterReceiver(batteryReceiver);
+            this.unregisterReceiver(mBatteryReceiver);
         }
     }
 
