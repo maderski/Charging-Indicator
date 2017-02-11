@@ -1,10 +1,12 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.UI;
 
 import android.content.pm.PackageInfo;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
+
+import maderski.chargingindicator.R;
 
 public class AboutActivity extends AppCompatActivity {
 

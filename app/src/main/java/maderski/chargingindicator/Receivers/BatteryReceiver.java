@@ -1,8 +1,13 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Actions.PerformActions;
 
 /**
  * Created by Jason on 8/9/16.
@@ -13,7 +18,6 @@ public class BatteryReceiver extends BroadcastReceiver {
     private boolean canPlaySound = true;
     private BatteryManager batteryManager;
 
-    public BatteryReceiver(){ }
     public BatteryReceiver(BatteryManager batteryManager) { this.batteryManager = batteryManager; }
 
     @Override

@@ -1,8 +1,14 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Actions;
 
 import android.content.Context;
 import android.net.Uri;
 import android.widget.Toast;
+
+import maderski.chargingindicator.Actions.Actions;
+import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Sounds;
+import maderski.chargingindicator.Vibration;
 
 /**
  * Created by Jason on 8/2/16.

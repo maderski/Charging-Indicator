@@ -1,4 +1,4 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Actions;
 
 /**
  * Created by Jason on 8/2/16.

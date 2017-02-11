@@ -1,11 +1,9 @@
 package maderski.chargingindicator;
 
 import android.content.Context;
-import android.content.Intent;
 import android.util.Log;
 
-import java.util.Calendar;
-import java.util.Timer;
+import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
 
 /**
  * Created by Jason on 5/1/16.

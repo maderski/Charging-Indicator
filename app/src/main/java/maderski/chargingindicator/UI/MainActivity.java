@@ -1,10 +1,9 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.UI;
 
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -17,6 +16,16 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.List;
+
+import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.Services.BatteryService;
+import maderski.chargingindicator.BuildConfig;
+import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.Services.CIService;
+import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Actions.PerformActions;
+import maderski.chargingindicator.R;
+import maderski.chargingindicator.Sounds;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015

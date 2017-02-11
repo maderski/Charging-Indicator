@@ -1,4 +1,4 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.UI;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;

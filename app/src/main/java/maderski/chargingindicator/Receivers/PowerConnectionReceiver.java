@@ -1,11 +1,13 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
-import android.os.CountDownTimer;
 import android.util.Log;
+
+import maderski.chargingindicator.Actions.AsyncConnectedActions;
+import maderski.chargingindicator.Actions.AsyncDisconnectedActions;
+import maderski.chargingindicator.BuildConfig;
 
 /**
  * Created by Jason on 12/6/15.

@@ -1,10 +1,12 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Services;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.IBinder;
 import android.util.Log;
+
+import maderski.chargingindicator.BuildConfig;
+import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
 
 /**
  * Created by Jason on 12/6/15.
