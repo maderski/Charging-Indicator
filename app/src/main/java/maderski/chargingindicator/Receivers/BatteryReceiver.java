@@ -13,31 +13,18 @@ import maderski.chargingindicator.Actions.PerformActions;
  * Created by Jason on 8/9/16.
  */
 public class BatteryReceiver extends BroadcastReceiver {
-    private final static String TAG = BatteryReceiver.class.getName();
+    private static final String TAG = "BatteryReceiver";
 
     private boolean canPlaySound = true;
-    private BatteryManager batteryManager;
-
-    public BatteryReceiver(){}
-
-    public BatteryReceiver(BatteryManager batteryManager) { this.batteryManager = batteryManager; }
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        BatteryManager batteryManager = new BatteryManager(intent);
         batteryManager.setBatteryStatus(intent);
         if(batteryManager.isPluggedIn()) {
             PerformActions performActions = new PerformActions(context, new NotificationManager(context, batteryManager));
             performActions.showNotification();
-            makeBatteryChargedSound(context, performActions, batteryManager);
-        }
-    }
-
-    private void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
-        if(batteryManager.isBatteryAt100()
-                && canPlaySound
-                && CIPreferences.getBatteryChargedPlaySound(context)){
-            performActions.batteryChargedSound();
-            canPlaySound = false;
+            canPlaySound = performActions.makeBatteryChargedSound(context, performActions, batteryManager, canPlaySound);
         }
     }
 }

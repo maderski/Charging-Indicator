@@ -19,12 +19,9 @@ public class BatteryService extends Service {
 
     private BatteryReceiver batteryReceiver;
 
-    private BatteryManager batteryManager;
-
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        batteryManager = new BatteryManager(intent);
-        batteryReceiver = new BatteryReceiver(batteryManager);
+        batteryReceiver = new BatteryReceiver();
         batteryReceiver.onReceive(this, intent);
         this.registerReceiver(batteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
         return START_NOT_STICKY;

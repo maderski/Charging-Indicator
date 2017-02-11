@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.widget.Toast;
 
 import maderski.chargingindicator.Actions.Actions;
+import maderski.chargingindicator.BatteryManager;
 import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.NotificationManager;
 import maderski.chargingindicator.Sounds;
@@ -91,4 +92,14 @@ public class PerformActions implements Actions {
 
     @Override
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }
+
+    public boolean makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager, boolean canPlaySound){
+        if(batteryManager.isBatteryAt100()
+                && canPlaySound
+                && CIPreferences.getBatteryChargedPlaySound(context)){
+            performActions.batteryChargedSound();
+            return false;
+        }
+        return canPlaySound;
+    }
 }
