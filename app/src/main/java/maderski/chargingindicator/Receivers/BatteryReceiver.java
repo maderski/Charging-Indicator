@@ -18,6 +18,8 @@ public class BatteryReceiver extends BroadcastReceiver {
     private boolean canPlaySound = true;
     private BatteryManager batteryManager;
 
+    public BatteryReceiver(){}
+
     public BatteryReceiver(BatteryManager batteryManager) { this.batteryManager = batteryManager; }
 
     @Override
