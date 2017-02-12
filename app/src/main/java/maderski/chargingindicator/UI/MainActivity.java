@@ -152,10 +152,19 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void setQuietTimes(View view){
         Log.d(TAG, "QuietTime button pressed");
+
+    }
+
+    public void setStartQuietTime(View view){
         int previousStartTime = CIPreferences.getStartQuietTime(this);
         DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.START_TIME, previousStartTime, "Start Time");
         timePickerDialog.show(getSupportFragmentManager(), "startQuietTime");
+    }
 
+    public void setEndQuietTime(View view){
+        int previousStartTime = CIPreferences.getEndQuietTime(this);
+        DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.END_TIME, previousStartTime, "End Time");
+        timePickerDialog.show(getSupportFragmentManager(), "EndQuietTime");
     }
 
     private void setButtonPreferences(){
@@ -380,16 +389,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         if(timeState.equals(TimePickerFragment.TimeState.START_TIME)){
             Log.d(TAG, "Start time set to: " + Integer.toString(timeSet));
             CIPreferences.setStartQuietTime(this, timeSet);
-            Toast.makeText(this, "Start time SAVED", Toast.LENGTH_SHORT).show();
 
-            // Show Set End Time Fragment
-            int previousStartTime = CIPreferences.getEndQuietTime(this);
-            DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.END_TIME, previousStartTime, "End Time");
-            timePickerDialog.show(getSupportFragmentManager(), "EndQuietTime");
         } else if(timeState.equals(TimePickerFragment.TimeState.END_TIME)){
             Log.d(TAG, "End time set to: " + Integer.toString(timeSet));
             CIPreferences.setEndQuietTime(this, timeSet);
-            Toast.makeText(this, "End time SAVED", Toast.LENGTH_SHORT).show();
         }
+        Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show();
     }
 }

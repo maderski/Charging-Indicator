@@ -72,7 +72,7 @@
 
             <Button
                 android:text="@string/set_sound_button_text"
-                android:textColor="@color/yellowDark"
+                android:textColor="@color/charcoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button"
@@ -121,7 +121,7 @@
 
             <Button
                 android:text="@string/set_sound_button_text"
-                android:textColor="@color/yellowDark"
+                android:textColor="@color/charcoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/button2"
@@ -219,7 +219,7 @@
 
             <Button
                 android:text="@string/set_sound_button_text"
-                android:textColor="@color/yellowDark"
+                android:textColor="@color/charcoal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/set_sound_battery_charged_button"
@@ -233,7 +233,7 @@
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enable Quiet Time"
+                android:text="Don't play sounds for specified time span"
                 android:id="@+id/quiet_time_switch"
                 android:checked="false"
                 android:textStyle="bold"
@@ -242,18 +242,39 @@
                 android:paddingTop="20dp"
                 android:paddingBottom="20dp" />
 
-            <Button
-                android:text="Set Quiet Times"
-                android:textColor="@color/yellowDark"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/set_quiet_times_button"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:onClick="setQuietTimes"
-                android:background="@drawable/on_state"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:layout_gravity="center_horizontal" />
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginBottom="8dp">
+                <Button
+                    android:text="Start Time"
+                    android:textColor="@color/charcoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/set_start_time_button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:onClick="setStartQuietTime"
+                    android:background="@drawable/on_state"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_marginRight="4dp"
+                    android:layout_gravity="center_horizontal" />
+                <Button
+                    android:text="End Time"
+                    android:textColor="@color/charcoal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/set_end_time_button"
+                    style="@style/Widget.AppCompat.Button.Borderless"
+                    android:onClick="setEndQuietTime"
+                    android:background="@drawable/on_state"
+                    android:paddingLeft="24dp"
+                    android:paddingRight="24dp"
+                    android:layout_marginLeft="4dp"
+                    android:layout_gravity="center_horizontal" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
