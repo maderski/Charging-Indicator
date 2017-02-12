@@ -56,11 +56,11 @@ public class BatteryManager extends Battery {
         }
 
         previousPercents[index] = currentPercent;
-        if(index >= 1) {
-            if (currentPercent < previousPercents[index - 1]) {
-                return previousPercents[index - 1];
-            }
-        }
+//        if(index >= 1) {
+//            if (currentPercent < previousPercents[index - 1]) {
+//                return previousPercents[index - 1];
+//            }
+//        }
 
         float sum = 0;
         int numOfDivisibleElements = previousPercents.length;
