@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
+
 import java.util.List;
 
 import maderski.chargingindicator.BatteryManager;

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1066922295205",
+    "firebase_url": "https://chargingindicator.firebaseio.com",
+    "project_id": "chargingindicator",
+    "storage_bucket": "chargingindicator.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066922295205:android:d2c6d73acae97c7f",
+        "android_client_info": {
+          "package_name": "maderski.chargingindicator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066922295205-6k0qlltd5bk8tk35uj4l64cdqdbvhdib.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "maderski.chargingindicator",
+            "certificate_hash": "E8E06A6897009527909C51BE52A1A52357E3AAF4"
+          }
+        },
+        {
+          "client_id": "1066922295205-8gdpubs1n4ig238unuekrdrho9asncc6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6UzvUQVAAMmJPelEARr7O_NHEcHMf-_A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066922295205-8gdpubs1n4ig238unuekrdrho9asncc6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
