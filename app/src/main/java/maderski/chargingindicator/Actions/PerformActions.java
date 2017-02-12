@@ -7,10 +7,9 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import maderski.chargingindicator.Actions.Actions;
-import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Sounds;
 import maderski.chargingindicator.Vibration;
 

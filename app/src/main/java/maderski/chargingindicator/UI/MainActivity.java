@@ -2,7 +2,6 @@ package maderski.chargingindicator.UI;
 
 import android.app.Activity;
 import android.app.ActivityManager;
-import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -18,16 +17,14 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import com.google.firebase.crash.FirebaseCrash;
-
 import java.util.List;
 
-import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Services.BatteryService;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Services.CIService;
-import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Actions.PerformActions;
 import maderski.chargingindicator.R;
 import maderski.chargingindicator.Sounds;

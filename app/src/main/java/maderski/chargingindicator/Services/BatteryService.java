@@ -7,7 +7,7 @@ import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
-import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.BuildConfig;
 

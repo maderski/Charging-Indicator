@@ -1,7 +1,9 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Battery;
 
 import android.content.Intent;
 import android.util.Log;
+
+import maderski.chargingindicator.BuildConfig;
 
 /**
  * Created by Jason on 12/31/16.

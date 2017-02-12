@@ -4,9 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import maderski.chargingindicator.BatteryManager;
-import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.NotificationManager;
+import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Actions.PerformActions;
 
 /**

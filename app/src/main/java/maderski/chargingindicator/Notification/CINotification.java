@@ -1,10 +1,12 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Notification;
 
 import android.app.NotificationManager;
 import android.content.Context;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.ContextCompat;
 import android.util.Log;
+
+import maderski.chargingindicator.R;
 
 
 /**

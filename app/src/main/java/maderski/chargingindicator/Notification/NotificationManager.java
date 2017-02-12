@@ -1,14 +1,18 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.Notification;
 
 import android.content.Context;
 import android.util.Log;
 
+import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.BuildConfig;
+import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.R;
 import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
 
 /**
  * Created by Jason on 5/1/16.
  */
-public class NotificationManager extends CINotification{
+public class NotificationManager extends CINotification {
 
     private final static String TAG = PowerConnectionReceiver.class.getName();
 
