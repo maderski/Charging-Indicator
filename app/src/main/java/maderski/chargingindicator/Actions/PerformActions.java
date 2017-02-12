@@ -2,7 +2,10 @@ package maderski.chargingindicator.Actions;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
+
+import java.util.Calendar;
 
 import maderski.chargingindicator.Actions.Actions;
 import maderski.chargingindicator.BatteryManager;
@@ -15,6 +18,7 @@ import maderski.chargingindicator.Vibration;
  * Created by Jason on 8/2/16.
  */
 public class PerformActions implements Actions {
+    private static final String TAG = "PerformActions";
     private Context context;
     private NotificationManager notificationManager;
     private Vibration vibration;
@@ -73,11 +77,34 @@ public class PerformActions implements Actions {
     }
 
     private void playSoundHandler(boolean canPlaySound, String chosenPlaySound){
-        if(canPlaySound){
+        if(canPlaySound && !isQuietTime()){
             if(chosenPlaySound.equalsIgnoreCase("None"))
                 playSound.playDefaultNotificationSound();
             else
                 playSound.playNotificationSound(Uri.parse(chosenPlaySound));
+        }
+    }
+
+    private boolean isQuietTime() {
+        boolean quietTimeEnabled = CIPreferences.getQuietTime(context);
+        int startQuietTime = CIPreferences.getStartQuietTime(context);
+        int endQuietTime = CIPreferences.getEndQuietTime(context);
+
+        if(quietTimeEnabled) {
+            Calendar c = Calendar.getInstance();
+            int hour = c.get(Calendar.HOUR_OF_DAY);
+            int minute = c.get(Calendar.MINUTE);
+            int currentTime = (hour * 100) + minute;
+            Log.d(TAG, "Current time: " + Integer.toString(currentTime));
+            if (currentTime >= startQuietTime){
+                return true;
+            } else if(currentTime <= endQuietTime && !(currentTime <= startQuietTime)) {
+                return true;
+            }else {
+                return false;
+            }
+        } else {
+            return false;
         }
     }
 
