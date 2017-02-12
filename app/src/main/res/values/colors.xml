@@ -5,4 +5,6 @@
     <color name="colorAccent">#f8f654</color>
     <color name="colorAccentDark">#C6C443</color>
     <color name="white">#FFFFFF</color>
+    <color name="lightGray">#EFF1F1</color>
+    <color name="charcoal">#666565</color>
 </resources>
