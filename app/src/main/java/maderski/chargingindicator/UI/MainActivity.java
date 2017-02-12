@@ -17,6 +17,8 @@ import android.widget.Switch;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 import java.util.List;
 
 import maderski.chargingindicator.Battery.BatteryManager;
@@ -39,11 +41,13 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     private static final String TAG = MainActivity.class.getName();
 
+    private FirebaseAnalytics mFirebaseAnalytics;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkIfCIServiceIsRunning();
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
     }
 
     @Override
@@ -213,8 +217,15 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         setting_switch.setChecked(btnState);
     }
 
+    public void setFirebaseSwitchEvent(String eventName, boolean switchedOn){
+        Bundle bundle = new Bundle();
+        bundle.putInt(FirebaseAnalytics.Param.VALUE, switchedOn ? 1 : 0);
+        mFirebaseAnalytics.logEvent(eventName, bundle);
+    }
+
     public void quietTimeSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("quiet_time", on);
         if (on) {
             CIPreferences.setQuietTime(this, true);
             if(BuildConfig.DEBUG)
@@ -228,6 +239,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void batteryChargedSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("charged_sound", on);
         if (on) {
             CIPreferences.setBatteryChargedPlaySound(this, true);
             if(BuildConfig.DEBUG)
@@ -241,6 +253,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void IncreasingDecreasingIconSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("show_charging_state_icon", on);
         if (on) {
             CIPreferences.setShowChargingStateIcon(this, true);
             Toast.makeText(this, "Show Up/Down Arrow ENABLED", Toast.LENGTH_SHORT).show();
@@ -256,6 +269,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void ChangeIconSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("change_icon", on);
         if (on) {
             CIPreferences.SetChangeIcon(this, true);
             if(BuildConfig.DEBUG)
@@ -282,6 +296,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void DisconnectVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("disconnect_vibrate", on);
         if (on) {
             CIPreferences.setVibrateOnDisconnect(this, true);
             if(BuildConfig.DEBUG)
@@ -295,6 +310,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void DiffVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("diff_vibrate", on);
         if (on) {
             CIPreferences.setDiffVibrations(this, true);
             if(BuildConfig.DEBUG)
@@ -308,6 +324,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void ConnectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("connect_sound", on);
         if (on) {
             CIPreferences.SetPlaySound(this, true);
             if(BuildConfig.DEBUG)
@@ -321,6 +338,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void DisconnectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("disconnect_sound", on);
         if (on) {
             CIPreferences.setDisconnectPlaySound(this, true);
             if(BuildConfig.DEBUG)
@@ -334,6 +352,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void ShowToastSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("show_toast", on);
         if (on) {
             CIPreferences.SetShowToast(this, true);
             if(BuildConfig.DEBUG)
@@ -347,6 +366,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void ShowNotificationSwitch(View view){
         boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("show_notification", on);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
             restartBatteryService();
