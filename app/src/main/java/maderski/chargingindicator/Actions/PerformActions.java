@@ -50,11 +50,17 @@ public class PerformActions {
     }
 
     public void connectSound(BatteryManager batteryManager) {
+        boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
         boolean canPlaySound = CIPreferences.GetPlaySound(context);
         String chosenPlaySound = CIPreferences.getChosenConnectSound(context);
 
-        if(!batteryManager.isBatteryAt100())
+        if(playChargedSoundEnabled) {
+            if (!batteryManager.isBatteryAt100()) {
+                playSoundHandler(canPlaySound, chosenPlaySound);
+            }
+        } else {
             playSoundHandler(canPlaySound, chosenPlaySound);
+        }
     }
 
     public void disconnectSound() {
@@ -114,9 +120,10 @@ public class PerformActions {
 
     public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
         boolean canPlaySound = CIPreferences.getPlayedChargingDoneSound(context);
+        boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
         if(batteryManager.isBatteryAt100()
                 && canPlaySound
-                && CIPreferences.getBatteryChargedPlaySound(context)){
+                && playChargedSoundEnabled){
             performActions.batteryChargedSound();
             CIPreferences.setPlayedChargingDoneSound(context, false);
         }
