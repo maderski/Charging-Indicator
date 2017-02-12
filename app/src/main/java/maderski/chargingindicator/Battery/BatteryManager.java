@@ -30,7 +30,7 @@ public class BatteryManager extends Battery {
 
     public int getBatteryChargingState(){
         float currentPercent = batteryPercent();
-        float previousPercent = getPreviousPercent(currentPercent);
+        float previousPercent = getPreviousPercentAvg(currentPercent);
         System.out.println("AVERAGE: " + previousPercent);
         System.out.println("INDEX: " + index);
 
@@ -52,7 +52,7 @@ public class BatteryManager extends Battery {
         return state;
     }
 
-    private float getPreviousPercent(float currentPercent) {
+    private float getPreviousPercentAvg(float currentPercent) {
         if(index > previousPercents.length - 1) {
             index = 0;
         }
