@@ -38,7 +38,7 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
     @Override
     protected Void doInBackground(Void... params) {
         performActions.connectVibrate();
-        performActions.connectSound();
+        performActions.connectSound(batteryManager);
         return null;
     }
 

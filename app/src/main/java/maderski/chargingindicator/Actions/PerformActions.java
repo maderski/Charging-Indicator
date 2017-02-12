@@ -16,7 +16,7 @@ import maderski.chargingindicator.Vibration;
 /**
  * Created by Jason on 8/2/16.
  */
-public class PerformActions implements Actions {
+public class PerformActions {
     private static final String TAG = "PerformActions";
     private Context context;
     private NotificationManager notificationManager;
@@ -30,7 +30,6 @@ public class PerformActions implements Actions {
         this.playSound = new Sounds(context);
     }
 
-    @Override
     public void connectVibrate() {
         if(CIPreferences.GetVibrateWhenPluggedIn(context))
         {
@@ -41,7 +40,6 @@ public class PerformActions implements Actions {
         }
     }
 
-    @Override
     public void disconnectVibrate() {
         if(CIPreferences.getVibrateOnDisconnect(context)) {
             if (CIPreferences.getDiffVibrations(context))
@@ -51,15 +49,14 @@ public class PerformActions implements Actions {
         }
     }
 
-    @Override
-    public void connectSound() {
+    public void connectSound(BatteryManager batteryManager) {
         boolean canPlaySound = CIPreferences.GetPlaySound(context);
         String chosenPlaySound = CIPreferences.getChosenConnectSound(context);
 
-        playSoundHandler(canPlaySound, chosenPlaySound);
+        if(!batteryManager.isBatteryAt100())
+            playSoundHandler(canPlaySound, chosenPlaySound);
     }
 
-    @Override
     public void disconnectSound() {
         boolean canPlaySound = CIPreferences.getDisconnectPlaySound(context);
         String chosenPlaySound = CIPreferences.getChosenDisconnectSound(context);
@@ -67,7 +64,6 @@ public class PerformActions implements Actions {
         playSoundHandler(canPlaySound, chosenPlaySound);
     }
 
-    @Override
     public void batteryChargedSound(){
         boolean canPlaySound = CIPreferences.getBatteryChargedPlaySound(context);
         String chosenPlaySound = CIPreferences.getChosenBatteryChargedSound(context);
@@ -107,16 +103,13 @@ public class PerformActions implements Actions {
         }
     }
 
-    @Override
     public void showToast(String message) {
         if (CIPreferences.GetShowToast(context))
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    @Override
     public void showNotification() { notificationManager.SetNotifMessage(); }
 
-    @Override
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }
 
     public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
