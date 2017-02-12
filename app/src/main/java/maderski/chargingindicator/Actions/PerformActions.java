@@ -120,13 +120,13 @@ public class PerformActions implements Actions {
     @Override
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }
 
-    public boolean makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager, boolean canPlaySound){
+    public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
+        boolean canPlaySound = CIPreferences.getPlayedChargingDoneSound(context);
         if(batteryManager.isBatteryAt100()
                 && canPlaySound
                 && CIPreferences.getBatteryChargedPlaySound(context)){
             performActions.batteryChargedSound();
-            return false;
+            CIPreferences.setPlayedChargingDoneSound(context, false);
         }
-        return canPlaySound;
     }
 }

@@ -15,7 +15,6 @@ import maderski.chargingindicator.Actions.PerformActions;
 public class BatteryReceiver extends BroadcastReceiver {
     private static final String TAG = "BatteryReceiver";
 
-    private boolean canPlaySound = true;
     private BatteryManager mBatteryManager;
 
     public BatteryReceiver(){}
@@ -28,7 +27,7 @@ public class BatteryReceiver extends BroadcastReceiver {
         if(mBatteryManager.isPluggedIn()) {
             PerformActions performActions = new PerformActions(context, new NotificationManager(context, mBatteryManager));
             performActions.showNotification();
-            canPlaySound = performActions.makeBatteryChargedSound(context, performActions, mBatteryManager, canPlaySound);
+            performActions.makeBatteryChargedSound(context, performActions, mBatteryManager);
         }
     }
 }

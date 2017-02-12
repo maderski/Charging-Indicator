@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 
 import maderski.chargingindicator.BatteryManager;
+import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.NotificationManager;
 import maderski.chargingindicator.Services.BatteryService;
 
@@ -27,6 +28,7 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
+        CIPreferences.setPlayedChargingDoneSound(mContext, true);
         batteryManager = new BatteryManager(mIntent);
         performActions = new PerformActions(mContext,
                 new NotificationManager(mContext, batteryManager));

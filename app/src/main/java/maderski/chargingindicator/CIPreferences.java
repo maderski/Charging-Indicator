@@ -28,6 +28,7 @@ public class CIPreferences {
     private static final String QUIET_TIME = "quietTime";
     private static final String START_QUIET_TIME = "startQuietTIme";
     private static final String END_QUIET_TIME = "endQuietTime";
+    private static final String PLAYED_CHARGING_DONE_SOUND = "playedChargingDoneSound";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -50,6 +51,15 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setPlayedChargingDoneSound(Context context, boolean didPlay){
+        editor(context).putBoolean(PLAYED_CHARGING_DONE_SOUND, didPlay);
+        commit(context);
+    }
+
+    public static boolean getPlayedChargingDoneSound(Context context){
+        return reader(context).getBoolean(PLAYED_CHARGING_DONE_SOUND, false);
     }
 
     public static void setStartQuietTime(Context context, int time){
