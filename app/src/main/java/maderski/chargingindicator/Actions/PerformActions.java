@@ -49,18 +49,11 @@ public class PerformActions {
         }
     }
 
-    public void connectSound(BatteryManager batteryManager) {
-        boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
+    public void connectSound() {
         boolean canPlaySound = CIPreferences.GetPlaySound(context);
         String chosenPlaySound = CIPreferences.getChosenConnectSound(context);
 
-        if(playChargedSoundEnabled) {
-            if (!batteryManager.isBatteryAt100()) {
-                playSoundHandler(canPlaySound, chosenPlaySound);
-            }
-        } else {
-            playSoundHandler(canPlaySound, chosenPlaySound);
-        }
+        playSoundHandler(canPlaySound, chosenPlaySound);
     }
 
     public void disconnectSound() {
