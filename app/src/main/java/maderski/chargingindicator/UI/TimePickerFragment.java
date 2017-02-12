@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.StringDef;
 import android.support.v4.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.util.Log;
@@ -15,15 +16,32 @@ import android.view.Gravity;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+
 public class TimePickerFragment extends DialogFragment
         implements TimePickerDialog.OnTimeSetListener {
     private static final String TAG = "TimePickerFragment";
+
+    @StringDef({
+            TimeState.START_TIME,
+            TimeState.END_TIME
+    })
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface TimeState {
+        String START_TIME = "start_time";
+        String END_TIME = "end_time";
+    }
+
     private int previouslySetTime;
     private String pickerTitle;
+    private String mTimeState;
+
     public TimePickerDialogListener dialogListener;
 
-    public static TimePickerFragment newInstance(int previouslySetTime, String title) {
+    public static TimePickerFragment newInstance(@TimeState String timeState, int previouslySetTime, String title) {
         Bundle args = new Bundle();
+        args.putString("picker_time_state", timeState);
         args.putInt("picker_previouslySetTime", previouslySetTime);
         args.putString("picker_title", title);
         TimePickerFragment fragment = new TimePickerFragment();
@@ -33,6 +51,7 @@ public class TimePickerFragment extends DialogFragment
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+        mTimeState = getArguments().getString("picker_time_state");
         previouslySetTime = getArguments().getInt("picker_previouslySetTime");
         pickerTitle = getArguments().getString("picker_title");
         dialogListener = getActivity() instanceof TimePickerDialogListener ? (TimePickerDialogListener) getActivity() : null;
@@ -62,9 +81,6 @@ public class TimePickerFragment extends DialogFragment
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        if (dialogListener != null) {
-            dialogListener.onTimeCancel();
-        }
         super.onCancel(dialog);
     }
 
@@ -74,13 +90,12 @@ public class TimePickerFragment extends DialogFragment
         Log.d(TAG, "Set time: " + Integer.toString(setTime));
 
         if (dialogListener != null)
-            dialogListener.onTimeSet(view, hourOfDay, minute);
+            dialogListener.onTimeSet(view, mTimeState, hourOfDay, minute);
 
 
     }
 
     public interface TimePickerDialogListener {
-        void onTimeSet(TimePicker view, int hourOfDay, int minute);
-        void onTimeCancel();
+        void onTimeSet(TimePicker view, String timeState, int hourOfDay, int minute);
     }
 }

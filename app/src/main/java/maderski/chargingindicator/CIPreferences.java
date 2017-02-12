@@ -25,6 +25,9 @@ public class CIPreferences {
     private static final String CHOSEN_DISCONNECT_SOUND_KEY = "chosenDisconnectSound";
     private static final String CHOSEN_CONNECT_SOUND_KEY = "chosenConnectSound";
     private static final String CHOSEN_BATTERY_CHARGED_SOUND_KEY = "batteryChargedSound";
+    private static final String QUIET_TIME = "quietTime";
+    private static final String START_QUIET_TIME = "startQuietTIme";
+    private static final String END_QUIET_TIME = "endQuietTime";
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
@@ -47,6 +50,34 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setStartQuietTime(Context context, int time){
+        editor(context).putInt(START_QUIET_TIME, time);
+        commit(context);
+    }
+
+    public static int getStartQuietTime(Context context){
+        return reader(context).getInt(START_QUIET_TIME, 2200);
+    }
+
+    public static void setEndQuietTime(Context context, int time){
+        editor(context).putInt(END_QUIET_TIME, time);
+        commit(context);
+    }
+
+    public static int getEndQuietTime(Context context){
+        return reader(context).getInt(END_QUIET_TIME, 800);
+    }
+
+
+    public static void setQuietTime(Context context, boolean enabled){
+        editor(context).putBoolean(QUIET_TIME, enabled);
+        commit(context);
+    }
+
+    public static boolean getQuietTime(Context context){
+        return reader(context).getBoolean(QUIET_TIME, false);
     }
 
     public static void setBatteryChargedPlaySound(Context context, boolean enabled){

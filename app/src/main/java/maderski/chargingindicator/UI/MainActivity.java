@@ -2,17 +2,20 @@ package maderski.chargingindicator.UI;
 
 import android.app.Activity;
 import android.app.ActivityManager;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.google.firebase.crash.FirebaseCrash;
@@ -35,7 +38,7 @@ import maderski.chargingindicator.Sounds;
     App gives users with wireless chargers a clearer indicator that the phone is charging
     by creating a notification when Power is connected to the phone.
 */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TimePickerFragment.TimePickerDialogListener{
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -49,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume(){
         super.onResume();
-        setButtonPreferences(this);
+        setButtonPreferences();
         restartBatteryService();
     }
 
@@ -147,49 +150,74 @@ public class MainActivity extends AppCompatActivity {
         sounds.notificationList(this, chosenRingtone, 3);
     }
 
-    private void setButtonPreferences(Context context){
+    public void setQuietTimes(View view){
+        Log.d(TAG, "QuietTime button pressed");
+        int previousStartTime = CIPreferences.getStartQuietTime(this);
+        DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.START_TIME, previousStartTime, "Start Time");
+        timePickerDialog.show(getSupportFragmentManager(), "startQuietTime");
+
+    }
+
+    private void setButtonPreferences(){
         Boolean btnState;
         Switch setting_switch;
 
-        btnState = CIPreferences.GetChangeIcon(context);
+        btnState = CIPreferences.GetChangeIcon(this);
         setting_switch = (Switch) findViewById(R.id.change_icon_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetVibrateWhenPluggedIn(context);
+        btnState = CIPreferences.GetVibrateWhenPluggedIn(this);
         setting_switch = (Switch) findViewById(R.id.vibrate_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetPlaySound(context);
+        btnState = CIPreferences.GetPlaySound(this);
         setting_switch = (Switch) findViewById(R.id.play_sound_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetShowToast(context);
+        btnState = CIPreferences.GetShowToast(this);
         setting_switch = (Switch) findViewById(R.id.show_toast_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetShowNotification(context);
+        btnState = CIPreferences.GetShowNotification(this);
         setting_switch = (Switch) findViewById(R.id.show_notification_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetShowChargingStateIcon(context);
+        btnState = CIPreferences.GetShowChargingStateIcon(this);
         setting_switch = (Switch) findViewById(R.id.show_chargingstate_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.getDisconnectPlaySound(context);
+        btnState = CIPreferences.getDisconnectPlaySound(this);
         setting_switch = (Switch) findViewById(R.id.disconnect_playsound_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.getDiffVibrations(context);
+        btnState = CIPreferences.getDiffVibrations(this);
         setting_switch = (Switch) findViewById(R.id.diff_vibrations_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.getVibrateOnDisconnect(context);
+        btnState = CIPreferences.getVibrateOnDisconnect(this);
         setting_switch = (Switch) findViewById(R.id.disconnect_vibrate_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.getBatteryChargedPlaySound(context);
+        btnState = CIPreferences.getBatteryChargedPlaySound(this);
         setting_switch = (Switch) findViewById(R.id.battery_charged_sound_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getQuietTime(this);
+        setting_switch = (Switch) findViewById(R.id.quiet_time_switch);
+        setting_switch.setChecked(btnState);
+    }
+
+    public void quietTimeSwitch(View view){
+        boolean on = ((Switch) view).isChecked();
+        if (on) {
+            CIPreferences.setQuietTime(this, true);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "QuietTimeSwitch is ON");
+        } else {
+            CIPreferences.setQuietTime(this, false);
+            if(BuildConfig.DEBUG)
+                Log.i(TAG, "QuietTimeSwitch is OFF");
+        }
     }
 
     public void batteryChargedSoundSwitch(View view){
@@ -346,5 +374,22 @@ public class MainActivity extends AppCompatActivity {
         startService(serviceIntent);
     }
 
+    @Override
+    public void onTimeSet(TimePicker view, String timeState, int hourOfDay, int minute) {
+        int timeSet = (hourOfDay * 100) + minute;
+        if(timeState.equals(TimePickerFragment.TimeState.START_TIME)){
+            Log.d(TAG, "Start time set to: " + Integer.toString(timeSet));
+            CIPreferences.setStartQuietTime(this, timeSet);
+            Toast.makeText(this, "Start time SAVED", Toast.LENGTH_SHORT);
 
+            // Show Set End Time Fragment
+            int previousStartTime = CIPreferences.getEndQuietTime(this);
+            DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.END_TIME, previousStartTime, "End Time");
+            timePickerDialog.show(getSupportFragmentManager(), "EndQuietTime");
+            Toast.makeText(this, "End time SAVED", Toast.LENGTH_SHORT);
+        } else if(timeState.equals(TimePickerFragment.TimeState.END_TIME)){
+            Log.d(TAG, "End time set to: " + Integer.toString(timeSet));
+            CIPreferences.setEndQuietTime(this, timeSet);
+        }
+    }
 }

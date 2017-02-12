@@ -2,9 +2,11 @@
 <resources>
     <color name="colorPrimary">#030303</color>
     <color name="colorPrimaryDark">#030303</color>
-    <color name="colorAccent">#f8f654</color>
-    <color name="colorAccentDark">#C6C443</color>
+    <color name="colorAccent">#030303</color>
+    <color name="colorAccentDark">#030303</color>
     <color name="white">#FFFFFF</color>
     <color name="lightGray">#EFF1F1</color>
     <color name="charcoal">#666565</color>
+    <color name="yellow">#f8f654</color>
+    <color name="yellowDark">#C6C443</color>
 </resources>

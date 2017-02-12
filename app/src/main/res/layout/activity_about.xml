@@ -33,6 +33,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
                 android:text="Created by:"
+                android:textColor="@color/yellowDark"
                 android:id="@+id/CBTextView"
                 android:textSize="16dp" />
 
@@ -41,6 +42,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text=" Jason Maderski"
+                android:textColor="@color/yellowDark"
                 android:id="@+id/AuthorTextView"
                 android:textSize="16dp" />
         </LinearLayout>
@@ -50,6 +52,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="2015"
+            android:textColor="@color/yellowDark"
             android:id="@+id/YearTextView"
             android:layout_gravity="center_horizontal"
             android:textSize="16dp" />
@@ -59,6 +62,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="This little program really helped me when using a wireless charger.  I hope it can do the same for others! :)"
+            android:textColor="@color/yellowDark"
             android:id="@+id/textView3"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
@@ -70,6 +74,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="version"
+            android:textColor="@color/white"
             android:id="@+id/versionTxt"
             android:layout_gravity="center_horizontal"
             android:paddingTop="20dp"
