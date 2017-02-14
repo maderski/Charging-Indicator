@@ -31,7 +31,7 @@ public class PerformActions {
     }
 
     public void connectVibrate() {
-        if(CIPreferences.GetVibrateWhenPluggedIn(context))
+        if(CIPreferences.GetVibrateWhenPluggedIn(context) && !isQuietTime())
         {
             if (CIPreferences.getDiffVibrations(context))
                 vibration.onConnectPattern();
@@ -41,7 +41,7 @@ public class PerformActions {
     }
 
     public void disconnectVibrate() {
-        if(CIPreferences.getVibrateOnDisconnect(context)) {
+        if(CIPreferences.getVibrateOnDisconnect(context) && !isQuietTime()) {
             if (CIPreferences.getDiffVibrations(context))
                 vibration.onDisconnectPattern();
             else

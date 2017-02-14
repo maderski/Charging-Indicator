@@ -233,7 +233,7 @@
             <Switch
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Don't play sounds for specified time span"
+                android:text="Don't play sounds/vibration for set timespan"
                 android:id="@+id/quiet_time_switch"
                 android:checked="false"
                 android:textStyle="bold"
