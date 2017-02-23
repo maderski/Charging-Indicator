@@ -8,8 +8,8 @@ android {
         applicationId "maderski.chargingindicator"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 21
-        versionName "2.38"
+        versionCode 22
+        versionName "2.39"
     }
     buildTypes {
         release {

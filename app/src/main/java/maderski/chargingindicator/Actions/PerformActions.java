@@ -89,14 +89,18 @@ public class PerformActions {
             int hour = c.get(Calendar.HOUR_OF_DAY);
             int minute = c.get(Calendar.MINUTE);
             int currentTime = (hour * 100) + minute;
-            Log.d(TAG, "Current time: " + Integer.toString(currentTime));
-            if (currentTime >= startQuietTime){
-                return true;
-            } else if(currentTime <= endQuietTime && !(currentTime <= startQuietTime)) {
-                return true;
-            }else {
-                return false;
+            Log.d(TAG, "Current time: " + Integer.toString(currentTime) + " Start: " + Integer.toString(startQuietTime) + " End: " + Integer.toString(endQuietTime));
+            boolean isQuiet = false;
+            if(currentTime >= 1200){
+                isQuiet = (currentTime >= startQuietTime);
+            } else {
+                isQuiet = (currentTime <= endQuietTime);
             }
+            Log.d(TAG, "Current time: " + Integer.toString(currentTime) + " Start: " +
+                    Integer.toString(startQuietTime) + " End: " +
+                    Integer.toString(endQuietTime) + " QuietTime: " + Boolean.toString(isQuiet));
+
+            return isQuiet;
         } else {
             return false;
         }
