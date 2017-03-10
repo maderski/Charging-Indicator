@@ -27,6 +27,10 @@ public class BatteryReceiver extends BroadcastReceiver {
             PerformActions performActions = new PerformActions(context, new NotificationManager(context, mBatteryManager));
             performActions.showNotification();
             performActions.makeBatteryChargedSound(context, performActions, mBatteryManager);
+
+            if(mBatteryManager.isBatteryAt100()){
+                context.unregisterReceiver(this);
+            }
         }
     }
 }

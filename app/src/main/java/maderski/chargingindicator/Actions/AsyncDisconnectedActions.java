@@ -46,6 +46,5 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         mContext.stopService(new Intent(mContext, BatteryService.class));
-        CIPreferences.setPlayedChargingDoneSound(mContext, false);
     }
 }

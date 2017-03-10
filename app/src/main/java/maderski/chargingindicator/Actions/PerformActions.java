@@ -116,13 +116,10 @@ public class PerformActions {
     public void removeNotification() { notificationManager.RemoveNotifMessage(); }
 
     public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
-        boolean canPlaySound = CIPreferences.getPlayedChargingDoneSound(context);
         boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
         if(batteryManager.isBatteryAt100()
-                && canPlaySound
                 && playChargedSoundEnabled){
             performActions.batteryChargedSound();
-            CIPreferences.setPlayedChargingDoneSound(context, false);
         }
     }
 }
