@@ -1,12 +1,16 @@
 package maderski.chargingindicator.Actions;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Notification.NotificationManager;
+import maderski.chargingindicator.Receivers.BatteryReceiver;
+import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
 import maderski.chargingindicator.Services.BatteryService;
 
 /**
@@ -17,8 +21,8 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
 
     private Context mContext;
     private Intent mIntent;
-    private PerformActions performActions;
-    private BatteryManager batteryManager;
+    private PerformActions mPerformActions;
+    private BatteryManager mBatteryManager;
 
     public AsyncConnectedActions(Context context, Intent intent) {
         this.mContext = context;
@@ -28,16 +32,16 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        batteryManager = new BatteryManager(mIntent);
-        performActions = new PerformActions(mContext,
-                new NotificationManager(mContext, batteryManager));
-        performActions.showToast("Power Connected");
+        mBatteryManager = new BatteryManager(mIntent);
+        mPerformActions = new PerformActions(mContext,
+                new NotificationManager(mContext, mBatteryManager));
+        mPerformActions.showToast("Power Connected");
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        performActions.connectVibrate();
-        performActions.connectSound();
+        mPerformActions.connectVibrate();
+        mPerformActions.connectSound();
         return null;
     }
 

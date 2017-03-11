@@ -1,12 +1,16 @@
 package maderski.chargingindicator.Actions;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Notification.NotificationManager;
+import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.Services.BatteryService;
 
 /**
@@ -17,8 +21,8 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
 
     private Context mContext;
     private Intent mIntent;
-    private PerformActions performActions;
-    private BatteryManager batteryManager;
+    private PerformActions mPerformActions;
+    private BatteryManager mBatteryManager;
 
     public AsyncDisconnectedActions(Context context, Intent intent){
         this.mContext = context;
@@ -27,24 +31,26 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        batteryManager = new BatteryManager(mIntent);
-        performActions = new PerformActions(mContext,
-                new NotificationManager(mContext, batteryManager));
-        performActions.showToast("Power Disconnected");
+        mBatteryManager = new BatteryManager(mIntent);
+        mPerformActions = new PerformActions(mContext,
+                new NotificationManager(mContext, mBatteryManager));
+        mPerformActions.showToast("Power Disconnected");
 
     }
 
     @Override
     protected Void doInBackground(Void... params) {
-        performActions.disconnectVibrate();
-        performActions.disconnectSound();
-        performActions.removeNotification();
+        mPerformActions.disconnectVibrate();
+        mPerformActions.disconnectSound();
+        mPerformActions.removeNotification();
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mContext.stopService(new Intent(mContext, BatteryService.class));
+        if(ServiceHelper.isServiceRunning(mContext, BatteryService.class)) {
+            mContext.stopService(new Intent(mContext, BatteryService.class));
+        }
     }
 }

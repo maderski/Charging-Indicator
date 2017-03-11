@@ -3,10 +3,12 @@ package maderski.chargingindicator.Receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 
 import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Actions.PerformActions;
+import maderski.chargingindicator.Services.BatteryService;
 
 /**
  * Created by Jason on 8/9/16.
@@ -29,7 +31,7 @@ public class BatteryReceiver extends BroadcastReceiver {
             performActions.makeBatteryChargedSound(context, performActions, mBatteryManager);
 
             if(mBatteryManager.isBatteryAt100()){
-                context.unregisterReceiver(this);
+                context.stopService(new Intent(context, BatteryService.class));
             }
         }
     }

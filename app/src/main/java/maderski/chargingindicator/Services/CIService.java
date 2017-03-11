@@ -1,7 +1,9 @@
 package maderski.chargingindicator.Services;
 
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -18,9 +20,10 @@ public class CIService extends Service {
     //Instantiation of PowerConnectionReceiver and Registers receiver for ACTION_BATTERY_CHANGED
     @Override
     public int onStartCommand(Intent intent, int flags, int startId){
-        //Toast.makeText(getApplication(), "CIService Started", Toast.LENGTH_LONG).show();
-        PowerConnectionReceiver pcr = new PowerConnectionReceiver();
-        pcr.onReceive(this, intent);
+
+        ComponentName powerConnectionReceiver = new ComponentName(this, PowerConnectionReceiver.class);
+        PackageManager packageManager = getPackageManager();
+        packageManager.setComponentEnabledSetting(powerConnectionReceiver, PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP);
 
         if(BuildConfig.DEBUG)
             Log.i(TAG, "CIService Started");

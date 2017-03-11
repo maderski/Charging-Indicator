@@ -22,6 +22,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import java.util.List;
 
 import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Services.BatteryService;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.CIPreferences;
@@ -58,7 +59,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     }
 
     private void checkIfCIServiceIsRunning(){
-        if(!isServiceRunning(CIService.class)){
+        if(!ServiceHelper.isServiceRunning(this, CIService.class)){
             Intent serviceIntent = new Intent(this, CIService.class);
             startService(serviceIntent);
         }
@@ -381,21 +382,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
                 Log.i(TAG, "ShowNotificationSwitch is OFF");
         }
     }
-    private boolean isServiceRunning(Class<?> serviceClass){
-        ActivityManager activityManager = (ActivityManager)this.getSystemService(Context.ACTIVITY_SERVICE);
-        List<ActivityManager.RunningServiceInfo> services = activityManager.getRunningServices(Integer.MAX_VALUE);
-
-        for (ActivityManager.RunningServiceInfo runningServiceInfo : services) {
-            if (runningServiceInfo.service.getClassName().equals(serviceClass.getName())){
-                return true;
-            }
-        }
-        return false;
-    }
 
     private void restartBatteryService(){
         Intent serviceIntent = new Intent(this, BatteryService.class);
-        if (isServiceRunning(BatteryService.class))
+        if (ServiceHelper.isServiceRunning(this, BatteryService.class))
             stopService(serviceIntent);
         startService(serviceIntent);
     }
