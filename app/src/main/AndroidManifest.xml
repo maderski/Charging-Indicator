@@ -18,10 +18,13 @@
             android:name=".UI.MainActivity"
             android:screenOrientation="portrait">
         </activity>
-
-        <receiver android:name=".Receivers.PowerConnectionReceiver">
+        <receiver android:name=".Receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name=".Receivers.PowerConnectionReceiver">
+            <intent-filter>
                 <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
                 <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
             </intent-filter>
