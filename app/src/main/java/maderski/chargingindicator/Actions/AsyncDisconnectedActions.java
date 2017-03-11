@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
@@ -52,5 +53,7 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
         if(ServiceHelper.isServiceRunning(mContext, BatteryService.class)) {
             mContext.stopService(new Intent(mContext, BatteryService.class));
         }
+
+        CIPreferences.setPlayedChargingDoneSound(mContext, false);
     }
 }

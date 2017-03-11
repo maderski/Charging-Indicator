@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Services.CIService;
 
@@ -21,6 +22,9 @@ public class BootCompletedReceiver extends BroadcastReceiver {
         Runnable runnable = new Runnable() {
             @Override
             public void run() {
+                if(CIPreferences.getPlayedChargingDoneSound(ctx)){
+                    CIPreferences.setPlayedChargingDoneSound(ctx, false);
+                }
                 ServiceHelper.restartBatteryService(ctx);
             }
         };

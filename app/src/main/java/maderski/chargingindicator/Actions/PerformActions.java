@@ -117,9 +117,12 @@ public class PerformActions {
 
     public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
         boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
+        boolean playedSound = CIPreferences.getPlayedChargingDoneSound(context);
         if(batteryManager.isBatteryAt100()
-                && playChargedSoundEnabled){
+                && playChargedSoundEnabled
+                && !playedSound){
             performActions.batteryChargedSound();
+            CIPreferences.setPlayedChargingDoneSound(context, true);
         }
     }
 }
