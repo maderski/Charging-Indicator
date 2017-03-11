@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     protected void onResume(){
         super.onResume();
         setButtonPreferences();
-        restartBatteryService();
+        ServiceHelper.restartBatteryService(this);
     }
 
     private void checkIfCIServiceIsRunning(){
@@ -264,7 +264,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             CIPreferences.setShowChargingStateIcon(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
-            restartBatteryService();
+            ServiceHelper.restartBatteryService(this);
         }
     }
 
@@ -370,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         setFirebaseSwitchEvent("show_notification", on);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            restartBatteryService();
+            ServiceHelper.restartBatteryService(this);
 
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
@@ -381,13 +381,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");
         }
-    }
-
-    private void restartBatteryService(){
-        Intent serviceIntent = new Intent(this, BatteryService.class);
-        if (ServiceHelper.isServiceRunning(this, BatteryService.class))
-            stopService(serviceIntent);
-        startService(serviceIntent);
     }
 
     @Override

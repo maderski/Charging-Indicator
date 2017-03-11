@@ -3,7 +3,9 @@ package maderski.chargingindicator.Receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
 
+import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Services.CIService;
 
 /**
@@ -13,6 +15,15 @@ import maderski.chargingindicator.Services.CIService;
 public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        context.startService(new Intent(context, CIService.class));
+        //context.startService(new Intent(context, CIService.class));
+        final Context ctx = context;
+        Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            @Override
+            public void run() {
+                ServiceHelper.restartBatteryService(ctx);
+            }
+        };
+        handler.postDelayed(runnable, 5000);
     }
 }
