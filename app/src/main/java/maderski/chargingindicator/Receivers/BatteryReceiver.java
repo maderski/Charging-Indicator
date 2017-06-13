@@ -26,10 +26,11 @@ public class BatteryReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         mBatteryManager.setBatteryStatus(intent);
         if(mBatteryManager.isPluggedIn()) {
-            PerformActions performActions = new PerformActions(context, new NotificationManager(context, mBatteryManager));
-            performActions.showNotification();
+            PerformActions performActions = new PerformActions(context);
             performActions.makeBatteryChargedSound(context, performActions, mBatteryManager);
 
+            NotificationManager notificationManager = new NotificationManager(context, mBatteryManager);
+            notificationManager.SetNotifMessage();
             if(mBatteryManager.isBatteryAt100()){
                 context.stopService(new Intent(context, BatteryService.class));
             }

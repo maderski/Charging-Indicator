@@ -19,13 +19,11 @@ import maderski.chargingindicator.Vibration;
 public class PerformActions {
     private static final String TAG = "PerformActions";
     private Context context;
-    private NotificationManager notificationManager;
     private Vibration vibration;
     private Sounds playSound;
 
-    public PerformActions(Context context, NotificationManager notificationManager){
+    public PerformActions(Context context){
         this.context = context;
-        this.notificationManager = notificationManager;
         this.vibration = new Vibration(context);
         this.playSound = new Sounds(context);
     }
@@ -110,10 +108,6 @@ public class PerformActions {
         if (CIPreferences.GetShowToast(context))
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
-
-    public void showNotification() { notificationManager.SetNotifMessage(); }
-
-    public void removeNotification() { notificationManager.RemoveNotifMessage(); }
 
     public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
         boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);

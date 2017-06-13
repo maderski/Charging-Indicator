@@ -22,11 +22,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(intent != null)
             if(intent.getAction() != null) {
                 String action = intent.getAction();
-                actionReceived(context, intent, action);
+                actionReceived(context, action);
             }
     }
 
-    private void actionReceived(Context context, Intent intent, String action){
+    private void actionReceived(Context context, String action){
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "Action: " + action);
         }
@@ -34,11 +34,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                new AsyncConnectedActions(context, intent).execute();
+                new AsyncConnectedActions(context).execute();
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:
-                new AsyncDisconnectedActions(context, intent).execute();
+                new AsyncDisconnectedActions(context).execute();
                 break;
         }
 

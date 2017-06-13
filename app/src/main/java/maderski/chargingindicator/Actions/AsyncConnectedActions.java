@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Notification.NotificationManager;
@@ -20,21 +21,16 @@ import maderski.chargingindicator.Services.BatteryService;
 public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
 
     private Context mContext;
-    private Intent mIntent;
     private PerformActions mPerformActions;
-    private BatteryManager mBatteryManager;
 
-    public AsyncConnectedActions(Context context, Intent intent) {
+    public AsyncConnectedActions(Context context) {
         this.mContext = context;
-        this.mIntent = intent;
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mBatteryManager = new BatteryManager(mIntent);
-        mPerformActions = new PerformActions(mContext,
-                new NotificationManager(mContext, mBatteryManager));
+        mPerformActions = new PerformActions(mContext);
         mPerformActions.showToast("Power Connected");
     }
 

@@ -375,8 +375,8 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            PerformActions performActions = new PerformActions(this, new NotificationManager(this, new BatteryManager(this.getIntent())));
-            performActions.removeNotification();
+            NotificationManager notificationManager = new NotificationManager(this, new BatteryManager(getIntent()));
+            notificationManager.RemoveNotifMessage();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");

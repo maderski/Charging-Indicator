@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.BuildConfig;
 
@@ -19,6 +20,7 @@ public class BatteryService extends Service {
 
     private BatteryReceiver mBatteryReceiver;
     private BatteryManager mBatteryManager;
+    private NotificationManager mNotificationManager;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
@@ -26,12 +28,19 @@ public class BatteryService extends Service {
         mBatteryReceiver = new BatteryReceiver(mBatteryManager);
         mBatteryReceiver.onReceive(this, intent);
         this.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
+        
+        mNotificationManager = new NotificationManager(this, mBatteryManager);
+        mNotificationManager.SetNotifMessage();
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
+        if(mNotificationManager != null){
+            mNotificationManager.RemoveNotifMessage();
+        }
+
         if(mBatteryReceiver != null) {
             if(BuildConfig.DEBUG) {
                 Log.i(TAG, "Battery Reciever NOT NULL!");

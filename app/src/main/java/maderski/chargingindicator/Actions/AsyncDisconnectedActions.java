@@ -21,29 +21,22 @@ import maderski.chargingindicator.Services.BatteryService;
 public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
 
     private Context mContext;
-    private Intent mIntent;
     private PerformActions mPerformActions;
-    private BatteryManager mBatteryManager;
 
-    public AsyncDisconnectedActions(Context context, Intent intent){
+    public AsyncDisconnectedActions(Context context){
         this.mContext = context;
-        this.mIntent = intent;
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mBatteryManager = new BatteryManager(mIntent);
-        mPerformActions = new PerformActions(mContext,
-                new NotificationManager(mContext, mBatteryManager));
+        mPerformActions = new PerformActions(mContext);
         mPerformActions.showToast("Power Disconnected");
-
     }
 
     @Override
     protected Void doInBackground(Void... params) {
         mPerformActions.disconnectVibrate();
         mPerformActions.disconnectSound();
-        mPerformActions.removeNotification();
         return null;
     }
 
