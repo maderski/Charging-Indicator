@@ -19,26 +19,23 @@ public class BatteryService extends Service {
     private static final String TAG = BatteryService.class.getName();
 
     private BatteryReceiver mBatteryReceiver;
-    private NotificationManager mNotificationManager;
+    private BatteryManager mBatteryManager;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        BatteryManager mBatteryManager = new BatteryManager(intent);
+        mBatteryManager = new BatteryManager(intent);
         mBatteryReceiver = new BatteryReceiver(mBatteryManager);
         mBatteryReceiver.onReceive(this, intent);
         this.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        mNotificationManager = new NotificationManager(this, mBatteryManager);
-        mNotificationManager.SetNotifMessage();
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mNotificationManager != null){
-            mNotificationManager.RemoveNotifMessage();
-        }
+        NotificationManager notificationManager = new NotificationManager(this, mBatteryManager);
+        notificationManager.removeNotifMessage();
 
         if(mBatteryReceiver != null) {
             if(BuildConfig.DEBUG) {

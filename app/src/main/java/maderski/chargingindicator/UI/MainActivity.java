@@ -1,8 +1,6 @@
 package maderski.chargingindicator.UI;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -19,16 +17,12 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import java.util.List;
-
 import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Helpers.ServiceHelper;
-import maderski.chargingindicator.Services.BatteryService;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Services.CIService;
 import maderski.chargingindicator.Notification.NotificationManager;
-import maderski.chargingindicator.Actions.PerformActions;
 import maderski.chargingindicator.R;
 import maderski.chargingindicator.Sounds;
 
@@ -376,7 +370,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
             NotificationManager notificationManager = new NotificationManager(this, new BatteryManager(getIntent()));
-            notificationManager.RemoveNotifMessage();
+            notificationManager.removeNotifMessage();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");

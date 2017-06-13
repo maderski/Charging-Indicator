@@ -26,13 +26,13 @@ public class NotificationManager extends CINotification {
     }
 
     //Create notification message with battery percentage
-    public void SetNotifMessage(){
+    public void setNotifMessage(){
         boolean isCharging = batteryManager.isBatteryCharging();
         boolean powerConnected = batteryManager.isPluggedIn();
         boolean showNotification = CIPreferences.GetShowNotification(context);
 
         if(BuildConfig.DEBUG)
-            Log.i(TAG, "SetNotifMessage");
+            Log.i(TAG, "setNotifMessage");
 
         if(powerConnected && showNotification) {
             if(BuildConfig.DEBUG) {
@@ -41,7 +41,7 @@ public class NotificationManager extends CINotification {
                 Log.i(TAG, "isCharging: " + Boolean.toString(isCharging));
             }
 
-            createChargingMessage(getTitle(), getMessage(), getIcon());
+            createChargingMessage(getMessage(), getIcon());
         }
     }
 
@@ -97,7 +97,7 @@ public class NotificationManager extends CINotification {
         }
     }
 
-    public void RemoveNotifMessage(){
+    public void removeNotifMessage(){
         boolean showNotifcation = CIPreferences.GetShowNotification(context);
 
         if(showNotifcation) {

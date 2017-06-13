@@ -30,9 +30,8 @@ public class CINotification {
     }
 
     //Notification to display phone is charging
-    public void createChargingMessage(String title, String message, int icon){
+    protected void createChargingMessage(String message, int icon){
         builder.setContentTitle(message)
-                .setContentText(title)
                 .setSmallIcon(icon)
                 .setOngoing(false)
                 .setColor(color)
@@ -41,7 +40,7 @@ public class CINotification {
     }
 
     //Remove notification message
-    public void removeChargingMessage(Context context){
+    protected void removeChargingMessage(Context context){
         try{
             nManager.cancel(nTAG, nID);
         }catch(Exception e){
