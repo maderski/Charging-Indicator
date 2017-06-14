@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.CIPreferences;
 import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
@@ -18,7 +19,7 @@ import maderski.chargingindicator.Services.BatteryService;
  * Created by Jason on 2/11/17.
  */
 
-public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
+public class AsyncConnectedActions extends AsyncTask<Boolean, Void, Void> {
 
     private Context mContext;
     private PerformActions mPerformActions;
@@ -35,9 +36,12 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
     }
 
     @Override
-    protected Void doInBackground(Void... params) {
+    protected Void doInBackground(Boolean... isAt100) {
         mPerformActions.connectVibrate();
-        mPerformActions.connectSound();
+        if(isAt100[0]) {
+            mPerformActions.connectSound();
+        }
+
         return null;
     }
 

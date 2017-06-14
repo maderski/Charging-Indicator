@@ -7,6 +7,7 @@ import android.util.Log;
 
 import maderski.chargingindicator.Actions.AsyncConnectedActions;
 import maderski.chargingindicator.Actions.AsyncDisconnectedActions;
+import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.BuildConfig;
 
 /**
@@ -22,11 +23,11 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         if(intent != null)
             if(intent.getAction() != null) {
                 String action = intent.getAction();
-                actionReceived(context, action);
+                actionReceived(context, intent, action);
             }
     }
 
-    private void actionReceived(Context context, String action){
+    private void actionReceived(Context context, Intent intent, String action){
         if(BuildConfig.DEBUG) {
             Log.i(TAG, "Action: " + action);
         }
@@ -34,7 +35,9 @@ public class PowerConnectionReceiver extends BroadcastReceiver{
         switch (action){
             //When POWER_CONNECTED is received create a toast message saying Power Connected
             case Intent.ACTION_POWER_CONNECTED:
-                new AsyncConnectedActions(context).execute();
+                BatteryManager batteryManager = new BatteryManager(intent);
+                boolean isBatteryAt100 = batteryManager.isBatteryAt100();
+                new AsyncConnectedActions(context).execute(isBatteryAt100);
                 break;
             //When POWER_DISCONNECTED is received create a toast message saying Power Disconnected
             case Intent.ACTION_POWER_DISCONNECTED:

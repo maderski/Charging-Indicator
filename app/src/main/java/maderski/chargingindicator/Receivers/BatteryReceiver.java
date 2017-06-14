@@ -30,10 +30,6 @@ public class BatteryReceiver extends BroadcastReceiver {
 
             NotificationManager notificationManager = new NotificationManager(context, mBatteryManager);
             notificationManager.setNotifMessage();
-
-            if(mBatteryManager.isBatteryAt100()){
-                context.stopService(new Intent(context, BatteryService.class));
-            }
         }
     }
 }

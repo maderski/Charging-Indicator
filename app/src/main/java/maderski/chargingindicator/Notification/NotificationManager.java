@@ -101,7 +101,7 @@ public class NotificationManager extends CINotification {
         boolean showNotifcation = CIPreferences.GetShowNotification(context);
 
         if(showNotifcation) {
-            removeChargingMessage(context);
+            removeChargingMessage();
         }
     }
 
