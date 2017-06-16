@@ -28,18 +28,21 @@ public class BatteryService extends Service {
         mBatteryReceiver.onReceive(this, intent);
         this.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
+        if(mBatteryManager.isBatteryAt100()){
+            stopService(new Intent(this, BatteryService.class));
+        }
+
+
         return START_NOT_STICKY;
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        NotificationManager notificationManager = new NotificationManager(this, mBatteryManager);
-        notificationManager.removeNotifMessage();
 
         if(mBatteryReceiver != null) {
             if(BuildConfig.DEBUG) {
-                Log.i(TAG, "Battery Reciever NOT NULL!");
+                Log.i(TAG, "Battery Receiver NOT NULL!");
             }
             this.unregisterReceiver(mBatteryReceiver);
         }

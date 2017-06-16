@@ -47,6 +47,9 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
             mContext.stopService(new Intent(mContext, BatteryService.class));
         }
 
+        NotificationManager notificationManager = new NotificationManager(mContext, new BatteryManager(new Intent()));
+        notificationManager.removeNotifMessage();
+
         CIPreferences.setPlayedChargingDoneSound(mContext, false);
     }
 }
