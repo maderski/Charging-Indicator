@@ -6,6 +6,7 @@ import android.content.IntentFilter;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.util.Log;
+import android.widget.Toast;
 
 import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.Notification.NotificationManager;
@@ -31,7 +32,6 @@ public class BatteryService extends Service {
         if(mBatteryManager.isBatteryAt100()){
             stopService(new Intent(this, BatteryService.class));
         }
-
 
         return START_NOT_STICKY;
     }

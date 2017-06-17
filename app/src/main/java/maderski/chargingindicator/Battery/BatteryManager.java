@@ -13,7 +13,7 @@ public class BatteryManager extends Battery {
 
     private static final String TAG = BatteryManager.class.getName();
 
-    private float[] previousPercents = new float[7];
+    private float[] previousPercents = new float[15];
     private int index = 0;
 
     public BatteryManager(Intent intent){
@@ -31,11 +31,11 @@ public class BatteryManager extends Battery {
     public int getBatteryChargingState(){
         float currentPercent = batteryPercent();
         float previousPercent = getPreviousPercentAvg(currentPercent);
-        System.out.println("AVERAGE: " + previousPercent);
-        System.out.println("INDEX: " + index);
+        Log.d(TAG, "AVERAGE: " + previousPercent);
+        Log.d(TAG, "INDEX: " + index);
 
         if(BuildConfig.DEBUG)
-            Log.i(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
+            Log.d(TAG, "Current %: " + currentPercent + " Previous %: " + previousPercent);
 
         //Is decreasing
         int state = -1;
@@ -53,28 +53,19 @@ public class BatteryManager extends Battery {
     }
 
     private float getPreviousPercentAvg(float currentPercent) {
-        if(index > previousPercents.length - 1) {
-            index = 0;
-        }
-
         previousPercents[index] = currentPercent;
-//        if(index >= 1) {
-//            if (currentPercent < previousPercents[index - 1]) {
-//                return previousPercents[index - 1];
-//            }
-//        }
 
         float sum = 0;
         int numOfDivisibleElements = previousPercents.length;
         for(int i = 0; i < previousPercents.length; i++) {
             sum += previousPercents[i];
-            System.out.println("Sum: " + sum + " Elements: " + previousPercents[i] + " divide by: " + numOfDivisibleElements);
+            Log.d(TAG, "Sum: " + sum + " Elements: " + previousPercents[i] + " divide by: " + numOfDivisibleElements);
         }
-        index++;
+        index = index > previousPercents.length - 1 ? 0 : index++;
 
         float avg = (sum / numOfDivisibleElements);
 
-        System.out.println("AVG: " + avg);
+        Log.d(TAG, "AVG: " + avg);
         return avg;
     }
 }
