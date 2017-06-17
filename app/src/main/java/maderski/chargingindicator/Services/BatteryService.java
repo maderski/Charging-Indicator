@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import maderski.chargingindicator.Battery.BatteryManager;
+import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.BuildConfig;
@@ -29,10 +30,10 @@ public class BatteryService extends Service {
         mBatteryReceiver.onReceive(this, intent);
         this.registerReceiver(mBatteryReceiver, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
 
-        if(mBatteryManager.isBatteryAt100()){
-            stopService(new Intent(this, BatteryService.class));
+        if(BuildConfig.DEBUG){
+            Toast.makeText(this, "Battery Receiver Started", Toast.LENGTH_SHORT).show();
+            Log.d(TAG, "Battery Receiver Started");
         }
-
         return START_NOT_STICKY;
     }
 
@@ -42,8 +43,10 @@ public class BatteryService extends Service {
 
         if(mBatteryReceiver != null) {
             if(BuildConfig.DEBUG) {
-                Log.i(TAG, "Battery Receiver NOT NULL!");
+                Toast.makeText(this, "Battery Receiver Stopped", Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "Battery Receiver Stopped");
             }
+
             this.unregisterReceiver(mBatteryReceiver);
         }
     }
