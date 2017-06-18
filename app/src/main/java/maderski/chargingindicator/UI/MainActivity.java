@@ -18,13 +18,12 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.Helpers.ServiceHelper;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Services.CIService;
 import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.R;
 import maderski.chargingindicator.Sounds;
+import maderski.chargingindicator.Utils.ServiceUtils;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015
@@ -49,14 +48,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     protected void onResume(){
         super.onResume();
         setButtonPreferences();
-        ServiceHelper.restartBatteryService(this);
+        ServiceUtils.restartBatteryService(this);
     }
 
     private void checkIfCIServiceIsRunning(){
-        if(!ServiceHelper.isServiceRunning(this, CIService.class)){
-            Intent serviceIntent = new Intent(this, CIService.class);
-            startService(serviceIntent);
-        }
+        ServiceUtils.startCIService(this);
     }
 
     @Override
@@ -258,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             CIPreferences.setShowChargingStateIcon(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
-            ServiceHelper.restartBatteryService(this);
+            ServiceUtils.restartBatteryService(this);
         }
     }
 
@@ -364,7 +360,7 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         setFirebaseSwitchEvent("show_notification", on);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            ServiceHelper.restartBatteryService(this);
+            ServiceUtils.restartBatteryService(this);
 
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");

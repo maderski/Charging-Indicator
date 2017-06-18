@@ -5,9 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
 
+import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Helpers.ServiceHelper;
-import maderski.chargingindicator.Services.CIService;
+import maderski.chargingindicator.Services.BatteryService;
+import maderski.chargingindicator.Utils.ServiceUtils;
 
 /**
  * Created by Jason on 3/10/17.
@@ -15,7 +16,7 @@ import maderski.chargingindicator.Services.CIService;
 
 public class BootCompletedReceiver extends BroadcastReceiver {
     @Override
-    public void onReceive(Context context, Intent intent) {
+    public void onReceive(final Context context, final Intent intent) {
         //context.startService(new Intent(context, CIService.class));
         final Context ctx = context;
         Handler handler = new Handler();
@@ -25,9 +26,12 @@ public class BootCompletedReceiver extends BroadcastReceiver {
                 if(CIPreferences.getPlayedChargingDoneSound(ctx)){
                     CIPreferences.setPlayedChargingDoneSound(ctx, false);
                 }
-                ServiceHelper.restartBatteryService(ctx);
+
+                ServiceUtils.restartBatteryService(context);
             }
         };
         handler.postDelayed(runnable, 5000);
+
+        ServiceUtils.startCIService(context);
     }
 }

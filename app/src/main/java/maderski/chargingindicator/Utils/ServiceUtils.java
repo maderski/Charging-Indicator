@@ -2,8 +2,12 @@ package maderski.chargingindicator.Utils;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.Intent;
 
 import java.util.List;
+
+import maderski.chargingindicator.Services.BatteryService;
+import maderski.chargingindicator.Services.CIService;
 
 /**
  * Created by Jason on 6/17/17.
@@ -20,5 +24,28 @@ public class ServiceUtils {
             }
         }
         return false;
+    }
+
+    public static void startCIService(Context context){
+        if(!isServiceRunning(context, CIService.class)){
+            Intent serviceIntent = new Intent(context, CIService.class);
+            context.startService(serviceIntent);
+        }
+    }
+
+    public static void restartBatteryService(Context context){
+        Intent serviceIntent = new Intent(context, BatteryService.class);
+        if (isServiceRunning(context, BatteryService.class)){
+            context.stopService(serviceIntent);
+        }
+
+        context.startService(serviceIntent);
+    }
+
+    public static void stopBatteryService(Context context){
+        Intent serviceIntent = new Intent(context, BatteryService.class);
+        if (isServiceRunning(context, BatteryService.class)){
+            context.stopService(serviceIntent);
+        }
     }
 }

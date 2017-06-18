@@ -9,8 +9,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.Helpers.ServiceHelper;
-import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Receivers.BatteryReceiver;
 import maderski.chargingindicator.BuildConfig;
 
