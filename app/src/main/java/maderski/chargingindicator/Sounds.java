@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -22,12 +23,20 @@ public class Sounds {
     public void playDefaultNotificationSound(){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         Ringtone ringtone = RingtoneManager.getRingtone(context, notificationSound);
-        ringtone.play();
+        if(ringtone == null){
+            Toast.makeText(context, "No Default Notification sound set", Toast.LENGTH_LONG).show();
+        } else {
+            ringtone.play();
+        }
     }
 
     public void playNotificationSound(Uri ringtoneUri){
         Ringtone ringtone = RingtoneManager.getRingtone(context, ringtoneUri);
-        ringtone.play();
+        if(ringtone == null){
+            Toast.makeText(context, "Unable to play sound", Toast.LENGTH_LONG).show();
+        } else {
+            ringtone.play();
+        }
     }
 
     public ArrayList<String> getNotificationSounds(){
