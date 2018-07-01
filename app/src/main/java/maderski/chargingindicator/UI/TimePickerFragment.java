@@ -1,4 +1,4 @@
-package maderski.chargingindicator.UI;
+package maderski.chargingindicator.ui;
 
 /**
  * Created by Jason on 2/11/17.
@@ -9,7 +9,7 @@ import android.app.TimePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.StringDef;
-import android.support.v4.app.DialogFragment;
+import android.app.DialogFragment;
 import android.text.format.DateFormat;
 import android.util.Log;
 import android.view.Gravity;

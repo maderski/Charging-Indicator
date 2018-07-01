@@ -15,28 +15,30 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".UI.MainActivity"
+            android:name=".ui.MainActivity"
             android:screenOrientation="portrait">
         </activity>
-        <receiver android:name=".Receivers.BootCompletedReceiver">
+        <receiver android:name=".receivers.BootCompletedReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".Receivers.OnAppUpdateReceiver">
+        <receiver android:name=".receivers.OnAppUpdateReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>
         </receiver>
 
-        <receiver android:name=".Receivers.PowerConnectionReceiver" />
-        <receiver android:name=".Receivers.BatteryReceiver" />
+        <receiver android:name=".receivers.PowerConnectionReceiver" />
 
-        <service android:name=".Services.CIService" />
-        <service android:name=".Services.BatteryService" />
+        <service
+            android:name=".services.CIService" />
+        <service
+            android:name=".services.StartCIService"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
 
-        <activity android:name=".UI.AboutActivity" />
-        <activity android:name=".UI.SplashActivity"
+        <activity android:name=".ui.AboutActivity" />
+        <activity android:name=".ui.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

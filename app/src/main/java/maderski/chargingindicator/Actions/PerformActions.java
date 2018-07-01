@@ -1,4 +1,4 @@
-package maderski.chargingindicator.Actions;
+package maderski.chargingindicator.actions;
 
 import android.content.Context;
 import android.net.Uri;
@@ -7,9 +7,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 
-import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.Sounds;
 import maderski.chargingindicator.Vibration;
 
@@ -109,14 +107,14 @@ public class PerformActions {
             Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public void makeBatteryChargedSound(Context context, PerformActions performActions, BatteryManager batteryManager){
-        boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
-        boolean playedSound = CIPreferences.getPlayedChargingDoneSound(context);
-        if(batteryManager.isBatteryAt100()
-                && playChargedSoundEnabled
-                && !playedSound) {
-            performActions.batteryChargedSound();
-            CIPreferences.setPlayedChargingDoneSound(context, true);
-        }
-    }
+//    public void makeBatteryChargedSound(Context context, PerformActions performActions, CIBatteryManager CIBatteryManager){
+//        boolean playChargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context);
+//        boolean playedSound = CIPreferences.getPlayedChargingDoneSound(context);
+//        if(CIBatteryManager.isBatteryAt100()
+//                && playChargedSoundEnabled
+//                && !playedSound) {
+//            performActions.batteryChargedSound();
+//            CIPreferences.setPlayedChargingDoneSound(context, true);
+//        }
+//    }
 }

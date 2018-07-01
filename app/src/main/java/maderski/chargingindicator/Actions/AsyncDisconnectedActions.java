@@ -1,14 +1,9 @@
-package maderski.chargingindicator.Actions;
+package maderski.chargingindicator.actions;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 
-import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Notification.NotificationManager;
-import maderski.chargingindicator.Services.BatteryService;
-import maderski.chargingindicator.Utils.ServiceUtils;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by Jason on 2/11/17.
@@ -16,16 +11,17 @@ import maderski.chargingindicator.Utils.ServiceUtils;
 
 public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
 
-    private Context mContext;
     private PerformActions mPerformActions;
+    private WeakReference<Context> mWeakReference;
 
     public AsyncDisconnectedActions(Context context){
-        this.mContext = context;
+        mWeakReference = new WeakReference<>(context.getApplicationContext());
     }
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mPerformActions = new PerformActions(mContext);
+        final Context context = mWeakReference.get();
+        mPerformActions = new PerformActions(context);
         mPerformActions.showToast("Power Disconnected");
     }
 
@@ -39,13 +35,12 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        if(ServiceUtils.isServiceRunning(mContext, BatteryService.class)) {
-            mContext.stopService(new Intent(mContext, BatteryService.class));
-        }
+        final Context context = mWeakReference.get();
+//        boolean isServiceRunning = ServiceUtils.isServiceRunning(context, BatteryService.class);
+//        if(isServiceRunning) {
+//            ServiceUtils.stopService(context, BatteryService.class, BatteryService.TAG);
+//        }
 
-        NotificationManager notificationManager = new NotificationManager(mContext, new BatteryManager(new Intent()));
-        notificationManager.removeNotifMessage();
-
-        CIPreferences.setPlayedChargingDoneSound(mContext, false);
+//        CIPreferences.setPlayedChargingDoneSound(context, false);
     }
 }

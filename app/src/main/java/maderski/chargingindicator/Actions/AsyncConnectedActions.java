@@ -1,53 +1,42 @@
-package maderski.chargingindicator.Actions;
+package maderski.chargingindicator.actions;
 
-import android.content.ComponentName;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
-import maderski.chargingindicator.Battery.BatteryManager;
-import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Notification.NotificationManager;
-import maderski.chargingindicator.Receivers.BatteryReceiver;
-import maderski.chargingindicator.Receivers.PowerConnectionReceiver;
-import maderski.chargingindicator.Services.BatteryService;
+import java.lang.ref.WeakReference;
 
 /**
  * Created by Jason on 2/11/17.
  */
 
-public class AsyncConnectedActions extends AsyncTask<Boolean, Void, Void> {
+public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
 
-    private Context mContext;
     private PerformActions mPerformActions;
+    private WeakReference<Context> mWeakReference;
 
     public AsyncConnectedActions(Context context) {
-        this.mContext = context;
+        mWeakReference = new WeakReference<>(context.getApplicationContext());
     }
 
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
-        mPerformActions = new PerformActions(mContext);
+        final Context context = mWeakReference.get();
+        mPerformActions = new PerformActions(context);
         mPerformActions.showToast("Power Connected");
     }
 
     @Override
-    protected Void doInBackground(Boolean... isAt100) {
+    protected Void doInBackground(Void... voids) {
         mPerformActions.connectVibrate();
-        if(isAt100[0]) {
-            mPerformActions.connectSound();
-        }
-
+        mPerformActions.connectSound();
         return null;
     }
 
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-        mContext.startService(new Intent(mContext, BatteryService.class));
+        final Context context = mWeakReference.get();
+//        ServiceUtils.startService(context, BatteryService.class, BatteryService.TAG);
     }
 }

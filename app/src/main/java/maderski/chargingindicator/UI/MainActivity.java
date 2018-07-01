@@ -1,12 +1,11 @@
-package maderski.chargingindicator.UI;
+package maderski.chargingindicator.ui;
 
 import android.app.Activity;
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -17,13 +16,12 @@ import android.widget.Toast;
 
 import com.google.firebase.analytics.FirebaseAnalytics;
 
-import maderski.chargingindicator.Battery.BatteryManager;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.CIPreferences;
-import maderski.chargingindicator.Notification.NotificationManager;
 import maderski.chargingindicator.R;
 import maderski.chargingindicator.Sounds;
-import maderski.chargingindicator.Utils.ServiceUtils;
+import maderski.chargingindicator.services.CIService;
+import maderski.chargingindicator.utils.ServiceUtils;
 
 /*  Created by Jason Maderski
     Date: 12/6/2015
@@ -31,7 +29,7 @@ import maderski.chargingindicator.Utils.ServiceUtils;
     App gives users with wireless chargers a clearer indicator that the phone is charging
     by creating a notification when Power is connected to the phone.
 */
-public class MainActivity extends AppCompatActivity implements TimePickerFragment.TimePickerDialogListener{
+public class MainActivity extends Activity implements TimePickerFragment.TimePickerDialogListener{
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -48,11 +46,13 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     protected void onResume(){
         super.onResume();
         setButtonPreferences();
-        ServiceUtils.restartBatteryService(this);
     }
 
     private void checkIfCIServiceIsRunning(){
-        ServiceUtils.startCIService(this);
+        boolean isCIServiceRunning = ServiceUtils.isServiceRunning(this, CIService.class);
+        if(!isCIServiceRunning) {
+            ServiceUtils.startService(this, CIService.class, CIService.TAG);
+        }
     }
 
     @Override
@@ -150,13 +150,13 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     public void setStartQuietTime(View view){
         int previousStartTime = CIPreferences.getStartQuietTime(this);
         DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.START_TIME, previousStartTime, "Start Time");
-        timePickerDialog.show(getSupportFragmentManager(), "startQuietTime");
+        timePickerDialog.show(getFragmentManager(), "startQuietTime");
     }
 
     public void setEndQuietTime(View view){
         int previousStartTime = CIPreferences.getEndQuietTime(this);
         DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.END_TIME, previousStartTime, "End Time");
-        timePickerDialog.show(getSupportFragmentManager(), "EndQuietTime");
+        timePickerDialog.show(getFragmentManager(), "EndQuietTime");
     }
 
     private void setButtonPreferences(){
@@ -254,7 +254,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             CIPreferences.setShowChargingStateIcon(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
-            ServiceUtils.restartBatteryService(this);
         }
     }
 
@@ -360,13 +359,12 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         setFirebaseSwitchEvent("show_notification", on);
         if (on) {
             CIPreferences.SetShowNotification(this, true);
-            ServiceUtils.restartBatteryService(this);
 
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is ON");
         } else {
-            NotificationManager notificationManager = new NotificationManager(this, new BatteryManager(getIntent()));
-            notificationManager.removeNotifMessage();
+//            NotificationManager notificationManager = new NotificationManager(this, new BatteryManager(getIntent()));
+//            notificationManager.removeNotifMessage();
             CIPreferences.SetShowNotification(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "ShowNotificationSwitch is OFF");
