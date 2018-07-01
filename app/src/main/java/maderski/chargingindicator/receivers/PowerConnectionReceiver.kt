@@ -12,8 +12,12 @@ class PowerConnectionReceiver : BroadcastReceiver() {
             val action = it.action
             if(action != null) {
                 when(action) {
-                    Intent.ACTION_POWER_CONNECTED -> AsyncConnectedActions(context).execute()
-                    Intent.ACTION_POWER_DISCONNECTED -> AsyncDisconnectedActions(context).execute()
+                    Intent.ACTION_POWER_CONNECTED -> {
+                        AsyncConnectedActions(context).execute()
+                    }
+                    Intent.ACTION_POWER_DISCONNECTED -> {
+                        AsyncDisconnectedActions(context).execute()
+                    }
                 }
             }
         }
