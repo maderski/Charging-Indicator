@@ -10,6 +10,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.WindowManager
+import android.widget.ImageView
 import maderski.chargingindicator.R
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.sharedprefs.CIPreferences
@@ -20,7 +21,7 @@ class BatteryService : Service() {
 
     private var mIsShowingFAB = false
     private var mWindowManager: WindowManager? = null
-    private var mOverLayView: View? = null
+    private var mFloatingWidgetView: View? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter()
@@ -30,7 +31,7 @@ class BatteryService : Service() {
 
         if(mIsShowingFAB) {
             mWindowManager = getSystemService(android.content.Context.WINDOW_SERVICE) as WindowManager
-            mOverLayView = LayoutInflater.from(this).inflate(R.layout.overlay_layout, null)
+            mFloatingWidgetView = LayoutInflater.from(this).inflate(R.layout.overlay_layout, null)
 
             val layoutParams = WindowManager.LayoutParams(
                     WindowManager.LayoutParams.WRAP_CONTENT,
@@ -41,16 +42,28 @@ class BatteryService : Service() {
             )
 
             // Set FAB initial position
-            layoutParams.gravity = Gravity.CENTER_VERTICAL or Gravity.START
+            layoutParams.gravity = Gravity.CENTER_VERTICAL or Gravity.END
 
-            mOverLayView?.let {
+            mFloatingWidgetView?.let {
                 if(mWindowManager != null) {
                     mWindowManager?.addView(it, layoutParams)
                 }
             }
+
+            setFloatingWidgetOnClickListener()
         }
 
         return START_NOT_STICKY
+    }
+
+    private fun setFloatingWidgetOnClickListener() {
+        mFloatingWidgetView?.let {
+            val chargingBoltIV: ImageView = it.findViewById(R.id.iv_charging_bolt)
+            chargingBoltIV.setOnLongClickListener {
+                Log.d(TAG, "LONG CLICK!!!!!!!")
+                true
+            }
+        }
     }
 
     override fun onCreate() {
@@ -72,7 +85,7 @@ class BatteryService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         if(mIsShowingFAB) {
-            mOverLayView?.let {
+            mFloatingWidgetView?.let {
                 if(mWindowManager != null) {
                     mWindowManager?.removeView(it)
                 }

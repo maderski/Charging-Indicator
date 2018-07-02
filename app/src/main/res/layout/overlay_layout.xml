@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/fb_charging_fab"
+        android:id="@+id/iv_charging_bolt"
         android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:src="@drawable/chargingbolt2"/>
