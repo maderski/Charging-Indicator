@@ -2,6 +2,6 @@
     <string name="app_name">Charging Indicator</string>
     <string name="action_settings">About</string>
     <string name="set_sound_button_text">SET SOUND</string>
-    <string name="service_notification_title">Monitoring power…</string>
-    <string name="service_notification_messge">""</string>
+    <string name="ci_service_notification_title">Monitoring power…</string>
+    <string name="ci_service_notification_messge">""</string>
 </resources>

@@ -24,8 +24,8 @@ class CIService : Service() {
     override fun onCreate() {
         super.onCreate()
         Log.d(TAG, "ON CREATE")
-        val title = this.getString(R.string.service_notification_title)
-        val message = this.getString(R.string.service_notification_messge)
+        val title = this.getString(R.string.ci_service_notification_title)
+        val message = this.getString(R.string.ci_service_notification_messge)
         ServiceUtils.createServiceNotification(3449,
                 title,
                 message,

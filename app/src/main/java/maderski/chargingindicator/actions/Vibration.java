@@ -1,4 +1,4 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.actions;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -9,8 +9,6 @@ import android.os.Vibrator;
 
 public class Vibration{
 
-    private boolean canVibrate;
-    private Context context;
     private Vibrator vibrator;
 
     private int short_buzz = 200;
@@ -20,7 +18,6 @@ public class Vibration{
     private int long_gap = 1000;
 
     public Vibration(Context context){
-        this.context = context;
         this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 

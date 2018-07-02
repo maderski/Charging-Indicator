@@ -17,10 +17,11 @@ import android.widget.Toast;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 import maderski.chargingindicator.BuildConfig;
-import maderski.chargingindicator.CIPreferences;
+import maderski.chargingindicator.sharedprefs.CIPreferences;
 import maderski.chargingindicator.R;
-import maderski.chargingindicator.Sounds;
+import maderski.chargingindicator.actions.Sound;
 import maderski.chargingindicator.services.CIService;
+import maderski.chargingindicator.utils.PermissionUtils;
 import maderski.chargingindicator.utils.ServiceUtils;
 
 /*  Created by Jason Maderski
@@ -124,22 +125,22 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
     public void connectSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenConnectSound(this);
 
-        Sounds sounds = new Sounds(this);
-        sounds.notificationList(this, chosenRingtone, 1);
+        Sound sound = new Sound(this);
+        sound.notificationList(this, chosenRingtone, 1);
     }
 
     public void disconnectSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenDisconnectSound(this);
 
-        Sounds sounds = new Sounds(this);
-        sounds.notificationList(this, chosenRingtone, 2);
+        Sound sound = new Sound(this);
+        sound.notificationList(this, chosenRingtone, 2);
     }
 
     public void batteryChargedSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenBatteryChargedSound(this);
 
-        Sounds sounds = new Sounds(this);
-        sounds.notificationList(this, chosenRingtone, 3);
+        Sound sound = new Sound(this);
+        sound.notificationList(this, chosenRingtone, 3);
     }
 
     public void setQuietTimes(View view){
@@ -206,6 +207,10 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         btnState = CIPreferences.getQuietTime(this);
         setting_switch = (Switch) findViewById(R.id.quiet_time_switch);
         setting_switch.setChecked(btnState);
+
+        btnState = CIPreferences.getShowChargingFab(this);
+        setting_switch = (Switch) findViewById(R.id.show_floating_charging_btn_switch);
+        setting_switch.setChecked(btnState);
     }
 
     public void setFirebaseSwitchEvent(String eventName, boolean switchedOn){
@@ -242,132 +247,130 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         }
     }
 
-    public void IncreasingDecreasingIconSwitch(View view){
+    public void increasingDecreasingIconSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("show_charging_state_icon", on);
         if (on) {
             CIPreferences.setShowChargingStateIcon(this, true);
             Toast.makeText(this, "Show Up/Down Arrow ENABLED", Toast.LENGTH_SHORT).show();
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "IncreasingDecreasingIconSwitch is ON");
+                Log.i(TAG, "increasingDecreasingIconSwitch is ON");
         } else {
             CIPreferences.setShowChargingStateIcon(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "IncreasingDecreasingIconSwitch is OFF");
+                Log.i(TAG, "increasingDecreasingIconSwitch is OFF");
         }
     }
 
-    public void ChangeIconSwitch(View view){
+    public void changeIconSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("change_icon", on);
         if (on) {
-            CIPreferences.SetChangeIcon(this, true);
+            CIPreferences.setChangeIcon(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ChangeIconSwitch is ON");
+                Log.i(TAG, "changeIconSwitch is ON");
         } else {
-            CIPreferences.SetChangeIcon(this, false);
+            CIPreferences.setChangeIcon(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ChangeIconSwitch is OFF");
+                Log.i(TAG, "changeIconSwitch is OFF");
         }
     }
 
-    public void VibrateSwitch(View view){
+    public void vibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         if (on) {
-            CIPreferences.SetVibrateWhenPluggedIn(this, true);
+            CIPreferences.setVibrateWhenPluggedIn(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "VibrateSwitch is ON");
+                Log.i(TAG, "vibrateSwitch is ON");
         } else {
-            CIPreferences.SetVibrateWhenPluggedIn(this, false);
+            CIPreferences.setVibrateWhenPluggedIn(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "VibrateSwitch is OFF");
+                Log.i(TAG, "vibrateSwitch is OFF");
         }
     }
 
-    public void DisconnectVibrateSwitch(View view){
+    public void disconnectVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("disconnect_vibrate", on);
         if (on) {
             CIPreferences.setVibrateOnDisconnect(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "DisconnectVibrateSwitch is ON");
+                Log.i(TAG, "disconnectVibrateSwitch is ON");
         } else {
             CIPreferences.setVibrateOnDisconnect(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "VibrateSwitch is OFF");
+                Log.i(TAG, "vibrateSwitch is OFF");
         }
     }
 
-    public void DiffVibrateSwitch(View view){
+    public void diffVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("diff_vibrate", on);
         if (on) {
             CIPreferences.setDiffVibrations(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "DiffVibrateSwitch is ON");
+                Log.i(TAG, "diffVibrateSwitch is ON");
         } else {
             CIPreferences.setDiffVibrations(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "DiffVibrateSwitch is OFF");
+                Log.i(TAG, "diffVibrateSwitch is OFF");
         }
     }
 
-    public void ConnectSoundSwitch(View view){
+    public void connectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("connect_sound", on);
         if (on) {
-            CIPreferences.SetPlaySound(this, true);
+            CIPreferences.setPlaySound(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ConnectSoundSwitch is ON");
+                Log.i(TAG, "connectSoundSwitch is ON");
         } else {
-            CIPreferences.SetPlaySound(this, false);
+            CIPreferences.setPlaySound(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ConnectSoundSwitch is OFF");
+                Log.i(TAG, "connectSoundSwitch is OFF");
         }
     }
 
-    public void DisconnectSoundSwitch(View view){
+    public void disconnectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("disconnect_sound", on);
         if (on) {
             CIPreferences.setDisconnectPlaySound(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "DisconnectSoundSwitch is ON");
+                Log.i(TAG, "disconnectSoundSwitch is ON");
         } else {
             CIPreferences.setDisconnectPlaySound(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "DisconnectSoundSwitch is OFF");
+                Log.i(TAG, "disconnectSoundSwitch is OFF");
         }
     }
 
-    public void ShowToastSwitch(View view){
+    public void showToastSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("show_toast", on);
         if (on) {
-            CIPreferences.SetShowToast(this, true);
+            CIPreferences.setShowToast(this, true);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ShowToastSwitch is ON");
+                Log.i(TAG, "showToastSwitch is ON");
         } else {
-            CIPreferences.SetShowToast(this, false);
+            CIPreferences.setShowToast(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ShowToastSwitch is OFF");
+                Log.i(TAG, "showToastSwitch is OFF");
         }
     }
 
-    public void ShowNotificationSwitch(View view){
+    public void showNotificationSwitch(View view){
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("show_notification", on);
         if (on) {
-            CIPreferences.SetShowNotification(this, true);
+            CIPreferences.setShowNotification(this, true);
 
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ShowNotificationSwitch is ON");
+                Log.i(TAG, "showNotificationSwitch is ON");
         } else {
-//            NotificationManager notificationManager = new NotificationManager(this, new BatteryManager(getIntent()));
-//            notificationManager.removeNotifMessage();
-            CIPreferences.SetShowNotification(this, false);
+            CIPreferences.setShowNotification(this, false);
             if(BuildConfig.DEBUG)
-                Log.i(TAG, "ShowNotificationSwitch is OFF");
+                Log.i(TAG, "showNotificationSwitch is OFF");
         }
     }
 
@@ -383,5 +386,19 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
             CIPreferences.setEndQuietTime(this, timeSet);
         }
         Toast.makeText(this, "SAVED", Toast.LENGTH_SHORT).show();
+    }
+
+    public void floatingChargingBtnSwitch(View view) {
+        boolean on = ((Switch) view).isChecked();
+        setFirebaseSwitchEvent("floating_charging_button", on);
+        CIPreferences.setShowChargingFab(this, on);
+        if(on) {
+            PermissionUtils.checkSystemOverlayPermission(this);
+        }
+
+        if(BuildConfig.DEBUG) {
+            String switchState = on ? "ON" : "OFF";
+            Log.d(TAG, "floatingChargingBtnSwitch is " + switchState);
+        }
     }
 }

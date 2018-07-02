@@ -7,6 +7,7 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
         android:allowBackup="true"
@@ -30,12 +31,21 @@
         </receiver>
 
         <receiver android:name=".receivers.PowerConnectionReceiver" />
+        <receiver
+            android:name=".receivers.BatteryReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.BATTERY_CHANGED" />
+            </intent-filter>
+        </receiver>
 
         <service
             android:name=".services.CIService" />
         <service
             android:name=".services.StartCIService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service android:name=".services.BatteryService" />
 
         <activity android:name=".ui.AboutActivity" />
         <activity android:name=".ui.SplashActivity"

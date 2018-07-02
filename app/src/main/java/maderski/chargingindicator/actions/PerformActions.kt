@@ -7,16 +7,14 @@ import android.widget.Toast
 
 import java.util.Calendar
 
-import maderski.chargingindicator.CIPreferences
-import maderski.chargingindicator.Sounds
-import maderski.chargingindicator.Vibration
+import maderski.chargingindicator.sharedprefs.CIPreferences
 
 /**
  * Created by Jason on 8/2/16.
  */
 class PerformActions(private val mContext: Context) {
     private val vibration: Vibration = Vibration(mContext)
-    private val playSound: Sounds = Sounds(mContext)
+    private val playSound: Sound = Sound(mContext)
 
     private val isQuietTime: Boolean
         get() {

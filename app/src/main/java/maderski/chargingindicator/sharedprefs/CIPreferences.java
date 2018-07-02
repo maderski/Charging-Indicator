@@ -1,4 +1,4 @@
-package maderski.chargingindicator;
+package maderski.chargingindicator.sharedprefs;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -29,14 +29,15 @@ public class CIPreferences {
     private static final String START_QUIET_TIME = "startQuietTIme";
     private static final String END_QUIET_TIME = "endQuietTime";
     private static final String PLAYED_CHARGING_DONE_SOUND = "playedChargingDoneSound";
+    private static final String SHOW_CHARGING_FAB_KEY = "showChargingFAB";
 
 
     //Writes to SharedPreferences, but still need to commit setting to save it
     private static SharedPreferences.Editor editor(Context context){
 
         if(_editor == null){
-            _editor = context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE).edit();
-            _editor.commit();
+            _editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit();
+            _editor.apply();
         }
 
         return _editor;
@@ -45,13 +46,22 @@ public class CIPreferences {
     //Reads SharedPreferences value
     private static SharedPreferences reader(Context context){
 
-        return context.getSharedPreferences(MY_PREFS_NAME, context.MODE_PRIVATE);
+        return context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE);
     }
 
     //Commits write to SharedPreferences
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setShowChargingFab(Context context, boolean showChargingFab) {
+        editor(context).putBoolean(SHOW_CHARGING_FAB_KEY, showChargingFab);
+        commit(context);
+    }
+
+    public static boolean getShowChargingFab(Context context){
+        return reader(context).getBoolean(SHOW_CHARGING_FAB_KEY, false);
     }
 
     public static void setPlayedChargingDoneSound(Context context, boolean didPlay){
@@ -164,7 +174,7 @@ public class CIPreferences {
         return reader(context).getBoolean(SHOW_INCREASING_DECREASING_KEY, true);
     }
 
-    public static void SetChangeIcon(Context context, boolean enabled){
+    public static void setChangeIcon(Context context, boolean enabled){
         editor(context).putBoolean(CHANGE_ICON_KEY, enabled);
         commit(context);
     }
@@ -173,7 +183,7 @@ public class CIPreferences {
         return reader(context).getBoolean(CHANGE_ICON_KEY, true);
     }
 
-    public static void SetVibrateWhenPluggedIn(Context context, boolean enabled){
+    public static void setVibrateWhenPluggedIn(Context context, boolean enabled){
         editor(context).putBoolean(VIBRATE_KEY, enabled);
         commit(context);
     }
@@ -182,7 +192,7 @@ public class CIPreferences {
         return reader(context).getBoolean(VIBRATE_KEY, false);
     }
 
-    public static void SetPlaySound(Context context, boolean enabled){
+    public static void setPlaySound(Context context, boolean enabled){
         editor(context).putBoolean(PLAY_SOUND_KEY, enabled);
         commit(context);
     }
@@ -191,7 +201,7 @@ public class CIPreferences {
         return reader(context).getBoolean(PLAY_SOUND_KEY, false);
     }
 
-    public static void SetShowToast(Context context, boolean enabled){
+    public static void setShowToast(Context context, boolean enabled){
         editor(context).putBoolean(SHOW_TOAST_KEY, enabled);
         commit(context);
     }
@@ -200,7 +210,7 @@ public class CIPreferences {
         return reader(context).getBoolean(SHOW_TOAST_KEY, true);
     }
 
-    public static void SetShowNotification(Context context, boolean enabled){
+    public static void setShowNotification(Context context, boolean enabled){
         editor(context).putBoolean(SHOW_NOTIFICATION_KEY, enabled);
         commit(context);
     }

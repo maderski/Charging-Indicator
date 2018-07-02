@@ -5,6 +5,10 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import maderski.chargingindicator.sharedprefs.CIPreferences;
+import maderski.chargingindicator.services.BatteryService;
+import maderski.chargingindicator.utils.ServiceUtils;
+
 /**
  * Created by Jason on 2/11/17.
  */
@@ -36,11 +40,11 @@ public class AsyncDisconnectedActions extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         final Context context = mWeakReference.get();
-//        boolean isServiceRunning = ServiceUtils.isServiceRunning(context, BatteryService.class);
-//        if(isServiceRunning) {
-//            ServiceUtils.stopService(context, BatteryService.class, BatteryService.TAG);
-//        }
+        boolean isServiceRunning = ServiceUtils.isServiceRunning(context, BatteryService.class);
+        if(isServiceRunning) {
+            ServiceUtils.stopService(context, BatteryService.class, BatteryService.TAG);
+        }
 
-//        CIPreferences.setPlayedChargingDoneSound(context, false);
+        CIPreferences.setPlayedChargingDoneSound(context, false);
     }
 }

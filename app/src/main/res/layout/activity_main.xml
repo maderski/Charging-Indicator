@@ -43,7 +43,19 @@
                 android:id="@+id/show_notification_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="ShowNotificationSwitch"
+                android:onClick="showNotificationSwitch"
+                android:textColor="@color/charcoal"
+                android:paddingBottom="20dp"
+                android:paddingTop="16dp" />
+
+            <Switch
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="FLOATING CHARGING BUTTON"
+                android:id="@+id/show_floating_charging_btn_switch"
+                android:checked="false"
+                android:textStyle="bold"
+                android:onClick="floatingChargingBtnSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp"
                 android:paddingTop="16dp" />
@@ -55,7 +67,7 @@
                 android:id="@+id/vibrate_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="VibrateSwitch"
+                android:onClick="vibrateSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp" />
 
@@ -66,7 +78,7 @@
                 android:id="@+id/play_sound_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="ConnectSoundSwitch"
+                android:onClick="connectSoundSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp" />
 
@@ -103,7 +115,7 @@
                 android:id="@+id/disconnect_vibrate_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="DisconnectVibrateSwitch"
+                android:onClick="disconnectVibrateSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp"
                 android:paddingTop="16dp" />
@@ -115,7 +127,7 @@
                 android:id="@+id/disconnect_playsound_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="DisconnectSoundSwitch"
+                android:onClick="disconnectSoundSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp" />
 
@@ -153,7 +165,7 @@
                 android:id="@+id/show_toast_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="ShowToastSwitch"
+                android:onClick="showToastSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp"
                 android:paddingTop="16dp" />
@@ -165,7 +177,7 @@
                 android:id="@+id/show_chargingstate_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="IncreasingDecreasingIconSwitch"
+                android:onClick="increasingDecreasingIconSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp" />
 
@@ -176,7 +188,7 @@
                 android:id="@+id/change_icon_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="ChangeIconSwitch"
+                android:onClick="changeIconSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp"
                 android:layout_marginBottom="12dp" />
@@ -201,7 +213,7 @@
                 android:id="@+id/diff_vibrations_switch"
                 android:checked="false"
                 android:textStyle="bold"
-                android:onClick="DiffVibrateSwitch"
+                android:onClick="diffVibrateSwitch"
                 android:textColor="@color/charcoal"
                 android:paddingBottom="20dp"
                 android:paddingTop="16dp" />

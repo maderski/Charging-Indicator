@@ -5,6 +5,9 @@ import android.os.AsyncTask;
 
 import java.lang.ref.WeakReference;
 
+import maderski.chargingindicator.services.BatteryService;
+import maderski.chargingindicator.utils.ServiceUtils;
+
 /**
  * Created by Jason on 2/11/17.
  */
@@ -37,6 +40,6 @@ public class AsyncConnectedActions extends AsyncTask<Void, Void, Void> {
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
         final Context context = mWeakReference.get();
-//        ServiceUtils.startService(context, BatteryService.class, BatteryService.TAG);
+        ServiceUtils.startService(context, BatteryService.class, BatteryService.TAG);
     }
 }
