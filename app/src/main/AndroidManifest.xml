@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.MainActivity"
+            android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait">
         </activity>
         <receiver android:name=".receivers.BootCompletedReceiver">
@@ -41,14 +41,16 @@
         </receiver>
 
         <service
-            android:name=".services.CIService" />
-        <service
             android:name=".services.StartCIService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
-        <service android:name=".services.BatteryService" />
+        <service android:name=".services.CIService" />
+        <service
+            android:name=".services.BatteryService"
+            android:enabled="true"
+            android:exported="false"/>
 
-        <activity android:name=".ui.AboutActivity" />
-        <activity android:name=".ui.SplashActivity"
+        <activity android:name=".ui.activities.AboutActivity" />
+        <activity android:name=".ui.activities.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

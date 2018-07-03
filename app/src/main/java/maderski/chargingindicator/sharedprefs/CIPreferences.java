@@ -29,7 +29,9 @@ public class CIPreferences {
     private static final String START_QUIET_TIME = "startQuietTIme";
     private static final String END_QUIET_TIME = "endQuietTime";
     private static final String PLAYED_CHARGING_DONE_SOUND = "playedChargingDoneSound";
-    private static final String SHOW_CHARGING_FAB_KEY = "showChargingFAB";
+    private static final String SHOW_CHARGING_BUBBLE_KEY = "showChargingBubble";
+    private static final String CHARGING_BUBBLE_X = "chargingBubbleX";
+    private static final String CHARGING_BUBBLE_Y = "chargingBubbleY";
 
 
     //Writes to SharedPreferences, but still need to commit setting to save it
@@ -55,13 +57,31 @@ public class CIPreferences {
         _editor = null;
     }
 
-    public static void setShowChargingFab(Context context, boolean showChargingFab) {
-        editor(context).putBoolean(SHOW_CHARGING_FAB_KEY, showChargingFab);
+    public static void setChargingBubbleX(Context context, float x) {
+        editor(context).putFloat(CHARGING_BUBBLE_X, x);
         commit(context);
     }
 
-    public static boolean getShowChargingFab(Context context){
-        return reader(context).getBoolean(SHOW_CHARGING_FAB_KEY, false);
+    public static float getChargingBubbleX(Context context){
+        return reader(context).getFloat(CHARGING_BUBBLE_X, 60f);
+    }
+
+    public static void setChargingBubbleY(Context context, float y) {
+        editor(context).putFloat(CHARGING_BUBBLE_Y, y);
+        commit(context);
+    }
+
+    public static float getChargingBubbleY(Context context){
+        return reader(context).getFloat(CHARGING_BUBBLE_Y, 20f);
+    }
+
+    public static void setShowChargingBubble(Context context, boolean showChargingFab) {
+        editor(context).putBoolean(SHOW_CHARGING_BUBBLE_KEY, showChargingFab);
+        commit(context);
+    }
+
+    public static boolean getShowChargingBubble(Context context){
+        return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, false);
     }
 
     public static void setPlayedChargingDoneSound(Context context, boolean didPlay){

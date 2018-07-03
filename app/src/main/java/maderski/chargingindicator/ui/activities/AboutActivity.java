@@ -1,8 +1,7 @@
-package maderski.chargingindicator.ui;
+package maderski.chargingindicator.ui.activities;
 
 import android.app.Activity;
 import android.content.pm.PackageInfo;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;

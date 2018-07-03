@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<maderski.chargingindicator.ui.custom.CustomBubbleLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/avatar"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_gravity="center"
+        android:background="@android:color/transparent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/chargingbolt2" />
+</maderski.chargingindicator.ui.custom.CustomBubbleLayout>
+<!--<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <!--<maderski.chargingindicator.ui.custom.MovableFloatingImageView-->
+        <!--android:id="@+id/iv_charging_bolt"-->
+        <!--android:layout_width="48dp"-->
+        <!--android:layout_height="48dp"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:src="@drawable/chargingbolt2" />-->
+    <!---->
+<!--</FrameLayout>-->

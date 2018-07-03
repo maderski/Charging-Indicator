@@ -1,4 +1,4 @@
-package maderski.chargingindicator.ui;
+package maderski.chargingindicator.ui.activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -21,6 +21,7 @@ import maderski.chargingindicator.sharedprefs.CIPreferences;
 import maderski.chargingindicator.R;
 import maderski.chargingindicator.actions.Sound;
 import maderski.chargingindicator.services.CIService;
+import maderski.chargingindicator.ui.fragments.TimePickerFragment;
 import maderski.chargingindicator.utils.PermissionUtils;
 import maderski.chargingindicator.utils.ServiceUtils;
 
@@ -30,7 +31,7 @@ import maderski.chargingindicator.utils.ServiceUtils;
     App gives users with wireless chargers a clearer indicator that the phone is charging
     by creating a notification when Power is connected to the phone.
 */
-public class MainActivity extends Activity implements TimePickerFragment.TimePickerDialogListener{
+public class MainActivity extends Activity implements TimePickerFragment.TimePickerDialogListener {
 
     private static final String TAG = MainActivity.class.getName();
 
@@ -208,7 +209,7 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         setting_switch = (Switch) findViewById(R.id.quiet_time_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.getShowChargingFab(this);
+        btnState = CIPreferences.getShowChargingBubble(this);
         setting_switch = (Switch) findViewById(R.id.show_floating_charging_btn_switch);
         setting_switch.setChecked(btnState);
     }
@@ -391,7 +392,7 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
     public void floatingChargingBtnSwitch(View view) {
         boolean on = ((Switch) view).isChecked();
         setFirebaseSwitchEvent("floating_charging_button", on);
-        CIPreferences.setShowChargingFab(this, on);
+        CIPreferences.setShowChargingBubble(this, on);
         if(on) {
             PermissionUtils.checkSystemOverlayPermission(this);
         }

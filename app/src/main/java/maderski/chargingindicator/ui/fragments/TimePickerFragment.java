@@ -1,4 +1,4 @@
-package maderski.chargingindicator.ui;
+package maderski.chargingindicator.ui.fragments;
 
 /**
  * Created by Jason on 2/11/17.
