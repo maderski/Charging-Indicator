@@ -13,10 +13,13 @@ class CIService : Service() {
     private val mPowerConnectionReceiver = PowerConnectionReceiver()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val filter = IntentFilter()
-        filter.addAction("android.intent.action.ACTION_POWER_CONNECTED")
-        filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED")
-        registerReceiver(mPowerConnectionReceiver, filter)
+        IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
+            intentFilter -> registerReceiver(mPowerConnectionReceiver, intentFilter)
+        }
+
+        stopForeground(true)
+
+        stopSelf()
 
         return Service.START_NOT_STICKY
     }
