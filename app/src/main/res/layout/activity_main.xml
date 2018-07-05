@@ -39,25 +39,14 @@
             <Switch
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:text="Show NOTIFICATION"
-                android:id="@+id/show_notification_switch"
-                android:checked="false"
-                android:textStyle="bold"
-                android:onClick="showNotificationSwitch"
-                android:textColor="@color/charcoal"
-                android:paddingBottom="20dp"
-                android:paddingTop="16dp" />
-
-            <Switch
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
                 android:text="FLOATING CHARGING BUTTON"
                 android:id="@+id/show_floating_charging_btn_switch"
                 android:checked="false"
                 android:textStyle="bold"
                 android:onClick="floatingChargingBtnSwitch"
                 android:textColor="@color/charcoal"
-                android:paddingBottom="20dp" />
+                android:paddingBottom="20dp"
+                android:paddingTop="16dp"/>
 
             <Switch
                 android:layout_width="fill_parent"

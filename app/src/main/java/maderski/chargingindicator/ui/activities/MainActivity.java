@@ -181,10 +181,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         setting_switch = (Switch) findViewById(R.id.show_toast_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetShowNotification(this);
-        setting_switch = (Switch) findViewById(R.id.show_notification_switch);
-        setting_switch.setChecked(btnState);
-
         btnState = CIPreferences.getDisconnectPlaySound(this);
         setting_switch = (Switch) findViewById(R.id.disconnect_playsound_switch);
         setting_switch.setChecked(btnState);
@@ -338,21 +334,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
             CIPreferences.setShowToast(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "showToastSwitch is OFF");
-        }
-    }
-
-    public void showNotificationSwitch(View view){
-        boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("show_notification", on);
-        if (on) {
-            CIPreferences.setShowNotification(this, true);
-
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "showNotificationSwitch is ON");
-        } else {
-            CIPreferences.setShowNotification(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "showNotificationSwitch is OFF");
         }
     }
 
