@@ -170,17 +170,6 @@
                 android:paddingTop="16dp" />
 
             <Switch
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Show up/down arrow on icon"
-                android:id="@+id/show_chargingstate_switch"
-                android:checked="false"
-                android:textStyle="bold"
-                android:onClick="increasingDecreasingIconSwitch"
-                android:textColor="@color/charcoal"
-                android:paddingBottom="20dp" />
-
-            <Switch
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:text="Change ICON when charging is done"

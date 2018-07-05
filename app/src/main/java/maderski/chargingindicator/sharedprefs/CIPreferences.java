@@ -21,7 +21,6 @@ public class CIPreferences {
     private static final String BATTERY_CHARGED_PLAY_SOUND_KEY = "batteryChargedPlaySound";
     private static final String SHOW_TOAST_KEY = "showToast";
     private static final String SHOW_NOTIFICATION_KEY = "showNotification";
-    private static final String SHOW_INCREASING_DECREASING_KEY = "showIncreasingDecreasing";
     private static final String CHOSEN_DISCONNECT_SOUND_KEY = "chosenDisconnectSound";
     private static final String CHOSEN_CONNECT_SOUND_KEY = "chosenConnectSound";
     private static final String CHOSEN_BATTERY_CHARGED_SOUND_KEY = "batteryChargedSound";
@@ -183,15 +182,6 @@ public class CIPreferences {
 
     public static boolean getDiffVibrations(Context context){
         return reader(context).getBoolean(DIFF_VIBRATIONS_KEY, true);
-    }
-
-    public static void setShowChargingStateIcon(Context context, boolean enabled){
-        editor(context).putBoolean(SHOW_INCREASING_DECREASING_KEY, enabled);
-        commit(context);
-    }
-
-    public static boolean GetShowChargingStateIcon(Context context){
-        return reader(context).getBoolean(SHOW_INCREASING_DECREASING_KEY, true);
     }
 
     public static void setChangeIcon(Context context, boolean enabled){

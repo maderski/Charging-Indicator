@@ -185,10 +185,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         setting_switch = (Switch) findViewById(R.id.show_notification_switch);
         setting_switch.setChecked(btnState);
 
-        btnState = CIPreferences.GetShowChargingStateIcon(this);
-        setting_switch = (Switch) findViewById(R.id.show_chargingstate_switch);
-        setting_switch.setChecked(btnState);
-
         btnState = CIPreferences.getDisconnectPlaySound(this);
         setting_switch = (Switch) findViewById(R.id.disconnect_playsound_switch);
         setting_switch.setChecked(btnState);
@@ -245,21 +241,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
             CIPreferences.setBatteryChargedPlaySound(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "BatteryChargedPlaySoundSwitch is OFF");
-        }
-    }
-
-    public void increasingDecreasingIconSwitch(View view){
-        boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("show_charging_state_icon", on);
-        if (on) {
-            CIPreferences.setShowChargingStateIcon(this, true);
-            Toast.makeText(this, "Show Up/Down Arrow ENABLED", Toast.LENGTH_SHORT).show();
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "increasingDecreasingIconSwitch is ON");
-        } else {
-            CIPreferences.setShowChargingStateIcon(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "increasingDecreasingIconSwitch is OFF");
         }
     }
 
