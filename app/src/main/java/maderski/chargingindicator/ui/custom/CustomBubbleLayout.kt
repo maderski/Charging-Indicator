@@ -47,10 +47,17 @@ class CustomBubbleLayout : BubbleLayout, View.OnTouchListener {
                         return performClick()
                     }
 
-                    if(mLastXYCoordListener != null) {
-                        mLastXYCoordListener?.onLastXYCoord(upRawX, upRawY)
+                    v?.let {
+                        val width = it.width
+                        val height = it.height
+                        val xCenter: Float = upRawX - (width/1.75f)
+                        val yCenter: Float = upRawY - (height/1.5f)
+
+                        if(mLastXYCoordListener != null) {
+                            mLastXYCoordListener?.onLastXYCoord(xCenter, yCenter)
+                        }
+                        Log.d(TAG, "X: $xCenter Y: $yCenter W: $width H: $height")
                     }
-                    Log.d(TAG, "X: ${upRawX} Y: ${upRawY}")
 
                     false
                 }

@@ -57,8 +57,7 @@
                 android:textStyle="bold"
                 android:onClick="floatingChargingBtnSwitch"
                 android:textColor="@color/charcoal"
-                android:paddingBottom="20dp"
-                android:paddingTop="16dp" />
+                android:paddingBottom="20dp" />
 
             <Switch
                 android:layout_width="fill_parent"

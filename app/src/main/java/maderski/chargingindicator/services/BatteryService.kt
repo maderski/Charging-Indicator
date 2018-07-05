@@ -18,7 +18,7 @@ class BatteryService : Service() {
     private var mCIBubblesHelper: CIBubblesHelper? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        val filter = IntentFilter()
+        val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         registerReceiver(mBatteryReceiver, filter)
         mIsShowingFAB = CIPreferences.getShowChargingBubble(this)
         if(mIsShowingFAB) {
