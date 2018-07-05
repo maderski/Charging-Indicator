@@ -20,6 +20,7 @@ class PerformActions(private val mContext: Context) {
     private val mPlaySoundHelper: SoundHelper = SoundHelper(mContext)
     private val mCIBubblesHelper: CIBubblesHelper = CIBubblesHelper(mContext)
 
+    private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(mContext)
     private val isQuietTime: Boolean
         get() {
             val quietTimeEnabled = CIPreferences.getQuietTime(mContext)
@@ -102,6 +103,16 @@ class PerformActions(private val mContext: Context) {
         val isToastShown = CIPreferences.GetShowToast(mContext)
         if (isToastShown)
             Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+    }
+
+    fun showBubble() {
+        if(isBubbleShown)
+            mCIBubblesHelper.addBubble()
+    }
+
+    fun removeBubble() {
+        if(isBubbleShown)
+            mCIBubblesHelper.removeBubble()
     }
 
     companion object {

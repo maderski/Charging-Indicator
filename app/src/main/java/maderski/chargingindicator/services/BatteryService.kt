@@ -6,6 +6,7 @@ import android.content.IntentFilter
 import android.os.IBinder
 import android.util.Log
 import maderski.chargingindicator.R
+import maderski.chargingindicator.actions.PerformActions
 import maderski.chargingindicator.helpers.CIBubblesHelper
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.sharedprefs.CIPreferences
@@ -14,16 +15,18 @@ import maderski.chargingindicator.utils.ServiceUtils
 class BatteryService : Service() {
     private val mBatteryReceiver = BatteryReceiver()
 
-    private var mIsShowingFAB = false
-    private var mCIBubblesHelper: CIBubblesHelper? = null
+    private var mPerformActions: PerformActions? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         registerReceiver(mBatteryReceiver, filter)
-        mIsShowingFAB = CIPreferences.getShowChargingBubble(this)
-        if(mIsShowingFAB) {
-            mCIBubblesHelper = CIBubblesHelper(this)
-            mCIBubblesHelper?.addBubble()
+
+        mPerformActions = PerformActions(this)
+        mPerformActions?.let {
+            it.connectVibrate()
+            it.connectSound()
+            it.showToast(getString(R.string.power_connected_msg))
+            it.showBubble()
         }
 
         return START_NOT_STICKY
@@ -45,8 +48,11 @@ class BatteryService : Service() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(mIsShowingFAB) {
-            mCIBubblesHelper?.removeBubble()
+        mPerformActions?.let {
+            it.disconnectVibrate()
+            it.disconnectSound()
+            it.showToast(getString(R.string.power_disconnected_msg))
+            it.removeBubble()
         }
 
         stopForeground(true)
