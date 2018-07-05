@@ -1,4 +1,4 @@
-package maderski.chargingindicator.actions;
+package maderski.chargingindicator.helpers;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -7,7 +7,7 @@ import android.os.Vibrator;
  * Created by Jason on 9/25/16.
  */
 
-public class Vibration{
+public class VibrationHelper {
 
     private Vibrator vibrator;
 
@@ -17,7 +17,7 @@ public class Vibration{
     private int medium_gap = 500;
     private int long_gap = 1000;
 
-    public Vibration(Context context){
+    public VibrationHelper(Context context){
         this.vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 

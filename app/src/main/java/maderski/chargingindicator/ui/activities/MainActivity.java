@@ -19,7 +19,7 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 import maderski.chargingindicator.BuildConfig;
 import maderski.chargingindicator.sharedprefs.CIPreferences;
 import maderski.chargingindicator.R;
-import maderski.chargingindicator.actions.Sound;
+import maderski.chargingindicator.helpers.SoundHelper;
 import maderski.chargingindicator.services.CIService;
 import maderski.chargingindicator.ui.fragments.TimePickerFragment;
 import maderski.chargingindicator.utils.PermissionUtils;
@@ -126,22 +126,22 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
     public void connectSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenConnectSound(this);
 
-        Sound sound = new Sound(this);
-        sound.notificationList(this, chosenRingtone, 1);
+        SoundHelper soundHelper = new SoundHelper(this);
+        soundHelper.notificationList(this, chosenRingtone, 1);
     }
 
     public void disconnectSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenDisconnectSound(this);
 
-        Sound sound = new Sound(this);
-        sound.notificationList(this, chosenRingtone, 2);
+        SoundHelper soundHelper = new SoundHelper(this);
+        soundHelper.notificationList(this, chosenRingtone, 2);
     }
 
     public void batteryChargedSetSound(View view){
         String chosenRingtone = CIPreferences.getChosenBatteryChargedSound(this);
 
-        Sound sound = new Sound(this);
-        sound.notificationList(this, chosenRingtone, 3);
+        SoundHelper soundHelper = new SoundHelper(this);
+        soundHelper.notificationList(this, chosenRingtone, 3);
     }
 
     public void setQuietTimes(View view){

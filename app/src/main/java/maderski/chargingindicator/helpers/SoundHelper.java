@@ -1,4 +1,4 @@
-package maderski.chargingindicator.actions;
+package maderski.chargingindicator.helpers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,10 +15,10 @@ import java.util.ArrayList;
  * Created by Jason on 10/16/16.
  */
 
-public class Sound {
+public class SoundHelper {
     private Context context;
 
-    public Sound(Context context){ this.context = context; }
+    public SoundHelper(Context context){ this.context = context; }
 
     public void playDefaultNotificationSound(){
         Uri notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

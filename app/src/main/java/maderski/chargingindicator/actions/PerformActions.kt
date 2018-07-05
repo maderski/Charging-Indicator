@@ -4,6 +4,9 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import maderski.chargingindicator.helpers.CIBubblesHelper
+import maderski.chargingindicator.helpers.SoundHelper
+import maderski.chargingindicator.helpers.VibrationHelper
 
 import java.util.Calendar
 
@@ -13,8 +16,9 @@ import maderski.chargingindicator.sharedprefs.CIPreferences
  * Created by Jason on 8/2/16.
  */
 class PerformActions(private val mContext: Context) {
-    private val vibration: Vibration = Vibration(mContext)
-    private val playSound: Sound = Sound(mContext)
+    private val mVibrationHelper: VibrationHelper = VibrationHelper(mContext)
+    private val mPlaySoundHelper: SoundHelper = SoundHelper(mContext)
+    private val mCIBubblesHelper: CIBubblesHelper = CIBubblesHelper(mContext)
 
     private val isQuietTime: Boolean
         get() {
@@ -48,9 +52,9 @@ class PerformActions(private val mContext: Context) {
         val canVibrate = CIPreferences.GetVibrateWhenPluggedIn(mContext)
         if (canVibrate && isQuietTime.not()) {
             if (CIPreferences.getDiffVibrations(mContext))
-                vibration.onConnectPattern()
+                mVibrationHelper.onConnectPattern()
             else
-                vibration.standardVibration()
+                mVibrationHelper.standardVibration()
         }
     }
 
@@ -58,9 +62,9 @@ class PerformActions(private val mContext: Context) {
         val canVibrate = CIPreferences.getVibrateOnDisconnect(mContext)
         if (canVibrate && isQuietTime.not()) {
             if (CIPreferences.getDiffVibrations(mContext))
-                vibration.onDisconnectPattern()
+                mVibrationHelper.onDisconnectPattern()
             else
-                vibration.standardVibration()
+                mVibrationHelper.standardVibration()
         }
     }
 
@@ -88,14 +92,15 @@ class PerformActions(private val mContext: Context) {
     private fun playSoundHandler(canPlaySound: Boolean, chosenPlaySound: String) {
         if (canPlaySound && isQuietTime.not()) {
             if (chosenPlaySound.equals("None", ignoreCase = true))
-                playSound.playDefaultNotificationSound()
+                mPlaySoundHelper.playDefaultNotificationSound()
             else
-                playSound.playNotificationSound(Uri.parse(chosenPlaySound))
+                mPlaySoundHelper.playNotificationSound(Uri.parse(chosenPlaySound))
         }
     }
 
     fun showToast(message: String) {
-        if (CIPreferences.GetShowToast(mContext))
+        val isToastShown = CIPreferences.GetShowToast(mContext)
+        if (isToastShown)
             Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
     }
 

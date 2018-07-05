@@ -4,4 +4,6 @@
     <string name="set_sound_button_text">SET SOUND</string>
     <string name="ci_service_notification_title">Monitoring power…</string>
     <string name="ci_service_notification_messge">""</string>
+    <string name="power_connected_msg">Power Connected</string>
+    <string name="power_disconnected_msg">Power Disconnected</string>
 </resources>
