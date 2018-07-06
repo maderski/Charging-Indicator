@@ -62,6 +62,37 @@ public class ServiceUtils {
                                                  String channelName,
                                                  @DrawableRes int icon,
                                                  boolean isOngoing) {
+
+        Notification notification = getNotification(title, message, service, channelId, channelName, icon, isOngoing);
+
+        service.startForeground(id, notification);
+    }
+
+    public static void updateServiceNotification(int id,
+                                                 String title,
+                                                 String message,
+                                                 Service service,
+                                                 String channelId,
+                                                 String channelName,
+                                                 @DrawableRes int icon,
+                                                 boolean isOngoing) {
+
+        Notification notification = getNotification(title, message, service, channelId, channelName, icon, isOngoing);
+
+        NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(id, notification);
+        }
+
+    }
+
+    private static Notification getNotification(String title,
+                                               String message,
+                                               Service service,
+                                               String channelId,
+                                               String channelName,
+                                               @DrawableRes int icon,
+                                               boolean isOngoing) {
         Notification.Builder builder;
 
         if (Build.VERSION.SDK_INT < 26) {
@@ -87,7 +118,7 @@ public class ServiceUtils {
             notification.flags = Notification.FLAG_ONGOING_EVENT;
         }
 
-        service.startForeground(id, notification);
+        return notification;
     }
 
     @RequiresApi(Build.VERSION_CODES.O)

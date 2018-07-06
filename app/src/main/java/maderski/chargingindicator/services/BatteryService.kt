@@ -3,6 +3,7 @@ package maderski.chargingindicator.services
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.IBinder
 import android.util.Log
 import maderski.chargingindicator.R
@@ -55,8 +56,23 @@ class BatteryService : Service() {
             it.removeBubble()
         }
 
-        stopForeground(true)
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val title = this.getString(R.string.ci_service_notification_title)
+            val message = this.getString(R.string.ci_service_notification_messge)
+            ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                    title,
+                    message,
+                    this,
+                    getString(R.string.ci_channel_id),
+                    getString(R.string.ci_channel_name),
+                    R.drawable.standardbolt,
+                    true)
+        } else {
+            stopForeground(true)
+        }
+
         unregisterReceiver(mBatteryReceiver)
+
     }
 
     override fun onBind(intent: Intent?): IBinder? {
