@@ -37,16 +37,16 @@ class CIService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(TAG, "ON CREATE")
         val title = this.getString(R.string.ci_service_notification_title)
         val message = this.getString(R.string.ci_service_notification_messge)
-        ServiceUtils.createServiceNotification(3449,
+        ServiceUtils.createServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
                 title,
                 message,
                 this,
-                "CIChannelId",
-                "CIChannelName",
-                R.drawable.standardbolt)
+                getString(R.string.ci_channel_id),
+                getString(R.string.ci_channel_name),
+                R.drawable.standardbolt,
+                true)
     }
 
     override fun onDestroy() {

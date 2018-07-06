@@ -34,16 +34,16 @@ class BatteryService : Service() {
 
     override fun onCreate() {
         super.onCreate()
-        Log.d(CIService.TAG, "ON CREATE")
-        val title = "Getting battery percent"
-        val message = "Getting battery"
-        ServiceUtils.createServiceNotification(3448,
+        val title = getString(R.string.getting_battery_pct)
+        val message = getString(R.string.getting_battery_info)
+        ServiceUtils.createServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
                 title,
                 message,
                 this,
-                "CIChannelId",
-                "CIChannelName",
-                R.drawable.standardbolt)
+                getString(R.string.ci_channel_id),
+                getString(R.string.ci_channel_name),
+                R.drawable.standardbolt,
+                true)
     }
 
     override fun onDestroy() {

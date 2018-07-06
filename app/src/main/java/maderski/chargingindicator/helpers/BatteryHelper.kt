@@ -1,4 +1,4 @@
-package maderski.chargingindicator.battery
+package maderski.chargingindicator.helpers
 
 import android.content.Intent
 import android.os.BatteryManager

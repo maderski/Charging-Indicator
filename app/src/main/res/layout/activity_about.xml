@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -32,52 +33,52 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
-                android:text="Created by:"
+                android:text="@string/created_by"
                 android:textColor="@color/yellowDark"
                 android:id="@+id/CBTextView"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:text=" Jason Maderski"
+                android:text="@string/developer_name"
                 android:textColor="@color/yellowDark"
                 android:id="@+id/AuthorTextView"
-                android:textSize="16dp" />
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="2015"
+            android:text="@string/app_creation_date"
             android:textColor="@color/yellowDark"
             android:id="@+id/YearTextView"
             android:layout_gravity="center_horizontal"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="This little program really helped me when using a wireless charger.  I hope it can do the same for others! :)"
+            android:text="@string/about_msg"
             android:textColor="@color/yellowDark"
             android:id="@+id/textView3"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="version"
+            android:text="@string/version"
             android:textColor="@color/white"
             android:id="@+id/versionTxt"
             android:layout_gravity="center_horizontal"
             android:paddingTop="20dp"
-            android:textSize="16dp" />
+            android:textSize="16sp" />
     </LinearLayout>
 </RelativeLayout>

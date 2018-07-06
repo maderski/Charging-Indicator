@@ -21,6 +21,8 @@ import java.util.List;
  */
 
 public class ServiceUtils {
+    public static final int FOREGROUND_NOTIFICATION_ID = 3449;
+
     public static void startService(Context context, Class<?> serviceClass, String tag) {
         Intent intent = new Intent(context, serviceClass);
         intent.addCategory(tag);
@@ -58,7 +60,8 @@ public class ServiceUtils {
                                                  Service service,
                                                  String channelId,
                                                  String channelName,
-                                                 @DrawableRes int icon) {
+                                                 @DrawableRes int icon,
+                                                 boolean isOngoing) {
         Notification.Builder builder;
 
         if (Build.VERSION.SDK_INT < 26) {
@@ -77,7 +80,12 @@ public class ServiceUtils {
                 .setSmallIcon(icon)
                 .setContentTitle(title)
                 .setContentText(message)
+                .setOnlyAlertOnce(true)
                 .build();
+
+        if(isOngoing) {
+            notification.flags = Notification.FLAG_ONGOING_EVENT;
+        }
 
         service.startForeground(id, notification);
     }

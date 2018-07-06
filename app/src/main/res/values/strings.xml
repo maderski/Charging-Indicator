@@ -6,4 +6,27 @@
     <string name="ci_service_notification_messge">""</string>
     <string name="power_connected_msg">Power Connected</string>
     <string name="power_disconnected_msg">Power Disconnected</string>
+    <string name="ci_channel_id">CIChannelId</string>
+    <string name="ci_channel_name">CIChannelName</string>
+    <string name="getting_battery_pct">Getting battery percent</string>
+    <string name="getting_battery_info">Getting battery info</string>
+    <string name="about_msg">This little program really helped me when using a wireless charger. I hope it can do the same for others! :)</string>
+    <string name="created_by">Created by:</string>
+    <string name="developer_name">Jason Maderski</string>
+    <string name="app_creation_date">2015</string>
+    <string name="version">version</string>
+    <string name="power_connected">Power Connected</string>
+    <string name="floating_charging_button">FLOATING CHARGING BUTTON</string>
+    <string name="vibrate">VIBRATE</string>
+    <string name="play_sound">Play SOUND</string>
+    <string name="power_disconnected">Power Disconnected</string>
+    <string name="notification">Notification</string>
+    <string name="pop_up_message_on_connect_disconnect">Pop up MESSAGE on connect/disconnect</string>
+    <string name="change_icon_when_charging_is_done">Change ICON when charging is done</string>
+    <string name="other">Other</string>
+    <string name="connect_disconnect_vibrate_differently">Connect/Disconnect Vibrate differently</string>
+    <string name="play_sound_when_battery_is_charged">Play sound when battery is charged</string>
+    <string name="don_t_play_sounds_vibration_for_set_timespan">Don\'t play sounds/vibration for set timespan</string>
+    <string name="start_time">Start Time</string>
+    <string name="end_time">End Time</string>
 </resources>
