@@ -71,15 +71,15 @@ public class ServiceUtils {
     public static void updateServiceNotification(int id,
                                                  String title,
                                                  String message,
-                                                 Service service,
+                                                 Context context,
                                                  String channelId,
                                                  String channelName,
                                                  @DrawableRes int icon,
                                                  boolean isOngoing) {
 
-        Notification notification = getNotification(title, message, service, channelId, channelName, icon, isOngoing);
+        Notification notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing);
 
-        NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         if (notificationManager != null) {
             notificationManager.notify(id, notification);
         }
@@ -88,7 +88,7 @@ public class ServiceUtils {
 
     private static Notification getNotification(String title,
                                                String message,
-                                               Service service,
+                                               Context context,
                                                String channelId,
                                                String channelName,
                                                @DrawableRes int icon,
@@ -96,15 +96,15 @@ public class ServiceUtils {
         Notification.Builder builder;
 
         if (Build.VERSION.SDK_INT < 26) {
-            builder = new android.app.Notification.Builder(service);
+            builder = new android.app.Notification.Builder(context);
         } else {
-            NotificationManager notificationManager = (NotificationManager) service.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
             if (notificationManager != null) {
                 NotificationChannel channel = ServiceUtils.getNotificationChannel(channelId, channelName);
                 notificationManager.createNotificationChannel(channel);
             }
-            builder = new Notification.Builder(service, channelId);
+            builder = new Notification.Builder(context, channelId);
         }
 
         Notification notification = builder
