@@ -29,4 +29,5 @@
     <string name="don_t_play_sounds_vibration_for_set_timespan">Don\'t play sounds/vibration for set timespan</string>
     <string name="start_time">Start Time</string>
     <string name="end_time">End Time</string>
+    <string name="this_app_uses_msg">This app uses the Android library \'bubbles-for-android\' by Txus Ballesteros</string>
 </resources>
