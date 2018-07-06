@@ -26,7 +26,7 @@ class BatteryHelper(private val mBatteryStatus: Intent) {
         }
 
     val isBatteryAt100: Boolean
-        get() = batteryPercent() == 1f && isBatteryCharging
+        get() = batteryPercent() == 1f //&& isBatteryCharging
 
     // Returns battery percentage as string
     fun batteryLevel(): String {

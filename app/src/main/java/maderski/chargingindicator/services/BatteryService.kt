@@ -8,6 +8,7 @@ import android.os.IBinder
 import android.util.Log
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.PerformActions
+import maderski.chargingindicator.helpers.BatteryHelper
 import maderski.chargingindicator.helpers.CIBubblesHelper
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.sharedprefs.CIPreferences
@@ -20,17 +21,29 @@ class BatteryService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        registerReceiver(mBatteryReceiver, filter)
+        val batteryStatus = registerReceiver(mBatteryReceiver, filter)
 
         mPerformActions = PerformActions(this)
         mPerformActions?.let {
             it.connectVibrate()
-            it.connectSound()
+            playConnectSound(it, batteryStatus)
             it.showToast(getString(R.string.power_connected_msg))
             it.showBubble()
         }
 
         return START_NOT_STICKY
+    }
+
+    private fun playConnectSound(performActions: PerformActions, batteryStatus: Intent?) {
+        val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(this)
+        if(chargedSoundEnabled && batteryStatus != null) {
+            val isBatteryAt100 = BatteryHelper(batteryStatus).isBatteryAt100
+            if(isBatteryAt100.not()) {
+                performActions.connectSound()
+            }
+        } else {
+            performActions.connectSound()
+        }
     }
 
     override fun onCreate() {
