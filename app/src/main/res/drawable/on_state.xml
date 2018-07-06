@@ -14,8 +14,6 @@
     </item>
     <item>
         <shape>
-            <stroke android:color="@color/white"
-                android:width="3dp"/>
             <corners
                 android:radius="5dp"/>
             <padding
