@@ -26,7 +26,6 @@ public class CIPreferences {
     private static final String QUIET_TIME = "quietTime";
     private static final String START_QUIET_TIME = "startQuietTIme";
     private static final String END_QUIET_TIME = "endQuietTime";
-    private static final String PLAYED_CHARGING_DONE_SOUND = "playedChargingDoneSound";
     private static final String SHOW_CHARGING_BUBBLE_KEY = "showChargingBubble";
     private static final String CHARGING_BUBBLE_X = "chargingBubbleX";
     private static final String CHARGING_BUBBLE_Y = "chargingBubbleY";
@@ -81,16 +80,6 @@ public class CIPreferences {
     public static boolean getShowChargingBubble(Context context){
         return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, true);
     }
-
-    public static void setPlayedChargingDoneSound(Context context, boolean didPlay){
-        editor(context).putBoolean(PLAYED_CHARGING_DONE_SOUND, didPlay);
-        commit(context);
-    }
-
-    public static boolean getPlayedChargingDoneSound(Context context){
-        return reader(context).getBoolean(PLAYED_CHARGING_DONE_SOUND, false);
-    }
-
 
     public static void setStartQuietTime(Context context, int time){
         editor(context).putInt(START_QUIET_TIME, time);

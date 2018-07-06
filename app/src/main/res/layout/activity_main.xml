@@ -281,74 +281,58 @@
                     android:text="@string/set_sound_button_text"
                     android:textColor="@color/charcoal"
                     android:stateListAnimator="@animator/button_state_list_animator"/>
-                <android.support.v7.widget.CardView
+
+                <Switch
+                    android:id="@+id/quiet_time_switch"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardElevation="2dp"
-                    app:cardCornerRadius="4dp">
+                    android:checked="false"
+                    android:onClick="quietTimeSwitch"
+                    android:paddingBottom="20dp"
+                    android:paddingTop="20dp"
+                    android:text="@string/don_t_play_sounds_vibration_for_set_timespan"
+                    android:textColor="@color/charcoal"
+                    android:textStyle="bold" />
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/set_start_time_button"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-                        <Switch
-                            android:id="@+id/quiet_time_switch"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:checked="false"
-                            android:onClick="quietTimeSwitch"
-                            android:paddingBottom="20dp"
-                            android:paddingTop="8dp"
-                            android:text="@string/don_t_play_sounds_vibration_for_set_timespan"
-                            android:textColor="@color/charcoal"
-                            android:textStyle="bold" />
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginEnd="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/on_state"
+                        android:onClick="setStartQuietTime"
+                        android:paddingLeft="16dp"
+                        android:paddingRight="16dp"
+                        android:text="@string/start_time"
+                        android:textColor="@color/charcoal"
+                        android:stateListAnimator="@animator/button_state_list_animator" />
 
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="8dp"
-                            android:gravity="center_horizontal"
-                            android:orientation="horizontal">
-
-                            <Button
-                                android:id="@+id/set_start_time_button"
-                                style="@style/Widget.AppCompat.Button.Borderless"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginEnd="4dp"
-                                android:layout_marginBottom="8dp"
-                                android:background="@drawable/on_state"
-                                android:onClick="setStartQuietTime"
-                                android:paddingLeft="16dp"
-                                android:paddingRight="16dp"
-                                android:text="@string/start_time"
-                                android:textColor="@color/charcoal"
-                                android:stateListAnimator="@animator/button_state_list_animator" />
-
-                            <Button
-                                android:id="@+id/set_end_time_button"
-                                style="@style/Widget.AppCompat.Button.Borderless"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center_horizontal"
-                                android:layout_marginStart="4dp"
-                                android:layout_marginBottom="8dp"
-                                android:background="@drawable/on_state"
-                                android:onClick="setEndQuietTime"
-                                android:paddingLeft="24dp"
-                                android:paddingRight="24dp"
-                                android:text="@string/end_time"
-                                android:textColor="@color/charcoal"
-                                android:stateListAnimator="@animator/button_state_list_animator" />
-                        </LinearLayout>
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
+                    <Button
+                        android:id="@+id/set_end_time_button"
+                        style="@style/Widget.AppCompat.Button.Borderless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginStart="4dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/on_state"
+                        android:onClick="setEndQuietTime"
+                        android:paddingLeft="24dp"
+                        android:paddingRight="24dp"
+                        android:text="@string/end_time"
+                        android:textColor="@color/charcoal"
+                        android:stateListAnimator="@animator/button_state_list_animator" />
+                </LinearLayout>
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>

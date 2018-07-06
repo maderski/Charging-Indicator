@@ -85,9 +85,6 @@ class BatteryService : Service() {
         }
 
         unregisterReceiver(mBatteryReceiver)
-
-        CIPreferences.setPlayedChargingDoneSound(this, false)
-
     }
 
     override fun onBind(intent: Intent?): IBinder? {

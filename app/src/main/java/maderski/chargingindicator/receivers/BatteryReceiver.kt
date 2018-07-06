@@ -8,38 +8,35 @@ import android.util.Log
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.PerformActions
 import maderski.chargingindicator.helpers.BatteryHelper
-import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.utils.ServiceUtils
 
 class BatteryReceiver : BroadcastReceiver() {
+    private var canChargedSoundPlay = true
+
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let {
             val action = it.action
             if(action != null && context != null) {
-                val isFullyCharged = CIPreferences.getPlayedChargingDoneSound(context)
-
-                if(isFullyCharged.not()) {
-                    val performActions = PerformActions(context)
-                    val batteryHelper = BatteryHelper(it)
-                    val isBatteryAt100 = batteryHelper.isBatteryAt100
-                    if (isBatteryAt100) {
-                        performActions.batteryChargedSound()
-                        CIPreferences.setPlayedChargingDoneSound(context, true)
-                    }
-
-                    val title = "Battery Level: ${batteryHelper.batteryLevel()}"
-                    val message = if (isBatteryAt100) "CHARGED!" else "Charging..."
-
-                    Log.d(TAG, title)
-                    ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                            title,
-                            message,
-                            context,
-                            context.getString(R.string.ci_channel_id),
-                            context.getString(R.string.ci_channel_name),
-                            R.drawable.standardbolt,
-                            true)
+                val performActions = PerformActions(context)
+                val batteryHelper = BatteryHelper(it)
+                val isBatteryAt100 = batteryHelper.isBatteryAt100
+                if (isBatteryAt100 && canChargedSoundPlay) {
+                    performActions.batteryChargedSound()
+                    canChargedSoundPlay = false
                 }
+
+                val title = "Battery Level: ${batteryHelper.batteryLevel()}"
+                val message = if (isBatteryAt100) "CHARGED!" else "Charging..."
+
+                Log.d(TAG, title)
+                ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                        title,
+                        message,
+                        context,
+                        context.getString(R.string.ci_channel_id),
+                        context.getString(R.string.ci_channel_name),
+                        R.drawable.standardbolt,
+                        true)
             }
         }
     }
