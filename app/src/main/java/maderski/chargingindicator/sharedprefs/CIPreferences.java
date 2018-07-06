@@ -79,7 +79,7 @@ public class CIPreferences {
     }
 
     public static boolean getShowChargingBubble(Context context){
-        return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, false);
+        return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, true);
     }
 
     public static void setPlayedChargingDoneSound(Context context, boolean didPlay){
