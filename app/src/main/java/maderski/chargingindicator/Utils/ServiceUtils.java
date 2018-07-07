@@ -16,6 +16,8 @@ import android.support.annotation.RequiresApi;
 
 import java.util.List;
 
+import maderski.chargingindicator.BuildConfig;
+
 /**
  * Created by Jason on 6/17/17.
  */
@@ -77,11 +79,13 @@ public class ServiceUtils {
                                                  @DrawableRes int icon,
                                                  boolean isOngoing) {
 
-        Notification notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing);
+        if(Build.VERSION.SDK_INT < 26) {
+            Notification notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing);
 
-        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        if (notificationManager != null) {
-            notificationManager.notify(id, notification);
+            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (notificationManager != null) {
+                notificationManager.notify(id, notification);
+            }
         }
 
     }

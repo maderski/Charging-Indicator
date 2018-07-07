@@ -8,8 +8,8 @@
     <string name="power_disconnected_msg">Power Disconnected</string>
     <string name="ci_channel_id">CIChannelId</string>
     <string name="ci_channel_name">Charging Indicator</string>
-    <string name="getting_battery_pct">Getting battery percent</string>
-    <string name="getting_battery_info">Getting battery info</string>
+    <string name="getting_battery_pct">Device is plugged in!</string>
+    <string name="getting_battery_info">""</string>
     <string name="about_msg">This little program really helped me when using a wireless charger. I hope it can do the same for others! :)</string>
     <string name="created_by">Created by:</string>
     <string name="developer_name">Jason Maderski</string>
