@@ -77,7 +77,7 @@ public class CIPreferences {
     }
 
     public static boolean getShowChargingBubble(Context context){
-        return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, true);
+        return reader(context).getBoolean(SHOW_CHARGING_BUBBLE_KEY, false);
     }
 
     public static void setStartQuietTime(Context context, int time){

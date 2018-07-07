@@ -125,7 +125,7 @@ public class ServiceUtils {
     private static NotificationChannel getNotificationChannel(String channelId, String channelName) {
         NotificationChannel notificationChannel = new NotificationChannel(channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_NONE);
+                NotificationManager.IMPORTANCE_UNSPECIFIED);
         notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         notificationChannel.setSound(null, null);
         notificationChannel.enableVibration(false);
