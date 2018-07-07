@@ -13,6 +13,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.RequiresApi;
+import android.support.v4.app.NotificationCompat;
 
 import java.util.List;
 
@@ -94,10 +95,10 @@ public class ServiceUtils {
                                                String channelName,
                                                @DrawableRes int icon,
                                                boolean isOngoing) {
-        Notification.Builder builder;
+        NotificationCompat.Builder builder;
 
         if (Build.VERSION.SDK_INT < 26) {
-            builder = new android.app.Notification.Builder(context);
+            builder = new NotificationCompat.Builder(context, channelId);
         } else {
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -105,7 +106,7 @@ public class ServiceUtils {
                 NotificationChannel channel = ServiceUtils.getNotificationChannel(channelId, channelName);
                 notificationManager.createNotificationChannel(channel);
             }
-            builder = new Notification.Builder(context, channelId);
+            builder = new NotificationCompat.Builder(context, channelId);
         }
 
         Notification notification = builder
@@ -116,7 +117,7 @@ public class ServiceUtils {
                 .build();
 
         if(isOngoing) {
-            notification.flags = Notification.FLAG_ONGOING_EVENT;
+            notification.flags = Notification.FLAG_FOREGROUND_SERVICE;
         }
 
         return notification;
@@ -127,10 +128,9 @@ public class ServiceUtils {
         NotificationChannel notificationChannel = new NotificationChannel(channelId,
                 channelName,
                 NotificationManager.IMPORTANCE_MIN);
-        notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
-        notificationChannel.setSound(null, null);
         notificationChannel.enableVibration(false);
         notificationChannel.setShowBadge(false);
+        notificationChannel.setImportance(NotificationManager.IMPORTANCE_MIN);
         return notificationChannel;
     }
 

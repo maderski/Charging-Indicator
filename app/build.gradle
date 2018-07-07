@@ -24,9 +24,9 @@ android {
     defaultConfig {
         applicationId "maderski.chargingindicator"
         minSdkVersion 21
-        targetSdkVersion 27
-        versionCode 33
-        versionName "3.05"
+        targetSdkVersion 25
+        versionCode 34
+        versionName "3.06"
     }
     buildTypes {
         release {
