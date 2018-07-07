@@ -1,6 +1,5 @@
 package maderski.chargingindicator.receivers
 
-import android.app.NotificationManager
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -27,6 +26,7 @@ class BatteryReceiver : BroadcastReceiver() {
 
                 val title = "Battery Level: ${batteryHelper.batteryLevel()}"
                 val message = if (isBatteryAt100) "CHARGED!" else "Charging..."
+                val icon = if(isBatteryAt100) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
 
                 Log.d(TAG, title)
                 ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
@@ -35,7 +35,7 @@ class BatteryReceiver : BroadcastReceiver() {
                         context,
                         context.getString(R.string.ci_channel_id),
                         context.getString(R.string.ci_channel_name),
-                        R.drawable.standardbolt,
+                        icon,
                         true)
             }
         }
@@ -43,11 +43,5 @@ class BatteryReceiver : BroadcastReceiver() {
 
     companion object {
         const val TAG = "BatteryReceiver"
-    }
-
-    private fun updateNotification(context: Context, title: String) {
-
-        val notificationManager: NotificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
     }
 }

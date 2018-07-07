@@ -165,10 +165,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
         Boolean btnState;
         Switch setting_switch;
 
-        btnState = CIPreferences.GetChangeIcon(this);
-        setting_switch = (Switch) findViewById(R.id.change_icon_switch);
-        setting_switch.setChecked(btnState);
-
         btnState = CIPreferences.GetVibrateWhenPluggedIn(this);
         setting_switch = (Switch) findViewById(R.id.vibrate_switch);
         setting_switch.setChecked(btnState);
@@ -237,20 +233,6 @@ public class MainActivity extends Activity implements TimePickerFragment.TimePic
             CIPreferences.setBatteryChargedPlaySound(this, false);
             if(BuildConfig.DEBUG)
                 Log.i(TAG, "BatteryChargedPlaySoundSwitch is OFF");
-        }
-    }
-
-    public void changeIconSwitch(View view){
-        boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("change_icon", on);
-        if (on) {
-            CIPreferences.setChangeIcon(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "changeIconSwitch is ON");
-        } else {
-            CIPreferences.setChangeIcon(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "changeIconSwitch is OFF");
         }
     }
 

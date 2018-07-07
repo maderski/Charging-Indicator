@@ -12,7 +12,6 @@ public class CIPreferences {
 
     private static final String MY_PREFS_NAME = "CIPreferences";
 
-    private static final String CHANGE_ICON_KEY = "changeIcon";
     private static final String VIBRATE_KEY = "vibrate";
     private static final String DISCONNECT_VIBRATE_KEY = "disconnectVibrateKey";
     private static final String DIFF_VIBRATIONS_KEY = "differentVibrationsKey";
@@ -170,15 +169,6 @@ public class CIPreferences {
 
     public static boolean getDiffVibrations(Context context){
         return reader(context).getBoolean(DIFF_VIBRATIONS_KEY, true);
-    }
-
-    public static void setChangeIcon(Context context, boolean enabled){
-        editor(context).putBoolean(CHANGE_ICON_KEY, enabled);
-        commit(context);
-    }
-
-    public static boolean GetChangeIcon(Context context){
-        return reader(context).getBoolean(CHANGE_ICON_KEY, true);
     }
 
     public static void setVibrateWhenPluggedIn(Context context, boolean enabled){
