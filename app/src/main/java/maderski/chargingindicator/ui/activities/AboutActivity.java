@@ -1,8 +1,9 @@
 package maderski.chargingindicator.ui.activities;
 
-import android.app.Activity;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -11,7 +12,7 @@ import java.util.Objects;
 
 import maderski.chargingindicator.R;
 
-public class AboutActivity extends Activity {
+public class AboutActivity extends AppCompatActivity {
 
     private static final String TAG = AboutActivity.class.getName();
 
@@ -19,7 +20,10 @@ public class AboutActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about);
-        Objects.requireNonNull(getActionBar()).setDisplayHomeAsUpEnabled(true);
+        ActionBar actionBar = getSupportActionBar();
+        if(actionBar != null) {
+            Objects.requireNonNull(actionBar).setDisplayHomeAsUpEnabled(true);
+        }
 
         setVersionText();
     }

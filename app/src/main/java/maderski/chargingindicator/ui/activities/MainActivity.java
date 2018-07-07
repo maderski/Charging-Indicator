@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +32,7 @@ import maderski.chargingindicator.utils.ServiceUtils;
     App gives users with wireless chargers a clearer indicator that the phone is charging
     by creating a notification when Power is connected to the phone.
 */
-public class MainActivity extends Activity implements TimePickerFragment.TimePickerDialogListener {
+public class MainActivity extends AppCompatActivity implements TimePickerFragment.TimePickerDialogListener {
 
     private static final String TAG = MainActivity.class.getName();
 
