@@ -79,15 +79,12 @@ public class ServiceUtils {
                                                  @DrawableRes int icon,
                                                  boolean isOngoing) {
 
-        if(Build.VERSION.SDK_INT < 26) {
-            Notification notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing);
+        Notification notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing);
 
-            NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-            if (notificationManager != null) {
-                notificationManager.notify(id, notification);
-            }
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null) {
+            notificationManager.notify(id, notification);
         }
-
     }
 
     private static Notification getNotification(String title,
@@ -129,10 +126,11 @@ public class ServiceUtils {
     private static NotificationChannel getNotificationChannel(String channelId, String channelName) {
         NotificationChannel notificationChannel = new NotificationChannel(channelId,
                 channelName,
-                NotificationManager.IMPORTANCE_UNSPECIFIED);
+                NotificationManager.IMPORTANCE_MIN);
         notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
         notificationChannel.setSound(null, null);
         notificationChannel.enableVibration(false);
+        notificationChannel.setShowBadge(false);
         return notificationChannel;
     }
 
