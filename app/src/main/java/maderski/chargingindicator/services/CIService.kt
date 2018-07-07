@@ -10,6 +10,8 @@ import android.os.Looper
 import android.util.Log
 import maderski.chargingindicator.BuildConfig
 import maderski.chargingindicator.R
+import maderski.chargingindicator.helpers.BatteryHelper
+import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.receivers.PowerConnectionReceiver
 import maderski.chargingindicator.utils.ServiceUtils
 
@@ -22,7 +24,6 @@ class CIService : Service() {
             filter.addAction("android.intent.action.ACTION_POWER_CONNECTED")
             filter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED")
             registerReceiver(mPowerConnectionReceiver, filter)
-
         } else {
             IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
                 intentFilter -> registerReceiver(mPowerConnectionReceiver, intentFilter)

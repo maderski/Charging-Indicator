@@ -10,15 +10,17 @@ import maderski.chargingindicator.utils.ServiceUtils
 
 class OnAppUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        val isCIServiceRunning = ServiceUtils.isServiceRunning(context, CIService::class.java)
-        val isJobScheduled = ServiceUtils.isJobScheduled(context)
-        if (isCIServiceRunning.not() && isJobScheduled.not() && BuildConfig.DEBUG.not()) {
-            intent?.let {
-                val action = it.action
-                if(action == Intent.ACTION_MY_PACKAGE_REPLACED) {
-                    // Schedule Job to run on update
-                    ServiceUtils.scheduleJob(context, CIService::class.java)
-                }
+        intent?.let {
+            val action = it.action
+            if (action == Intent.ACTION_MY_PACKAGE_REPLACED) {
+                // Schedule Job to run on update
+                ServiceUtils.startService(context, CIService::class.java, CIService.TAG)
+                //ServiceUtils.scheduleJob(context, CIService::class.java)
+//                val isCIServiceRunning = ServiceUtils.isServiceRunning(context, CIService::class.java)
+//                val isJobScheduled = ServiceUtils.isJobScheduled(context)
+//                if (isCIServiceRunning.not() && isJobScheduled.not()) {
+//
+//                }
             }
         }
     }
