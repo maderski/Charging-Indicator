@@ -80,8 +80,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
             public void afterTextChanged(Editable s) {
                 if(s != null && !s.toString().isEmpty()) {
                     int newValue = Integer.valueOf(s.toString());
-                    if(newValue > 10) {
+                    if(newValue < 100) {
                         CIPreferences.setBatteryChargedPercent(MainActivity.this, newValue);
+                    } else {
+                        CIPreferences.setBatteryChargedPercent(MainActivity.this, 100);
                     }
                 }
             }

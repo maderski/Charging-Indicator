@@ -3,6 +3,7 @@ package maderski.chargingindicator.helpers
 import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
+import android.util.Log
 import maderski.chargingindicator.sharedprefs.CIPreferences
 
 import java.text.NumberFormat
@@ -31,7 +32,7 @@ class BatteryHelper(private val mBatteryStatus: Intent) {
         get() = batteryPercent() == 1f
 
     fun isBatteryUserCharged(context: Context): Boolean {
-        return batteryPercent() == CIPreferences.getBatteryCharged(context).toFloat()
+        return (batteryPercent() * 100).toInt() == CIPreferences.getBatteryCharged(context)
     }
 
     // Returns battery percentage as string
