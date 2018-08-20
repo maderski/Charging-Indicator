@@ -28,6 +28,7 @@ public class CIPreferences {
     private static final String SHOW_CHARGING_BUBBLE_KEY = "showChargingBubble";
     private static final String CHARGING_BUBBLE_X = "chargingBubbleX";
     private static final String CHARGING_BUBBLE_Y = "chargingBubbleY";
+    private static final String BATTERY_CHARGED_PERCENT = "batteryChargedPercent";
 
 
     //Writes to SharedPreferences, but still need to commit setting to save it
@@ -51,6 +52,15 @@ public class CIPreferences {
     private static void commit(Context context){
         editor(context).commit();
         _editor = null;
+    }
+
+    public static void setBatteryChargedPercent(Context context, int percent) {
+        editor(context).putInt(BATTERY_CHARGED_PERCENT, percent);
+        commit(context);
+    }
+
+    public static int getBatteryCharged(Context context) {
+        return reader(context).getInt(BATTERY_CHARGED_PERCENT, 100);
     }
 
     public static void setChargingBubbleX(Context context, float x) {

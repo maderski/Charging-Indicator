@@ -33,8 +33,6 @@ public class TimePickerFragment extends DialogFragment
         String END_TIME = "end_time";
     }
 
-    private int previouslySetTime;
-    private String pickerTitle;
     private String mTimeState;
 
     public TimePickerDialogListener dialogListener;
@@ -52,8 +50,8 @@ public class TimePickerFragment extends DialogFragment
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         mTimeState = getArguments().getString("picker_time_state");
-        previouslySetTime = getArguments().getInt("picker_previouslySetTime");
-        pickerTitle = getArguments().getString("picker_title");
+        int previouslySetTime = getArguments().getInt("picker_previouslySetTime");
+        String pickerTitle = getArguments().getString("picker_title");
         dialogListener = getActivity() instanceof TimePickerDialogListener ? (TimePickerDialogListener) getActivity() : null;
 
         //Create and set Title
@@ -89,10 +87,9 @@ public class TimePickerFragment extends DialogFragment
         int setTime = (hourOfDay * 100) + minute;
         Log.d(TAG, "Set time: " + Integer.toString(setTime));
 
-        if (dialogListener != null)
+        if (dialogListener != null) {
             dialogListener.onTimeSet(view, mTimeState, hourOfDay, minute);
-
-
+        }
     }
 
     public interface TimePickerDialogListener {

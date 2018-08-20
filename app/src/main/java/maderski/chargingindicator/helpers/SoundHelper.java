@@ -57,8 +57,7 @@ public class SoundHelper {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-        //intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (chosenRingtone == "None") ? (Uri)null :Uri.parse(chosenRingtone));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (chosenRingtone.equals("None")) ? (Uri)null :Uri.parse(chosenRingtone));
         activity.startActivityForResult(intent, 7);
     }
 
@@ -66,8 +65,7 @@ public class SoundHelper {
         Intent intent = new Intent(RingtoneManager.ACTION_RINGTONE_PICKER);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION);
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone");
-        //intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (Uri) null);
-        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (chosenRingtone == "None") ? (Uri)null :Uri.parse(chosenRingtone));
+        intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, (chosenRingtone.equals("None")) ? (Uri)null :Uri.parse(chosenRingtone));
         activity.startActivityForResult(intent, resultCode);
     }
 }

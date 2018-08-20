@@ -61,7 +61,6 @@ class BatteryService : Service() {
     }
 
     override fun onDestroy() {
-        super.onDestroy()
         mPerformActions?.let {
             it.disconnectVibrate()
             it.disconnectSound()
@@ -71,6 +70,8 @@ class BatteryService : Service() {
 
         stopForeground(true)
         unregisterReceiver(mBatteryReceiver)
+
+        super.onDestroy()
     }
 
     override fun onBind(intent: Intent?): IBinder? {

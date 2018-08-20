@@ -26,7 +26,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -34,16 +34,16 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView4"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingTop="8dp"
+                        android:background="@color/charcoal"
                         android:paddingBottom="12dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="8dp"
                         android:text="@string/power_connected"
-                        android:background="@color/yellow50"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:typeface="monospace" />
@@ -55,9 +55,9 @@
                         android:checked="false"
                         android:onClick="floatingChargingBtnSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingTop="16dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp"
                         android:text="@string/floating_charging_button"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -69,8 +69,8 @@
                         android:checked="false"
                         android:onClick="vibrateSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
                         android:text="@string/vibrate"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -82,8 +82,8 @@
                         android:checked="false"
                         android:onClick="connectSoundSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
                         android:text="@string/play_sound"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -113,7 +113,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -121,16 +121,16 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:background="@color/charcoal"
                         android:paddingBottom="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:background="@color/yellow50"
+                        android:paddingStart="8dp"
+                        android:paddingTop="12dp"
                         android:text="@string/power_disconnected"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:typeface="monospace" />
@@ -142,9 +142,9 @@
                         android:checked="false"
                         android:onClick="disconnectVibrateSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingTop="16dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp"
                         android:text="@string/vibrate"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -156,8 +156,8 @@
                         android:checked="false"
                         android:onClick="disconnectSoundSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
                         android:text="@string/play_sound"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -187,7 +187,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -195,17 +195,17 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/textView7"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:background="@color/charcoal"
                         android:paddingBottom="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:background="@color/yellow50"
+                        android:paddingStart="8dp"
+                        android:paddingTop="12dp"
                         android:text="@string/other"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:typeface="monospace" />
@@ -217,9 +217,9 @@
                         android:checked="false"
                         android:onClick="showToastSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingTop="16dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp"
                         android:text="@string/pop_up_message_on_connect_disconnect"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -231,9 +231,9 @@
                         android:checked="false"
                         android:onClick="diffVibrateSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingTop="16dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="16dp"
                         android:text="@string/connect_disconnect_vibrate_differently"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -244,12 +244,39 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:onClick="batteryChargedSoundSwitch"
-                        android:paddingBottom="20dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
                         android:text="@string/play_sound_when_battery_is_charged"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingBottom="20dp">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingStart="8dp"
+                            android:text="@string/charged_at"
+                            android:textColor="@color/charcoal"
+                            android:textStyle="bold" />
+
+                        <EditText
+                            android:id="@+id/et_user_set_charged_percent"
+                            android:layout_width="48dp"
+                            android:layout_height="wrap_content"
+                            android:inputType="number"
+                            android:maxLength="3"
+                            android:imeOptions="actionDone" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/percent_symbol" />
+                    </LinearLayout>
 
                     <Button
                         android:id="@+id/set_sound_battery_charged_button"
@@ -276,7 +303,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
                 app:cardCornerRadius="4dp"
-                app:cardElevation="8dp">
+                app:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -287,13 +314,14 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:background="@color/charcoal"
                         android:paddingBottom="12dp"
-                        android:paddingTop="12dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
-                        android:background="@color/yellow50"
+                        android:paddingStart="8dp"
+                        android:paddingTop="12dp"
                         android:text="@string/silence"
                         android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
                         android:typeface="monospace" />
@@ -305,9 +333,9 @@
                         android:checked="false"
                         android:onClick="quietTimeSwitch"
                         android:paddingBottom="20dp"
-                        android:paddingTop="20dp"
-                        android:paddingStart="8dp"
                         android:paddingEnd="8dp"
+                        android:paddingStart="8dp"
+                        android:paddingTop="20dp"
                         android:text="@string/don_t_play_sounds_vibration_for_set_timespan"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />

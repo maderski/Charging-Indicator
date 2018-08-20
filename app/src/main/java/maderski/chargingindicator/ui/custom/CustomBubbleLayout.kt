@@ -25,20 +25,20 @@ class CustomBubbleLayout : BubbleLayout, View.OnTouchListener {
     fun setLastXYCoordListener(lastXYCoordListener: LastXYCoordListener) { mLastXYCoordListener = lastXYCoordListener }
 
     override fun onTouch(v: View?, motionEvent: MotionEvent?): Boolean {
-        motionEvent?.let {
-            return when(it.action) {
+        motionEvent?.let { event ->
+            return when(event.action) {
                 MotionEvent.ACTION_DOWN -> {
                     Log.d(TAG, "MotionEvent ACTION_DOWN")
-                    mDownRawX = it.rawX
-                    mDownRawY = it.rawY
+                    mDownRawX = event.rawX
+                    mDownRawY = event.rawY
 
                     false
                 }
 
                 MotionEvent.ACTION_UP -> {
                     Log.d(TAG, "MotionEvent ACTION_UP")
-                    val upRawX = it.rawX
-                    val upRawY = it.rawY
+                    val upRawX = event.rawX
+                    val upRawY = event.rawY
 
                     val upDX = upRawX - mDownRawX
                     val upDY = upRawY - mDownRawY

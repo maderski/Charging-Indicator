@@ -43,16 +43,13 @@ public class AboutActivity extends AppCompatActivity {
 
     //Displays version number
     private void setVersionText(){
-        String versionInfo;
-        PackageInfo pkgInfo = null;
-        TextView tv = (TextView) findViewById(R.id.versionTxt);
         try {
-            pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-        }catch(Exception e){
+            TextView tv = (TextView) findViewById(R.id.versionTxt);
+            PackageInfo pkgInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+            String versionInfo = "v" + pkgInfo.versionName;
+            tv.setText(versionInfo);
+        } catch(Exception e){
             Log.e(TAG, e.getMessage());
         }
-        versionInfo = "v" + pkgInfo.versionName;
-
-        tv.setText(versionInfo);
     }
 }

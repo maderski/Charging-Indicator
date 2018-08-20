@@ -31,4 +31,6 @@
     <string name="end_time">End Time</string>
     <string name="this_app_uses_msg">This app uses the Android library \'bubbles-for-android\' by Txus Ballesteros</string>
     <string name="silence">Silence</string>
+    <string name="charged_at">Charged at:</string>
+    <string name="percent_symbol">%</string>
 </resources>

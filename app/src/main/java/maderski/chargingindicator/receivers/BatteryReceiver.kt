@@ -16,17 +16,17 @@ class BatteryReceiver : BroadcastReceiver() {
         intent?.let {
             val action = it.action
             if(action != null && context != null) {
-                val performActions = PerformActions(context)
                 val batteryHelper = BatteryHelper(it)
-                val isBatteryAt100 = batteryHelper.isBatteryAt100
-                if (isBatteryAt100 && canChargedSoundPlay) {
+                val isBatteryCharged = batteryHelper.isBatteryUserCharged(context)
+                if (isBatteryCharged && canChargedSoundPlay) {
+                    val performActions = PerformActions(context)
                     performActions.batteryChargedSound()
                     canChargedSoundPlay = false
                 }
 
                 val title = "Battery Level: ${batteryHelper.batteryLevel()}"
-                val message = if (isBatteryAt100) "CHARGED!" else "Charging..."
-                val icon = if(isBatteryAt100) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
+                val message = if (isBatteryCharged) "CHARGED!" else "Charging..."
+                val icon = if(isBatteryCharged) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
 
                 Log.d(TAG, title)
                 ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,

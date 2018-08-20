@@ -2,16 +2,24 @@ package maderski.chargingindicator.ui.activities;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -34,21 +42,64 @@ import maderski.chargingindicator.utils.ServiceUtils;
 */
 public class MainActivity extends AppCompatActivity implements TimePickerFragment.TimePickerDialogListener {
 
-    private static final String TAG = MainActivity.class.getName();
+    private static final String TAG = "MainActivity";
 
-    private FirebaseAnalytics mFirebaseAnalytics;
+    private EditText mUserChargedPercentEditText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkIfCIServiceIsRunning();
-        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        initUserChargedPercentEditText();
     }
 
     @Override
     protected void onResume(){
         super.onResume();
         setButtonPreferences();
+    }
+
+    private void initUserChargedPercentEditText() {
+        final String userChargedPercent = String.valueOf(CIPreferences.getBatteryCharged(this));
+        mUserChargedPercentEditText = findViewById(R.id.et_user_set_charged_percent);
+        mUserChargedPercentEditText.setText(userChargedPercent);
+        mUserChargedPercentEditText.setOnClickListener(v -> mUserChargedPercentEditText.setCursorVisible(true));
+        mUserChargedPercentEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if(s != null && !s.toString().isEmpty()) {
+                    int newValue = Integer.valueOf(s.toString());
+                    if(newValue > 10) {
+                        CIPreferences.setBatteryChargedPercent(MainActivity.this, newValue);
+                    }
+                }
+            }
+        });
+
+        mUserChargedPercentEditText.setOnEditorActionListener((v, actionId, event) -> {
+            if(actionId == EditorInfo.IME_ACTION_DONE) {
+                Log.d(TAG, "DONE");
+                InputMethodManager inputMethodManager = (InputMethodManager)MainActivity.this.getSystemService(Context.INPUT_METHOD_SERVICE);
+                if(inputMethodManager != null) {
+                    inputMethodManager.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                    mUserChargedPercentEditText.setCursorVisible(false);
+                }
+                return true;
+            } else {
+                return false;
+            }
+        });
     }
 
     private void checkIfCIServiceIsRunning(){
@@ -67,18 +118,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
         int id = item.getItemId();
-
         if(id == R.id.action_settings){
             aboutSelected();
             return true;
         }
-
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    protected void onDestroy(){
-        super.onDestroy();
     }
 
     //Launches the About Activity with about is selected
@@ -93,33 +137,23 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         super.onActivityResult(requestCode, resultCode, data);
 
         if(resultCode == Activity.RESULT_OK){
-            if(requestCode == 1) {
-                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                if(uri == null)
-                    uri = Uri.parse("None");
-                CIPreferences.setChosenConnectSound(this, uri.toString());
-                if (BuildConfig.DEBUG) {
-                    Log.i(TAG, uri.toString());
-                    Log.i(TAG, "Connect Sound Set: " + uri.toString());
-                }
-            }else if(requestCode == 2){
-                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                if(uri == null)
-                    uri = Uri.parse("None");
-                CIPreferences.setChosenDisconnectSound(this, uri.toString());
-                if (BuildConfig.DEBUG) {
-                    Log.i(TAG, uri.toString());
-                    Log.i(TAG, "Disconnect Sound Set: " + uri.toString());
-                }
-            }else if(requestCode == 3){
-                Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
-                if(uri == null)
-                    uri = Uri.parse("None");
-                CIPreferences.setChosenBatteryChargedSound(this, uri.toString());
-                if(BuildConfig.DEBUG){
-                    Log.i(TAG, uri.toString());
-                    Log.i(TAG, "Battery Charged Sound set: " + uri.toString());
-                }
+            Uri uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI);
+            if(uri == null) {
+                uri = Uri.parse("None");
+            }
+            switch (requestCode) {
+                case 1:
+                    CIPreferences.setChosenConnectSound(this, uri.toString());
+                    Log.d(TAG, "Connect Sound Set: " + uri.toString());
+                    break;
+                case 2:
+                    CIPreferences.setChosenDisconnectSound(this, uri.toString());
+                    Log.d(TAG, "Disconnect Sound Set: " + uri.toString());
+                    break;
+                case 3:
+                    CIPreferences.setChosenBatteryChargedSound(this, uri.toString());
+                    Log.d(TAG, "Battery Charged Sound set: " + uri.toString());
+                    break;
             }
         }
     }
@@ -143,11 +177,6 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
         SoundHelper soundHelper = new SoundHelper(this);
         soundHelper.notificationList(this, chosenRingtone, 3);
-    }
-
-    public void setQuietTimes(View view){
-        Log.d(TAG, "QuietTime button pressed");
-
     }
 
     public void setStartQuietTime(View view){
@@ -203,121 +232,53 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
         setting_switch.setChecked(btnState);
     }
 
-    public void setFirebaseSwitchEvent(String eventName, boolean switchedOn){
-        Bundle bundle = new Bundle();
-        bundle.putInt(FirebaseAnalytics.Param.VALUE, switchedOn ? 1 : 0);
-        mFirebaseAnalytics.logEvent(eventName, bundle);
-    }
 
     public void quietTimeSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("quiet_time", on);
-        if (on) {
-            CIPreferences.setQuietTime(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "QuietTimeSwitch is ON");
-        } else {
-            CIPreferences.setQuietTime(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "QuietTimeSwitch is OFF");
-        }
+        CIPreferences.setQuietTime(this, on);
+        Log.d(TAG, "QuietTimeSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void batteryChargedSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("charged_sound", on);
-        if (on) {
-            CIPreferences.setBatteryChargedPlaySound(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "BatteryChargedPlaySoundSwitch is ON");
-        } else {
-            CIPreferences.setBatteryChargedPlaySound(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "BatteryChargedPlaySoundSwitch is OFF");
-        }
+        CIPreferences.setBatteryChargedPlaySound(this, on);
+        Log.d(TAG, "BatteryChargedPlaySoundSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void vibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        if (on) {
-            CIPreferences.setVibrateWhenPluggedIn(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "vibrateSwitch is ON");
-        } else {
-            CIPreferences.setVibrateWhenPluggedIn(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "vibrateSwitch is OFF");
-        }
+        CIPreferences.setVibrateWhenPluggedIn(this, on);
+        Log.d(TAG, "vibrateSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void disconnectVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("disconnect_vibrate", on);
-        if (on) {
-            CIPreferences.setVibrateOnDisconnect(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "disconnectVibrateSwitch is ON");
-        } else {
-            CIPreferences.setVibrateOnDisconnect(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "vibrateSwitch is OFF");
-        }
+        CIPreferences.setVibrateOnDisconnect(this, on);
+        Log.d(TAG, "disconnectVibrateSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void diffVibrateSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("diff_vibrate", on);
-        if (on) {
-            CIPreferences.setDiffVibrations(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "diffVibrateSwitch is ON");
-        } else {
-            CIPreferences.setDiffVibrations(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "diffVibrateSwitch is OFF");
-        }
+        CIPreferences.setDiffVibrations(this, on);
+        Log.d(TAG, "diffVibrateSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void connectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("connect_sound", on);
-        if (on) {
-            CIPreferences.setPlaySound(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "connectSoundSwitch is ON");
-        } else {
-            CIPreferences.setPlaySound(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "connectSoundSwitch is OFF");
-        }
+        CIPreferences.setPlaySound(this, on);
+        Log.d(TAG, "connectSoundSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void disconnectSoundSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("disconnect_sound", on);
-        if (on) {
-            CIPreferences.setDisconnectPlaySound(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "disconnectSoundSwitch is ON");
-        } else {
-            CIPreferences.setDisconnectPlaySound(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "disconnectSoundSwitch is OFF");
-        }
+        CIPreferences.setDisconnectPlaySound(this, on);
+        Log.d(TAG, "disconnectSoundSwitch is enabled: " + Boolean.toString(on));
     }
 
     public void showToastSwitch(View view){
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("show_toast", on);
-        if (on) {
-            CIPreferences.setShowToast(this, true);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "showToastSwitch is ON");
-        } else {
-            CIPreferences.setShowToast(this, false);
-            if(BuildConfig.DEBUG)
-                Log.i(TAG, "showToastSwitch is OFF");
-        }
+        CIPreferences.setShowToast(this, on);
+        Log.d(TAG, "showToastSwitch is enabled: " + Boolean.toString(on));
     }
 
     @Override
@@ -336,15 +297,10 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void floatingChargingBtnSwitch(View view) {
         boolean on = ((Switch) view).isChecked();
-        setFirebaseSwitchEvent("floating_charging_button", on);
         CIPreferences.setShowChargingBubble(this, on);
         if(on) {
             PermissionUtils.checkSystemOverlayPermission(this);
         }
-
-        if(BuildConfig.DEBUG) {
-            String switchState = on ? "ON" : "OFF";
-            Log.d(TAG, "floatingChargingBtnSwitch is " + switchState);
-        }
+        Log.d(TAG, "floatingChargingBtnSwitch is enabled: " + Boolean.toString(on));
     }
 }
