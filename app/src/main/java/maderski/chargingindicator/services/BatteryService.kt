@@ -68,8 +68,9 @@ class BatteryService : Service() {
             it.removeBubble()
         }
 
-        stopForeground(true)
         unregisterReceiver(mBatteryReceiver)
+        stopForeground(true)
+        stopSelf()
 
         super.onDestroy()
     }

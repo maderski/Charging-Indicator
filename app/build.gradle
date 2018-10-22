@@ -19,14 +19,14 @@ repositories {
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion '28.0.3'
 
     defaultConfig {
         applicationId "maderski.chargingindicator"
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 36
-        versionName "3.08"
+        versionCode 37
+        versionName "3.09"
     }
     buildTypes {
         release {
