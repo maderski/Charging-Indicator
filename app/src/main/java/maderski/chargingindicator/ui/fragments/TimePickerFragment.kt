@@ -7,7 +7,6 @@ package maderski.chargingindicator.ui.fragments
 import android.app.Dialog
 import android.app.DialogFragment
 import android.app.TimePickerDialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.annotation.StringDef
 import android.text.format.DateFormat
@@ -21,10 +20,10 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
     private var mTimeState: String? = null
     private var dialogListener: TimePickerDialogListener? = null
 
-    override fun onCreateDialog(savedInstanceState: Bundle): Dialog {
-        mTimeState = arguments.getString("picker_time_state")
-        val previouslySetTime = arguments.getInt("picker_previouslySetTime")
-        val pickerTitle = arguments.getString("picker_title")
+    override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
+        mTimeState = arguments.getString(ARG_PICKER_TIME_STATE)
+        val previouslySetTime = arguments.getInt(ARG_PICKER_PREVIOUSLY_SET_TIME)
+        val pickerTitle = arguments.getString(ARG_PICKER_TITLE)
         dialogListener = if (activity is TimePickerDialogListener) activity as TimePickerDialogListener else null
 
         //Create and set Title
@@ -64,12 +63,12 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         fun onTimeSet(view: TimePicker, timeState: String?, hourOfDay: Int, minute: Int)
     }
 
-    @StringDef(START_TIME, END_TIME)
-    @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
-    annotation class TimeState
-
     companion object {
-        private val TAG = "TimePickerFragment"
+        private const val TAG = "TimePickerFragment"
+
+        @StringDef(START_TIME, END_TIME)
+        @kotlin.annotation.Retention(AnnotationRetention.SOURCE)
+        annotation class TimeState
 
         const val START_TIME = "start_time"
         const val END_TIME = "end_time"
