@@ -19,10 +19,7 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                         ServiceUtils.startService(context, BatteryService::class.java, BatteryService.TAG)
                     }
                     Intent.ACTION_POWER_DISCONNECTED -> {
-                        val isServiceRunning = ServiceUtils.isServiceRunning(context, BatteryService::class.java)
-                        if (isServiceRunning) {
-                            ServiceUtils.stopService(context, BatteryService::class.java, BatteryService.TAG)
-                        }
+                        ServiceUtils.stopService(context, BatteryService::class.java, BatteryService.TAG)
                     }
                 }
             }

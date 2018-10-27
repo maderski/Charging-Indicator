@@ -16,6 +16,7 @@ import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
 
 import maderski.chargingindicator.BuildConfig
+import java.lang.Exception
 
 /**
  * Created by Jason on 6/17/17.
@@ -36,9 +37,13 @@ object ServiceUtils {
     }
 
     fun stopService(context: Context, serviceClass: Class<*>, tag: String) {
-        val intent = Intent(context, serviceClass)
-        intent.addCategory(tag)
-        context.stopService(intent)
+        try {
+            val intent = Intent(context, serviceClass)
+            intent.addCategory(tag)
+            context.stopService(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     fun isServiceRunning(context: Context, serviceClass: Class<*>): Boolean {
