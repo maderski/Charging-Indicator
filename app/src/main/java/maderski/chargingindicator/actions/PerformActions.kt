@@ -50,7 +50,7 @@ class PerformActions(private val mContext: Context) {
         }
 
     fun connectVibrate() {
-        val canVibrate = CIPreferences.GetVibrateWhenPluggedIn(mContext)
+        val canVibrate = CIPreferences.getVibrateWhenPluggedIn(mContext)
         if (canVibrate && isQuietTime.not()) {
             if (CIPreferences.getDiffVibrations(mContext))
                 mVibrationHelper.onConnectPattern()
@@ -70,7 +70,7 @@ class PerformActions(private val mContext: Context) {
     }
 
     fun connectSound() {
-        val canPlaySound = CIPreferences.GetPlaySound(mContext)
+        val canPlaySound = CIPreferences.getPlaySound(mContext)
         val chosenPlaySound = CIPreferences.getChosenConnectSound(mContext)
 
         playSoundHandler(canPlaySound, chosenPlaySound)
@@ -100,7 +100,7 @@ class PerformActions(private val mContext: Context) {
     }
 
     fun showToast(message: String) {
-        val isToastShown = CIPreferences.GetShowToast(mContext)
+        val isToastShown = CIPreferences.getShowToast(mContext)
         if (isToastShown)
             Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
     }
