@@ -8,8 +8,8 @@ import maderski.chargingindicator.utils.ServiceUtils
 
 class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        intent?.let {
-            val action = it.action
+        if (context != null && intent != null) {
+            val action = intent.action
             if(action == Intent.ACTION_BOOT_COMPLETED) {
                 // Schedule Job to launch CIService on boot
                 ServiceUtils.scheduleJob(context, StartCIService::class.java)

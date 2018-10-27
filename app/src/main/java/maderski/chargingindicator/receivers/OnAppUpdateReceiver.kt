@@ -10,8 +10,8 @@ import maderski.chargingindicator.utils.ServiceUtils
 
 class OnAppUpdateReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        intent?.let {
-            val action = it.action
+        if (context != null && intent != null) {
+            val action = intent.action
             if (action != null && action == Intent.ACTION_MY_PACKAGE_REPLACED) {
                 // Schedule Job to run on update
                 ServiceUtils.startService(context, CIService::class.java, CIService.TAG)

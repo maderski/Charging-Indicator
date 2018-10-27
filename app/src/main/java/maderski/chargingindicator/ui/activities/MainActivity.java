@@ -100,9 +100,9 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     }
 
     private void checkIfCIServiceIsRunning(){
-        boolean isCIServiceRunning = ServiceUtils.isServiceRunning(this, CIService.class);
+        boolean isCIServiceRunning = ServiceUtils.INSTANCE.isServiceRunning(this, CIService.class);
         if(!isCIServiceRunning) {
-            ServiceUtils.startService(this, CIService.class, CIService.TAG);
+            ServiceUtils.INSTANCE.startService(this, CIService.class, CIService.TAG);
         }
     }
 

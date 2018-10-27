@@ -11,10 +11,10 @@ import maderski.chargingindicator.utils.ServiceUtils
 
 class PowerConnectionReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
-        intent?.let {
-            val action = it.action
-            if(action != null && context != null) {
-                when(action) {
+        if (context != null && intent != null) {
+            val action = intent.action
+            action?.let {
+                when(it) {
                     Intent.ACTION_POWER_CONNECTED -> {
                         ServiceUtils.startService(context, BatteryService::class.java, BatteryService.TAG)
                     }
@@ -23,7 +23,6 @@ class PowerConnectionReceiver : BroadcastReceiver() {
                         if (isServiceRunning) {
                             ServiceUtils.stopService(context, BatteryService::class.java, BatteryService.TAG)
                         }
-
                     }
                 }
             }
