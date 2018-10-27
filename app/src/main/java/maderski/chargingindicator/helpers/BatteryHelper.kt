@@ -31,9 +31,7 @@ class BatteryHelper(private val mBatteryStatus: Intent) {
     val isBatteryAt100: Boolean
         get() = batteryPercent() == 1f
 
-    fun isBatteryUserCharged(context: Context): Boolean {
-        return (batteryPercent() * 100).toInt() == CIPreferences.getBatteryCharged(context)
-    }
+    fun isBatteryUserCharged(context: Context): Boolean = (batteryPercent() * 100).toInt() == CIPreferences.getBatteryCharged(context)
 
     // Returns battery percentage as string
     fun batteryLevel(): String {

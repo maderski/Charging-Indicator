@@ -18,18 +18,11 @@ class CIBubblesHelper(private val context: Context) : OnInitializedCallback, Las
             .build()
 
     // Once BubblesManager is initialized add the Charging Bolt Bubble
-    override fun onInitialized() {
-        addChargingBoltBubble()
-    }
+    override fun onInitialized() = addChargingBoltBubble()
 
-    fun addBubble() {
-        mBubblesManager.initialize()
-    }
+    fun addBubble() = mBubblesManager.initialize()
 
-
-    fun removeBubble() {
-        mBubblesManager.recycle()
-    }
+    fun removeBubble() = mBubblesManager.recycle()
 
     private fun addChargingBoltBubble() {
         val lastXCoord = CIPreferences.getChargingBubbleX(context).toInt()

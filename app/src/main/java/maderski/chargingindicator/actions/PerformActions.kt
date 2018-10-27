@@ -27,25 +27,16 @@ class PerformActions(private val mContext: Context) {
             val startQuietTime = CIPreferences.getStartQuietTime(mContext)
             val endQuietTime = CIPreferences.getEndQuietTime(mContext)
 
-            if (quietTimeEnabled) {
-                val c = Calendar.getInstance()
-                val hour = c.get(Calendar.HOUR_OF_DAY)
-                val minute = c.get(Calendar.MINUTE)
+            return if (quietTimeEnabled) {
+                val calendar = Calendar.getInstance()
+                val hour = calendar.get(Calendar.HOUR_OF_DAY)
+                val minute = calendar.get(Calendar.MINUTE)
                 val currentTime = hour * 100 + minute
                 Log.d(TAG, "Current time: " + Integer.toString(currentTime) + " Start: " + Integer.toString(startQuietTime) + " End: " + Integer.toString(endQuietTime))
 
-                val isQuiet = if (currentTime >= 1200) {
-                    currentTime >= startQuietTime
-                } else {
-                    currentTime <= endQuietTime
-                }
-                Log.d(TAG, "Current time: " + Integer.toString(currentTime) + " Start: " +
-                        Integer.toString(startQuietTime) + " End: " +
-                        Integer.toString(endQuietTime) + " QuietTime: " + java.lang.Boolean.toString(isQuiet))
-
-                return isQuiet
+                currentTime in startQuietTime..endQuietTime
             } else {
-                return false
+                false
             }
         }
 
