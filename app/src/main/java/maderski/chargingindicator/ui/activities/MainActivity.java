@@ -178,13 +178,13 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
 
     public void setStartQuietTime(View view){
         int previousStartTime = CIPreferences.INSTANCE.getStartQuietTime(this);
-        DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.START_TIME, previousStartTime, "Start Time");
+        DialogFragment timePickerDialog = TimePickerFragment.Companion.newInstance(TimePickerFragment.START_TIME, previousStartTime, "Start Time");
         timePickerDialog.show(getFragmentManager(), "startQuietTime");
     }
 
     public void setEndQuietTime(View view){
         int previousStartTime = CIPreferences.INSTANCE.getEndQuietTime(this);
-        DialogFragment timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.TimeState.END_TIME, previousStartTime, "End Time");
+        DialogFragment timePickerDialog = TimePickerFragment.Companion.newInstance(TimePickerFragment.END_TIME, previousStartTime, "End Time");
         timePickerDialog.show(getFragmentManager(), "EndQuietTime");
     }
 
@@ -281,11 +281,11 @@ public class MainActivity extends AppCompatActivity implements TimePickerFragmen
     @Override
     public void onTimeSet(TimePicker view, String timeState, int hourOfDay, int minute) {
         int timeSet = (hourOfDay * 100) + minute;
-        if(timeState.equals(TimePickerFragment.TimeState.START_TIME)){
+        if(timeState.equals(TimePickerFragment.START_TIME)){
             Log.d(TAG, "Start time set to: " + Integer.toString(timeSet));
             CIPreferences.INSTANCE.setStartQuietTime(this, timeSet);
 
-        } else if(timeState.equals(TimePickerFragment.TimeState.END_TIME)){
+        } else if(timeState.equals(TimePickerFragment.END_TIME)){
             Log.d(TAG, "End time set to: " + Integer.toString(timeSet));
             CIPreferences.INSTANCE.setEndQuietTime(this, timeSet);
         }
