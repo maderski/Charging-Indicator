@@ -14,12 +14,15 @@ class PowerConnectionReceiver : BroadcastReceiver() {
         if (context != null && intent != null) {
             val action = intent.action
             action?.let {
-                when(it) {
+                when (it) {
                     Intent.ACTION_POWER_CONNECTED -> {
                         ServiceUtils.startService(context, BatteryService::class.java, BatteryService.TAG)
                     }
                     Intent.ACTION_POWER_DISCONNECTED -> {
-                        ServiceUtils.stopService(context, BatteryService::class.java, BatteryService.TAG)
+                        val isServiceRunning = ServiceUtils.isServiceRunning(context, BatteryService::class.java)
+                        if (isServiceRunning) {
+                            ServiceUtils.stopService(context, BatteryService::class.java, BatteryService.TAG)
+                        }
                     }
                 }
             }

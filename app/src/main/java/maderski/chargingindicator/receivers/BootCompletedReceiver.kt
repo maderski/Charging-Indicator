@@ -10,7 +10,7 @@ class BootCompletedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         if (context != null && intent != null) {
             val action = intent.action
-            if(action == Intent.ACTION_BOOT_COMPLETED) {
+            if (action == Intent.ACTION_BOOT_COMPLETED) {
                 // Schedule Job to launch CIService on boot
                 ServiceUtils.scheduleJob(context, StartCIService::class.java)
             }

@@ -117,7 +117,8 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         super.onActivityResult(requestCode, resultCode, data)
 
         if (resultCode == Activity.RESULT_OK) {
-            val uri: Uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI) ?: Uri.parse("None")
+            val uri: Uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
+                    ?: Uri.parse("None")
             when (requestCode) {
                 1 -> {
                     CIPreferences.setChosenConnectSound(this, uri.toString())

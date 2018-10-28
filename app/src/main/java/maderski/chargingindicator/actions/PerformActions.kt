@@ -92,17 +92,18 @@ class PerformActions(private val mContext: Context) {
 
     fun showToast(message: String) {
         val isToastShown = CIPreferences.getShowToast(mContext)
-        if (isToastShown)
+        if (isToastShown) {
             Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+        }
     }
 
     fun showBubble() {
-        if(isBubbleShown)
+        if (isBubbleShown)
             mCIBubblesHelper.addBubble()
     }
 
     fun removeBubble() {
-        if(isBubbleShown)
+        if (isBubbleShown)
             mCIBubblesHelper.removeBubble()
     }
 

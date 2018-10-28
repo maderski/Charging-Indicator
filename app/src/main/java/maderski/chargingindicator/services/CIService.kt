@@ -19,8 +19,8 @@ class CIService : Service() {
     private val mPowerConnectionReceiver = PowerConnectionReceiver()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        IntentFilter(Intent.ACTION_BATTERY_CHANGED).let {
-            intentFilter -> registerReceiver(mPowerConnectionReceiver, intentFilter)
+        IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { intentFilter ->
+            registerReceiver(mPowerConnectionReceiver, intentFilter)
         }
 
         stopForeground(true)

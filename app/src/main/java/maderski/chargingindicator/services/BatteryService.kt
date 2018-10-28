@@ -34,11 +34,17 @@ class BatteryService : Service() {
         return START_NOT_STICKY
     }
 
+    override fun stopService(name: Intent?): Boolean {
+        stopForeground(true)
+        return super.stopService(name)
+    }
+
+    // Checks if charged sound is enabled and if battery is at 100%, if both are true only play the charged sound
     private fun playConnectSound(performActions: PerformActions, batteryStatus: Intent?) {
         val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(this)
-        if(chargedSoundEnabled && batteryStatus != null) {
+        if (chargedSoundEnabled && batteryStatus != null) {
             val isBatteryAt100 = BatteryHelper(batteryStatus).isBatteryAt100
-            if(isBatteryAt100.not()) {
+            if (isBatteryAt100.not()) {
                 performActions.connectSound()
             }
         } else {
@@ -69,9 +75,6 @@ class BatteryService : Service() {
         }
 
         unregisterReceiver(mBatteryReceiver)
-        stopForeground(true)
-        stopSelf()
-
         super.onDestroy()
     }
 

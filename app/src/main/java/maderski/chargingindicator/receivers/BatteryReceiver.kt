@@ -15,7 +15,7 @@ class BatteryReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let {
             val action = it.action
-            if(action != null && context != null) {
+            if (action != null && context != null) {
                 val batteryHelper = BatteryHelper(it)
                 val isBatteryCharged = batteryHelper.isBatteryUserCharged(context)
                 if (isBatteryCharged && canChargedSoundPlay) {
@@ -26,7 +26,7 @@ class BatteryReceiver : BroadcastReceiver() {
 
                 val title = "Battery Level: ${batteryHelper.batteryLevel()}"
                 val message = if (isBatteryCharged) "CHARGED!" else "Charging..."
-                val icon = if(isBatteryCharged) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
+                val icon = if (isBatteryCharged) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
 
                 Log.d(TAG, title)
                 ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
