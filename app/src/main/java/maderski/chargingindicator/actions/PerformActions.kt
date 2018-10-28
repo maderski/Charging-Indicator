@@ -40,6 +40,8 @@ class PerformActions(private val mContext: Context) {
             }
         }
 
+    private var mToast: Toast? = null
+
     fun connectVibrate() {
         val canVibrate = CIPreferences.getVibrateWhenPluggedIn(mContext)
         if (canVibrate && isQuietTime.not()) {
@@ -93,7 +95,14 @@ class PerformActions(private val mContext: Context) {
     fun showToast(message: String) {
         val isToastShown = CIPreferences.getShowToast(mContext)
         if (isToastShown) {
-            Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
+            mToast?.let {
+                if (it.view.isShown) {
+                    it.cancel()
+                    mToast = null
+                }
+            }
+            mToast = Toast.makeText(mContext, message, Toast.LENGTH_LONG)
+            mToast?.show()
         }
     }
 
