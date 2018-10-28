@@ -82,6 +82,6 @@ object CIPreferences {
     private fun editor(context: Context): SharedPreferences.Editor = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE).edit()
 
     //Reads SharedPreferences value
-    private fun reader(context: Context): SharedPreferences  = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE)
+    private fun reader(context: Context): SharedPreferences = context.getSharedPreferences(MY_PREFS_NAME, Context.MODE_PRIVATE)
 
 }

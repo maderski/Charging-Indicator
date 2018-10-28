@@ -28,8 +28,7 @@ class CIBubblesHelper(private val context: Context) : OnInitializedCallback, Las
         val lastXCoord = CIPreferences.getChargingBubbleX(context).toInt()
         val lastYCoord = CIPreferences.getChargingBubbleY(context).toInt()
 
-        val bubbleView: CustomBubbleLayout = LayoutInflater.from(context).
-                inflate(R.layout.floating_widget_layout, null) as CustomBubbleLayout
+        val bubbleView: CustomBubbleLayout = LayoutInflater.from(context).inflate(R.layout.floating_widget_layout, null) as CustomBubbleLayout
         bubbleView.setShouldStickToWall(false)
         bubbleView.setLastXYCoordListener(this)
 
