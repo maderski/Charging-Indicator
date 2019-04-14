@@ -1,6 +1,7 @@
 package maderski.chargingindicator.services
 
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
@@ -19,14 +20,16 @@ class CIService : Service() {
     private val mPowerConnectionReceiver = PowerConnectionReceiver()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-        IntentFilter(Intent.ACTION_BATTERY_CHANGED).let { intentFilter ->
-            registerReceiver(mPowerConnectionReceiver, intentFilter)
-        }
+        val intentFilter = IntentFilter()
+        intentFilter.addAction("android.intent.action.ACTION_POWER_CONNECTED")
+        intentFilter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED")
 
-        stopForeground(true)
-        stopSelf()
+        registerReceiver(mPowerConnectionReceiver, intentFilter)
 
-        return Service.START_NOT_STICKY
+//        stopForeground(true)
+//        stopSelf()
+
+        return START_NOT_STICKY
     }
 
     override fun onCreate() {
@@ -39,7 +42,7 @@ class CIService : Service() {
                 this,
                 getString(R.string.ci_channel_id),
                 getString(R.string.ci_channel_name),
-                R.drawable.standardbolt,
+                R.drawable.ic_action_battery,
                 true)
     }
 

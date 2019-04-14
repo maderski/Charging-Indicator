@@ -113,24 +113,24 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         overridePendingTransition(0, R.animator.fadeout)
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK) {
+        if (resultCode == Activity.RESULT_OK && data != null) {
             val uri: Uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
                     ?: Uri.parse("None")
             when (requestCode) {
                 1 -> {
                     CIPreferences.setChosenConnectSound(this, uri.toString())
-                    Log.d(TAG, "Connect Sound Set: " + uri.toString())
+                    Log.d(TAG, "Connect Sound Set: $uri")
                 }
                 2 -> {
                     CIPreferences.setChosenDisconnectSound(this, uri.toString())
-                    Log.d(TAG, "Disconnect Sound Set: " + uri.toString())
+                    Log.d(TAG, "Disconnect Sound Set: $uri")
                 }
                 3 -> {
                     CIPreferences.setChosenBatteryChargedSound(this, uri.toString())
-                    Log.d(TAG, "Battery Charged Sound set: " + uri.toString())
+                    Log.d(TAG, "Battery Charged Sound set: $uri")
                 }
             }
         }

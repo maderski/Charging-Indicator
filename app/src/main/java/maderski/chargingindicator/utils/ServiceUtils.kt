@@ -50,13 +50,9 @@ object ServiceUtils {
         val activityManager = context.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
         val services = activityManager.getRunningServices(Integer.MAX_VALUE)
 
-        for (runningServiceInfo in services) {
-            if (runningServiceInfo.service.className == serviceClass.name) {
-                return true
-            }
+        return services.any { runningServiceInfo ->
+            runningServiceInfo.service.className == serviceClass.name
         }
-
-        return false
     }
 
     fun createServiceNotification(id: Int,
@@ -100,7 +96,7 @@ object ServiceUtils {
             NotificationCompat.Builder(context, channelId)
         } else {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            val channel = ServiceUtils.getNotificationChannel(channelId, channelName)
+            val channel = getNotificationChannel(channelId, channelName)
             notificationManager.createNotificationChannel(channel)
 
             NotificationCompat.Builder(context, channelId)

@@ -9,3 +9,6 @@
 .idea/compiler.xml
 .idea/.name
 .idea/copyright/profiles_settings.xml
+.idea/compiler.xml
+app/release/release/app.aab
+gradle/wrapper/gradle-wrapper.properties

@@ -74,6 +74,17 @@ class BatteryService : Service() {
             it.removeBubble()
         }
 
+        val title = this.getString(R.string.ci_service_notification_title)
+        val message = this.getString(R.string.ci_service_notification_messge)
+        ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                title,
+                message,
+                this,
+                getString(R.string.ci_channel_id),
+                getString(R.string.ci_channel_name),
+                R.drawable.ic_action_battery,
+                true)
+
         unregisterReceiver(mBatteryReceiver)
         super.onDestroy()
     }
