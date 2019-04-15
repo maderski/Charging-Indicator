@@ -21,10 +21,12 @@ import android.widget.TimePicker
 import android.widget.Toast
 import maderski.chargingindicator.R
 import maderski.chargingindicator.helpers.SoundHelper
+import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.services.CIService
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.ui.fragments.TimePickerFragment
 import maderski.chargingindicator.utils.PermissionUtils
+import maderski.chargingindicator.utils.PowerUtils
 import maderski.chargingindicator.utils.ServiceUtils
 
 /*  Created by Jason Maderski
@@ -39,6 +41,7 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         checkIfCIServiceIsRunning()
+        checkIfPhoneIsPluggedIn()
         initUserChargedPercentEditText()
     }
 
@@ -89,6 +92,14 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         val isCIServiceRunning = ServiceUtils.isServiceRunning(this, CIService::class.java)
         if (!isCIServiceRunning) {
             ServiceUtils.startService(this, CIService::class.java, CIService.TAG)
+        }
+    }
+
+    private fun checkIfPhoneIsPluggedIn() {
+        val isPluggedIn = PowerUtils.isPluggedIn(this)
+        val isBatteryServiceRunning = ServiceUtils.isServiceRunning(this, BatteryService::class.java)
+        if (isPluggedIn && !isBatteryServiceRunning) {
+            ServiceUtils.startService(this, BatteryService::class.java, BatteryService.TAG)
         }
     }
 
