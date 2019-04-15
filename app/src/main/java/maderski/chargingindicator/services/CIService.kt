@@ -26,9 +26,6 @@ class CIService : Service() {
 
         registerReceiver(mPowerConnectionReceiver, intentFilter)
 
-//        stopForeground(true)
-//        stopSelf()
-
         return START_NOT_STICKY
     }
 
@@ -43,7 +40,7 @@ class CIService : Service() {
                 getString(R.string.ci_channel_id),
                 getString(R.string.ci_channel_name),
                 R.drawable.ic_action_battery,
-                true)
+                false)
     }
 
     override fun onDestroy() {

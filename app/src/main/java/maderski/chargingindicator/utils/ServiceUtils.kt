@@ -123,7 +123,6 @@ object ServiceUtils {
                 NotificationManager.IMPORTANCE_MIN)
         notificationChannel.enableVibration(false)
         notificationChannel.setShowBadge(false)
-        notificationChannel.importance = NotificationManager.IMPORTANCE_MIN
         return notificationChannel
     }
 

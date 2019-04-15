@@ -83,7 +83,7 @@ class BatteryService : Service() {
                 getString(R.string.ci_channel_id),
                 getString(R.string.ci_channel_name),
                 R.drawable.ic_action_battery,
-                true)
+                false)
 
         unregisterReceiver(mBatteryReceiver)
         super.onDestroy()
