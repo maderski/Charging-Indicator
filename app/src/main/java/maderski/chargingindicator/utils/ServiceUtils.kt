@@ -2,8 +2,8 @@ package maderski.chargingindicator.utils
 
 import android.app.ActivityManager
 import android.app.Notification
-import android.app.NotificationChannel
 import android.app.NotificationManager
+import android.app.NotificationChannel
 import android.app.Service
 import android.app.job.JobInfo
 import android.app.job.JobScheduler
@@ -14,9 +14,6 @@ import android.os.Build
 import android.support.annotation.DrawableRes
 import android.support.annotation.RequiresApi
 import android.support.v4.app.NotificationCompat
-
-import maderski.chargingindicator.BuildConfig
-import java.lang.Exception
 
 /**
  * Created by Jason on 6/17/17.
