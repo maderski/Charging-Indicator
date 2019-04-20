@@ -13,16 +13,16 @@ import maderski.chargingindicator.ui.custom.CustomBubbleLayout
 
 class CIBubblesHelper(private val context: Context) : OnInitializedCallback, LastXYCoordListener {
     // Create BubblesManager Instance
-    private val mBubblesManager: BubblesManager = BubblesManager.Builder(context)
+    private val bubblesManager: BubblesManager = BubblesManager.Builder(context)
             .setInitializationCallback(this)
             .build()
 
     // Once BubblesManager is initialized add the Charging Bolt Bubble
     override fun onInitialized() = addChargingBoltBubble()
 
-    fun addBubble() = mBubblesManager.initialize()
+    fun addBubble() = bubblesManager.initialize()
 
-    fun removeBubble() = mBubblesManager.recycle()
+    fun removeBubble() = bubblesManager.recycle()
 
     private fun addChargingBoltBubble() {
         val lastXCoord = CIPreferences.getChargingBubbleX(context).toInt()
@@ -33,7 +33,7 @@ class CIBubblesHelper(private val context: Context) : OnInitializedCallback, Las
         bubbleView.setLastXYCoordListener(this)
 
         Log.d(BatteryService.TAG, "LAST XY COORD X: $lastXCoord Y: $lastYCoord")
-        mBubblesManager.addBubble(bubbleView, lastXCoord, lastYCoord)
+        bubblesManager.addBubble(bubbleView, lastXCoord, lastYCoord)
     }
 
     // Save the last XY Coordinate that a user lifted there finger after moving the Bubble

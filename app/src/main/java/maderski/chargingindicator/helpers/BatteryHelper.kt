@@ -3,7 +3,6 @@ package maderski.chargingindicator.helpers
 import android.content.Context
 import android.content.Intent
 import android.os.BatteryManager
-import android.util.Log
 import maderski.chargingindicator.sharedprefs.CIPreferences
 
 import java.text.NumberFormat
@@ -11,16 +10,16 @@ import java.text.NumberFormat
 /**
  * Created by Jason on 2/13/16.
  */
-class BatteryHelper(private val mBatteryStatus: Intent) {
+class BatteryHelper(private val batteryStatus: Intent) {
 
     // Returns true or false depending if battery is charging
     val isBatteryCharging: Boolean
-        get() = mBatteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING
+        get() = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING
 
     // Returns true or false depending if battery is plugged in
     val isPluggedIn: Boolean
         get() {
-            val chargePlug = mBatteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
+            val chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
             val usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB
             val acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC
             val wirelessCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_WIRELESS
@@ -42,8 +41,8 @@ class BatteryHelper(private val mBatteryStatus: Intent) {
     }
 
     fun batteryPercent(): Float {
-        val level = mBatteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
-        val scale = mBatteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
+        val level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
+        val scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
         return level / scale.toFloat()
     }
 

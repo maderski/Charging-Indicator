@@ -1,2 +1,0 @@
-package maderski.chargingindicator.workers
-

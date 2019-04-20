@@ -15,17 +15,17 @@ import maderski.chargingindicator.sharedprefs.CIPreferences
 /**
  * Created by Jason on 8/2/16.
  */
-class PerformActions(private val mContext: Context) {
-    private val mVibrationHelper: VibrationHelper = VibrationHelper(mContext)
-    private val mPlaySoundHelper: SoundHelper = SoundHelper(mContext)
-    private val mCIBubblesHelper: CIBubblesHelper = CIBubblesHelper(mContext)
+class PerformActions(private val context: Context) {
+    private val vibrationHelper: VibrationHelper = VibrationHelper(context)
+    private val playSoundHelper: SoundHelper = SoundHelper(context)
+    private val cIBubblesHelper: CIBubblesHelper = CIBubblesHelper(context)
 
-    private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(mContext)
+    private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(context)
     private val isQuietTime: Boolean
         get() {
-            val quietTimeEnabled = CIPreferences.getQuietTime(mContext)
-            val startQuietTime = CIPreferences.getStartQuietTime(mContext)
-            val endQuietTime = CIPreferences.getEndQuietTime(mContext)
+            val quietTimeEnabled = CIPreferences.getQuietTime(context)
+            val startQuietTime = CIPreferences.getStartQuietTime(context)
+            val endQuietTime = CIPreferences.getEndQuietTime(context)
 
             return if (quietTimeEnabled) {
                 val calendar = Calendar.getInstance()
@@ -40,45 +40,45 @@ class PerformActions(private val mContext: Context) {
             }
         }
 
-    private var mToast: Toast? = null
+    private var toast: Toast? = null
 
     fun connectVibrate() {
-        val canVibrate = CIPreferences.getVibrateWhenPluggedIn(mContext)
+        val canVibrate = CIPreferences.getVibrateWhenPluggedIn(context)
         if (canVibrate && isQuietTime.not()) {
-            if (CIPreferences.getDiffVibrations(mContext))
-                mVibrationHelper.onConnectPattern()
+            if (CIPreferences.getDiffVibrations(context))
+                vibrationHelper.onConnectPattern()
             else
-                mVibrationHelper.standardVibration()
+                vibrationHelper.standardVibration()
         }
     }
 
     fun disconnectVibrate() {
-        val canVibrate = CIPreferences.getVibrateOnDisconnect(mContext)
+        val canVibrate = CIPreferences.getVibrateOnDisconnect(context)
         if (canVibrate && isQuietTime.not()) {
-            if (CIPreferences.getDiffVibrations(mContext))
-                mVibrationHelper.onDisconnectPattern()
+            if (CIPreferences.getDiffVibrations(context))
+                vibrationHelper.onDisconnectPattern()
             else
-                mVibrationHelper.standardVibration()
+                vibrationHelper.standardVibration()
         }
     }
 
     fun connectSound() {
-        val canPlaySound = CIPreferences.getPlaySound(mContext)
-        val chosenPlaySound = CIPreferences.getChosenConnectSound(mContext)
+        val canPlaySound = CIPreferences.getPlaySound(context)
+        val chosenPlaySound = CIPreferences.getChosenConnectSound(context)
 
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
 
     fun disconnectSound() {
-        val canPlaySound = CIPreferences.getDisconnectPlaySound(mContext)
-        val chosenPlaySound = CIPreferences.getChosenDisconnectSound(mContext)
+        val canPlaySound = CIPreferences.getDisconnectPlaySound(context)
+        val chosenPlaySound = CIPreferences.getChosenDisconnectSound(context)
 
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
 
     fun batteryChargedSound() {
-        val canPlaySound = CIPreferences.getBatteryChargedPlaySound(mContext)
-        val chosenPlaySound = CIPreferences.getChosenBatteryChargedSound(mContext)
+        val canPlaySound = CIPreferences.getBatteryChargedPlaySound(context)
+        val chosenPlaySound = CIPreferences.getChosenBatteryChargedSound(context)
 
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
@@ -86,34 +86,34 @@ class PerformActions(private val mContext: Context) {
     private fun playSoundHandler(canPlaySound: Boolean, chosenPlaySound: String) {
         if (canPlaySound && isQuietTime.not()) {
             if (chosenPlaySound.equals("None", ignoreCase = true))
-                mPlaySoundHelper.playDefaultNotificationSound()
+                playSoundHelper.playDefaultNotificationSound()
             else
-                mPlaySoundHelper.playNotificationSound(Uri.parse(chosenPlaySound))
+                playSoundHelper.playNotificationSound(Uri.parse(chosenPlaySound))
         }
     }
 
     fun showToast(message: String) {
-        val isToastShown = CIPreferences.getShowToast(mContext)
+        val isToastShown = CIPreferences.getShowToast(context)
         if (isToastShown) {
-            mToast?.let {
+            toast?.let {
                 if (it.view.isShown) {
                     it.cancel()
-                    mToast = null
+                    toast = null
                 }
             }
-            mToast = Toast.makeText(mContext, message, Toast.LENGTH_LONG)
-            mToast?.show()
+            toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
+            toast?.show()
         }
     }
 
     fun showBubble() {
         if (isBubbleShown)
-            mCIBubblesHelper.addBubble()
+            cIBubblesHelper.addBubble()
     }
 
     fun removeBubble() {
         if (isBubbleShown)
-            mCIBubblesHelper.removeBubble()
+            cIBubblesHelper.removeBubble()
     }
 
     companion object {

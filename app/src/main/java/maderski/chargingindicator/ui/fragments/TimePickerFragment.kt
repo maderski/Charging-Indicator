@@ -17,11 +17,11 @@ import android.widget.TimePicker
 
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
-    private var mTimeState: String? = null
+    private var timeState: String? = null
     private var dialogListener: TimePickerDialogListener? = null
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        mTimeState = arguments.getString(ARG_PICKER_TIME_STATE)
+        timeState = arguments.getString(ARG_PICKER_TIME_STATE)
         val previouslySetTime = arguments.getInt(ARG_PICKER_PREVIOUSLY_SET_TIME)
         val pickerTitle = arguments.getString(ARG_PICKER_TITLE)
         dialogListener = if (activity is TimePickerDialogListener) activity as TimePickerDialogListener else null
@@ -55,7 +55,7 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         Log.d(TAG, "Set time: " + Integer.toString(setTime))
 
         if (dialogListener != null) {
-            dialogListener!!.onTimeSet(view, mTimeState, hourOfDay, minute)
+            dialogListener!!.onTimeSet(view, timeState, hourOfDay, minute)
         }
     }
 

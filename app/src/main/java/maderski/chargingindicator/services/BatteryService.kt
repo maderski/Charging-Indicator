@@ -3,28 +3,25 @@ package maderski.chargingindicator.services
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.os.IBinder
-import android.util.Log
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.PerformActions
 import maderski.chargingindicator.helpers.BatteryHelper
-import maderski.chargingindicator.helpers.CIBubblesHelper
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.utils.ServiceUtils
 
 class BatteryService : Service() {
-    private val mBatteryReceiver = BatteryReceiver()
+    private val batteryReceiver = BatteryReceiver()
 
-    private var mPerformActions: PerformActions? = null
+    private var performActions: PerformActions? = null
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
-        val batteryStatus = registerReceiver(mBatteryReceiver, filter)
+        val batteryStatus = registerReceiver(batteryReceiver, filter)
 
-        mPerformActions = PerformActions(this)
-        mPerformActions?.let {
+        performActions = PerformActions(this)
+        performActions?.let {
             it.connectVibrate()
             playConnectSound(it, batteryStatus)
             it.showToast(getString(R.string.power_connected_msg))
@@ -67,7 +64,7 @@ class BatteryService : Service() {
     }
 
     override fun onDestroy() {
-        mPerformActions?.let {
+        performActions?.let {
             it.disconnectVibrate()
             it.disconnectSound()
             it.showToast(getString(R.string.power_disconnected_msg))
@@ -85,7 +82,7 @@ class BatteryService : Service() {
                 R.drawable.ic_action_battery,
                 false)
 
-        unregisterReceiver(mBatteryReceiver)
+        unregisterReceiver(batteryReceiver)
         super.onDestroy()
     }
 

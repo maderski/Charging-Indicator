@@ -3,8 +3,6 @@ package maderski.chargingindicator.receivers
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import maderski.chargingindicator.R
-import maderski.chargingindicator.actions.PerformActions
 import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.utils.ServiceUtils
 
