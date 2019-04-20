@@ -9,7 +9,7 @@
                 android:left="1dp"
                 android:right="1dp"
                 android:top="1dp"/>
-            <solid android:color="@color/yellowDark"/>
+            <solid android:color="@color/colorAccentDark"/>
         </shape>
     </item>
     <item>
@@ -21,7 +21,7 @@
                 android:left="1dp"
                 android:right="1dp"
                 android:top="1dp"/>
-            <solid android:color="@color/yellow"/>
+            <solid android:color="@color/colorAccent" />
         </shape>
     </item>
 

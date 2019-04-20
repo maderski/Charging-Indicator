@@ -35,7 +35,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold"
                 android:text="@string/created_by"
-                android:textColor="@color/yellowDark"
+                android:textColor="@color/white"
                 android:textSize="16sp" />
 
             <TextView
@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="@string/developer_name"
-                android:textColor="@color/yellowDark"
+                android:textColor="@color/white"
                 android:id="@+id/AuthorTextView"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/app_creation_date"
-            android:textColor="@color/yellowDark"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:textSize="16sp" />
 
@@ -63,7 +63,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/about_msg"
-            android:textColor="@color/yellowDark"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center"
@@ -74,7 +74,7 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="@string/this_app_uses_msg"
-            android:textColor="@color/yellowDark"
+            android:textColor="@color/white"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp"
             android:gravity="center"

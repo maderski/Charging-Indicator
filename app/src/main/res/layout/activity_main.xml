@@ -2,6 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -25,7 +26,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="5dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -36,17 +37,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/charcoal"
-                        android:paddingBottom="12dp"
-                        android:paddingEnd="8dp"
+                        android:background="@color/charcoalDark"
                         android:paddingStart="8dp"
                         android:paddingTop="8dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="12dp"
                         android:text="@string/power_connected"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@android:color/white"
+                        android:textColor="@color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:typeface="monospace" />
+                        android:typeface="normal" />
 
                     <Switch
                         android:id="@+id/show_floating_charging_btn_switch"
@@ -60,7 +61,8 @@
                         android:paddingTop="16dp"
                         android:text="@string/floating_charging_button"
                         android:textColor="@color/charcoal"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        tools:checked="true"/>
 
                     <Switch
                         android:id="@+id/vibrate_switch"
@@ -101,7 +103,7 @@
                         android:paddingRight="60dp"
                         android:stateListAnimator="@animator/button_state_list_animator"
                         android:text="@string/set_sound_button_text"
-                        android:textColor="@color/charcoal" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -112,7 +114,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="5dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -123,17 +125,17 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/charcoal"
-                        android:paddingBottom="12dp"
-                        android:paddingEnd="8dp"
+                        android:background="@color/charcoalDark"
                         android:paddingStart="8dp"
                         android:paddingTop="12dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="12dp"
                         android:text="@string/power_disconnected"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:typeface="monospace" />
+                        android:typeface="normal" />
 
                     <Switch
                         android:id="@+id/disconnect_vibrate_switch"
@@ -175,18 +177,18 @@
                         android:paddingRight="60dp"
                         android:stateListAnimator="@animator/button_state_list_animator"
                         android:text="@string/set_sound_button_text"
-                        android:textColor="@color/charcoal" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="5dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -198,17 +200,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:background="@color/charcoal"
-                        android:paddingBottom="12dp"
-                        android:paddingEnd="8dp"
+                        android:background="@color/charcoalDark"
                         android:paddingStart="8dp"
                         android:paddingTop="12dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="12dp"
                         android:text="@string/other"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
                         android:textSize="22sp"
                         android:textStyle="bold"
-                        android:typeface="monospace" />
+                        android:typeface="normal" />
 
                     <Switch
                         android:id="@+id/show_toast_switch"
@@ -216,10 +218,10 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:onClick="showToastSwitch"
-                        android:paddingBottom="20dp"
-                        android:paddingEnd="8dp"
                         android:paddingStart="8dp"
                         android:paddingTop="16dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/pop_up_message_on_connect_disconnect"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -230,10 +232,10 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:onClick="diffVibrateSwitch"
-                        android:paddingBottom="20dp"
-                        android:paddingEnd="8dp"
                         android:paddingStart="8dp"
                         android:paddingTop="16dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="20dp"
                         android:text="@string/connect_disconnect_vibrate_differently"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -244,8 +246,8 @@
                         android:layout_height="wrap_content"
                         android:checked="false"
                         android:onClick="batteryChargedSoundSwitch"
-                        android:paddingEnd="8dp"
                         android:paddingStart="8dp"
+                        android:paddingEnd="8dp"
                         android:text="@string/play_sound_when_battery_is_charged"
                         android:textColor="@color/charcoal"
                         android:textStyle="bold" />
@@ -268,9 +270,9 @@
                             android:id="@+id/et_user_set_charged_percent"
                             android:layout_width="48dp"
                             android:layout_height="wrap_content"
+                            android:imeOptions="actionDone"
                             android:inputType="number"
-                            android:maxLength="3"
-                            android:imeOptions="actionDone" />
+                            android:maxLength="3" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -291,7 +293,7 @@
                         android:paddingRight="60dp"
                         android:stateListAnimator="@animator/button_state_list_animator"
                         android:text="@string/set_sound_button_text"
-                        android:textColor="@color/charcoal" />
+                        android:textColor="@color/white" />
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
@@ -302,7 +304,7 @@
                 android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                app:cardCornerRadius="4dp"
+                app:cardCornerRadius="5dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -314,11 +316,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:background="@color/charcoal"
-                        android:paddingBottom="12dp"
-                        android:paddingEnd="8dp"
+                        android:background="@color/charcoalDark"
                         android:paddingStart="8dp"
                         android:paddingTop="12dp"
+                        android:paddingEnd="8dp"
+                        android:paddingBottom="12dp"
                         android:text="@string/silence"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@android:color/white"
@@ -353,15 +355,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="8dp"
                             android:layout_marginEnd="4dp"
+                            android:layout_marginBottom="8dp"
                             android:background="@drawable/on_state"
                             android:onClick="setStartQuietTime"
                             android:paddingLeft="16dp"
                             android:paddingRight="16dp"
                             android:stateListAnimator="@animator/button_state_list_animator"
                             android:text="@string/start_time"
-                            android:textColor="@color/charcoal" />
+                            android:textColor="@color/white" />
 
                         <Button
                             android:id="@+id/set_end_time_button"
@@ -369,15 +371,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:layout_marginBottom="8dp"
                             android:layout_marginStart="4dp"
+                            android:layout_marginBottom="8dp"
                             android:background="@drawable/on_state"
                             android:onClick="setEndQuietTime"
                             android:paddingLeft="24dp"
                             android:paddingRight="24dp"
                             android:stateListAnimator="@animator/button_state_list_animator"
                             android:text="@string/end_time"
-                            android:textColor="@color/charcoal" />
+                            android:textColor="@color/white" />
                     </LinearLayout>
                 </LinearLayout>
             </android.support.v7.widget.CardView>
