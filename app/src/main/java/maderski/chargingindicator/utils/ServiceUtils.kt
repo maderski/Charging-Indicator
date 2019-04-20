@@ -1,13 +1,6 @@
 package maderski.chargingindicator.utils
 
-import android.app.ActivityManager
-import android.app.Notification
-import android.app.NotificationManager
-import android.app.NotificationChannel
-import android.app.Service
-import android.app.job.JobInfo
-import android.app.job.JobScheduler
-import android.content.ComponentName
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
