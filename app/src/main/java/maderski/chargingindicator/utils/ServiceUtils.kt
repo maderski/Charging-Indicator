@@ -122,30 +122,4 @@ object ServiceUtils {
         notificationChannel.setShowBadge(false)
         return notificationChannel
     }
-
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    fun scheduleJob(context: Context, jobServiceClass: Class<*>) {
-        val jobServiceComponent = ComponentName(context, jobServiceClass)
-        val builder = JobInfo.Builder(0, jobServiceComponent)
-        builder.setMinimumLatency(1000)
-        builder.setOverrideDeadline(10000)
-
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        jobScheduler.schedule(builder.build())
-    }
-
-    fun isJobScheduled(context: Context): Boolean {
-        var isScheduled = false
-        // Get Job Scheduler
-        val jobScheduler = context.getSystemService(Context.JOB_SCHEDULER_SERVICE) as JobScheduler
-        val jobInfos = jobScheduler.allPendingJobs
-        for (jobInfo in jobInfos) {
-            if (jobInfo.id == 0) {
-                isScheduled = true
-                break
-            }
-        }
-
-        return isScheduled
-    }
 }
