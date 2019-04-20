@@ -3,6 +3,7 @@ package maderski.chargingindicator.services
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.IBinder
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.PerformActions
@@ -34,7 +35,6 @@ class BatteryService : Service() {
     override fun onCreate() {
         super.onCreate()
 
-
         val title = getString(R.string.getting_battery_pct)
         val message = getString(R.string.getting_battery_info)
         ServiceUtils.createServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
@@ -53,16 +53,18 @@ class BatteryService : Service() {
         performActions.showToast(getString(R.string.power_disconnected_msg))
         performActions.removeBubble()
 
-        val title = this.getString(R.string.ci_service_notification_title)
-        val message = this.getString(R.string.ci_service_notification_messge)
-        ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                title,
-                message,
-                this,
-                getString(R.string.ci_channel_id),
-                getString(R.string.ci_channel_name),
-                R.drawable.ic_action_battery,
-                false)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val title = this.getString(R.string.ci_service_notification_title)
+            val message = this.getString(R.string.ci_service_notification_messge)
+            ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                    title,
+                    message,
+                    this,
+                    getString(R.string.ci_channel_id),
+                    getString(R.string.ci_channel_name),
+                    R.drawable.ic_action_battery,
+                    false)
+        }
 
         unregisterReceiver(batteryReceiver)
         super.onDestroy()

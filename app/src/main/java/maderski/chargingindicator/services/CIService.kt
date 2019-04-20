@@ -3,6 +3,7 @@ package maderski.chargingindicator.services
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.IBinder
 import maderski.chargingindicator.R
 import maderski.chargingindicator.receivers.PowerConnectionReceiver
@@ -17,6 +18,11 @@ class CIService : Service() {
         intentFilter.addAction("android.intent.action.ACTION_POWER_DISCONNECTED")
 
         registerReceiver(powerConnectionReceiver, intentFilter)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            stopForeground(true)
+            stopSelf()
+        }
 
         return START_NOT_STICKY
     }
