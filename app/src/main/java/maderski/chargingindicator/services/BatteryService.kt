@@ -6,27 +6,22 @@ import android.content.IntentFilter
 import android.os.IBinder
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.PerformActions
-import maderski.chargingindicator.helpers.BatteryHelper
 import maderski.chargingindicator.receivers.BatteryReceiver
-import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.utils.ServiceUtils
 
 class BatteryService : Service() {
     private val batteryReceiver = BatteryReceiver()
 
-    private var performActions: PerformActions? = null
+    private lateinit var performActions: PerformActions
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         val batteryStatus = registerReceiver(batteryReceiver, filter)
-
         performActions = PerformActions(this)
-        performActions?.let {
-            it.connectVibrate()
-            playConnectSound(it, batteryStatus)
-            it.showToast(getString(R.string.power_connected_msg))
-            it.showBubble()
-        }
+        performActions.connectVibrate()
+        performActions.playConnectSound(batteryStatus)
+        performActions.showToast(getString(R.string.power_connected_msg))
+        performActions.showBubble()
 
         return START_NOT_STICKY
     }
@@ -36,21 +31,10 @@ class BatteryService : Service() {
         return super.stopService(name)
     }
 
-    // Checks if charged sound is enabled and if battery is at 100%, if both are true only play the charged sound
-    private fun playConnectSound(performActions: PerformActions, batteryStatus: Intent?) {
-        val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(this)
-        if (chargedSoundEnabled && batteryStatus != null) {
-            val isBatteryAt100 = BatteryHelper(batteryStatus).isBatteryAt100
-            if (isBatteryAt100.not()) {
-                performActions.connectSound()
-            }
-        } else {
-            performActions.connectSound()
-        }
-    }
-
     override fun onCreate() {
         super.onCreate()
+
+
         val title = getString(R.string.getting_battery_pct)
         val message = getString(R.string.getting_battery_info)
         ServiceUtils.createServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
@@ -64,12 +48,10 @@ class BatteryService : Service() {
     }
 
     override fun onDestroy() {
-        performActions?.let {
-            it.disconnectVibrate()
-            it.disconnectSound()
-            it.showToast(getString(R.string.power_disconnected_msg))
-            it.removeBubble()
-        }
+        performActions.disconnectVibrate()
+        performActions.disconnectSound()
+        performActions.showToast(getString(R.string.power_disconnected_msg))
+        performActions.removeBubble()
 
         val title = this.getString(R.string.ci_service_notification_title)
         val message = this.getString(R.string.ci_service_notification_messge)

@@ -1,12 +1,14 @@
 package maderski.chargingindicator.actions
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import maderski.chargingindicator.helpers.CIBubblesHelper
-import maderski.chargingindicator.helpers.SoundHelper
-import maderski.chargingindicator.helpers.VibrationHelper
+import maderski.chargingindicator.helpers.*
+import maderski.chargingindicator.interfaces.SoundActions
+import maderski.chargingindicator.interfaces.VibrateActions
+import maderski.chargingindicator.interfaces.VisualActions
 
 import java.util.Calendar
 
@@ -15,10 +17,11 @@ import maderski.chargingindicator.sharedprefs.CIPreferences
 /**
  * Created by Jason on 8/2/16.
  */
-class PerformActions(private val context: Context) {
+class PerformActions(private val context: Context) : VibrateActions, SoundActions, VisualActions {
     private val vibrationHelper: VibrationHelper = VibrationHelper(context)
     private val playSoundHelper: SoundHelper = SoundHelper(context)
     private val cIBubblesHelper: CIBubblesHelper = CIBubblesHelper(context)
+    private val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context)
 
     private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(context)
     private val isQuietTime: Boolean
@@ -42,7 +45,7 @@ class PerformActions(private val context: Context) {
 
     private var toast: Toast? = null
 
-    fun connectVibrate() {
+    override fun connectVibrate() {
         val canVibrate = CIPreferences.getVibrateWhenPluggedIn(context)
         if (canVibrate && isQuietTime.not()) {
             if (CIPreferences.getDiffVibrations(context))
@@ -52,7 +55,7 @@ class PerformActions(private val context: Context) {
         }
     }
 
-    fun disconnectVibrate() {
+    override fun disconnectVibrate() {
         val canVibrate = CIPreferences.getVibrateOnDisconnect(context)
         if (canVibrate && isQuietTime.not()) {
             if (CIPreferences.getDiffVibrations(context))
@@ -62,28 +65,25 @@ class PerformActions(private val context: Context) {
         }
     }
 
-    fun connectSound() {
+    override fun connectSound() {
         val canPlaySound = CIPreferences.getPlaySound(context)
         val chosenPlaySound = CIPreferences.getChosenConnectSound(context)
-
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
 
-    fun disconnectSound() {
+    override fun disconnectSound() {
         val canPlaySound = CIPreferences.getDisconnectPlaySound(context)
         val chosenPlaySound = CIPreferences.getChosenDisconnectSound(context)
-
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
 
-    fun batteryChargedSound() {
+    override fun batteryChargedSound() {
         val canPlaySound = CIPreferences.getBatteryChargedPlaySound(context)
         val chosenPlaySound = CIPreferences.getChosenBatteryChargedSound(context)
-
         playSoundHandler(canPlaySound, chosenPlaySound)
     }
 
-    private fun playSoundHandler(canPlaySound: Boolean, chosenPlaySound: String) {
+    override fun playSoundHandler(canPlaySound: Boolean, chosenPlaySound: String) {
         if (canPlaySound && isQuietTime.not()) {
             if (chosenPlaySound.equals("None", ignoreCase = true))
                 playSoundHelper.playDefaultNotificationSound()
@@ -92,13 +92,24 @@ class PerformActions(private val context: Context) {
         }
     }
 
-    fun showToast(message: String) {
+    // Checks if charged sound is enabled and if battery is at 100%, if both are true only play the charged sound
+    override fun playConnectSound(batteryStatus: Intent?) {
+        if (chargedSoundEnabled && batteryStatus != null) {
+            val isBatteryAt100 = BatteryHelper(batteryStatus).isBatteryAt100
+            if (isBatteryAt100.not()) {
+                connectSound()
+            }
+        } else {
+            connectSound()
+        }
+    }
+
+    override fun showToast(message: String) {
         val isToastShown = CIPreferences.getShowToast(context)
         if (isToastShown) {
             toast?.let {
                 if (it.view.isShown) {
                     it.cancel()
-                    toast = null
                 }
             }
             toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
@@ -106,12 +117,19 @@ class PerformActions(private val context: Context) {
         }
     }
 
-    fun showBubble() {
-        if (isBubbleShown)
-            cIBubblesHelper.addBubble()
+    override fun showBubble() {
+        if (isBubbleShown) {
+            val permissionHelper = PermissionHelper()
+            val hasOverlayPermission = permissionHelper.hasOverlayPermission(context)
+            if (hasOverlayPermission) {
+                cIBubblesHelper.addBubble()
+            } else {
+                CIPreferences.setShowChargingBubble(context, false)
+            }
+        }
     }
 
-    fun removeBubble() {
+    override fun removeBubble() {
         if (isBubbleShown)
             cIBubblesHelper.removeBubble()
     }

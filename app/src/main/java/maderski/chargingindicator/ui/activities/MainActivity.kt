@@ -25,7 +25,7 @@ import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.services.CIService
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.ui.fragments.TimePickerFragment
-import maderski.chargingindicator.utils.PermissionUtils
+import maderski.chargingindicator.helpers.PermissionHelper
 import maderski.chargingindicator.utils.PowerUtils
 import maderski.chargingindicator.utils.ServiceUtils
 
@@ -171,54 +171,51 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
     fun setStartQuietTime(view: View) {
         val previousStartTime = CIPreferences.getStartQuietTime(this)
         val timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.START_TIME, previousStartTime, "Start Time")
-        timePickerDialog.show(fragmentManager, "startQuietTime")
+        timePickerDialog.show(supportFragmentManager, "startQuietTime")
     }
 
     fun setEndQuietTime(view: View) {
         val previousStartTime = CIPreferences.getEndQuietTime(this)
         val timePickerDialog = TimePickerFragment.newInstance(TimePickerFragment.END_TIME, previousStartTime, "End Time")
-        timePickerDialog.show(fragmentManager, "EndQuietTime")
+        timePickerDialog.show(supportFragmentManager, "EndQuietTime")
     }
 
     private fun setButtonPreferences() {
-        var btnState: Boolean?
-        var setting_switch: Switch
+        val vibrateBtnState = CIPreferences.getVibrateWhenPluggedIn(this)
+        val vibrateSwitchView = findViewById<Switch>(R.id.vibrate_switch)
+        vibrateSwitchView.isChecked = vibrateBtnState
 
-        btnState = CIPreferences.getVibrateWhenPluggedIn(this)
-        setting_switch = findViewById<View>(R.id.vibrate_switch) as Switch
-        setting_switch.isChecked = btnState
+        val playSoundBtnState = CIPreferences.getPlaySound(this)
+        val playSoundView = findViewById<Switch>(R.id.play_sound_switch)
+        playSoundView.isChecked = playSoundBtnState
 
-        btnState = CIPreferences.getPlaySound(this)
-        setting_switch = findViewById<View>(R.id.play_sound_switch) as Switch
-        setting_switch.isChecked = btnState
+        val showToastBtnState = CIPreferences.getShowToast(this)
+        val showToastView = findViewById<Switch>(R.id.show_toast_switch)
+        showToastView.isChecked = showToastBtnState
 
-        btnState = CIPreferences.getShowToast(this)
-        setting_switch = findViewById<View>(R.id.show_toast_switch) as Switch
-        setting_switch.isChecked = btnState
+        val disconnectSoundBtnState = CIPreferences.getDisconnectPlaySound(this)
+        val disconnectSoundView = findViewById<Switch>(R.id.disconnect_playsound_switch)
+        disconnectSoundView.isChecked = disconnectSoundBtnState
 
-        btnState = CIPreferences.getDisconnectPlaySound(this)
-        setting_switch = findViewById<View>(R.id.disconnect_playsound_switch) as Switch
-        setting_switch.isChecked = btnState
+        val diffVibrationsBtnState = CIPreferences.getDiffVibrations(this)
+        val diffVibrationsView = findViewById<Switch>(R.id.diff_vibrations_switch)
+        diffVibrationsView.isChecked = diffVibrationsBtnState
 
-        btnState = CIPreferences.getDiffVibrations(this)
-        setting_switch = findViewById<View>(R.id.diff_vibrations_switch) as Switch
-        setting_switch.isChecked = btnState
+        val vibrateOnDisconnectBtnState = CIPreferences.getVibrateOnDisconnect(this)
+        val disconnectVibrateView = findViewById<Switch>(R.id.disconnect_vibrate_switch)
+        disconnectVibrateView.isChecked = vibrateOnDisconnectBtnState
 
-        btnState = CIPreferences.getVibrateOnDisconnect(this)
-        setting_switch = findViewById<View>(R.id.disconnect_vibrate_switch) as Switch
-        setting_switch.isChecked = btnState
+        val batteryChargedPlaySoundBtnState = CIPreferences.getBatteryChargedPlaySound(this)
+        val batteryChargedView = findViewById<Switch>(R.id.battery_charged_sound_switch)
+        batteryChargedView.isChecked = batteryChargedPlaySoundBtnState
 
-        btnState = CIPreferences.getBatteryChargedPlaySound(this)
-        setting_switch = findViewById<View>(R.id.battery_charged_sound_switch) as Switch
-        setting_switch.isChecked = btnState
+        val quietTimeBtnState = CIPreferences.getQuietTime(this)
+        val quietTimeView = findViewById<Switch>(R.id.quiet_time_switch)
+        quietTimeView.isChecked = quietTimeBtnState
 
-        btnState = CIPreferences.getQuietTime(this)
-        setting_switch = findViewById<View>(R.id.quiet_time_switch) as Switch
-        setting_switch.isChecked = btnState
-
-        btnState = CIPreferences.getShowChargingBubble(this)
-        setting_switch = findViewById<View>(R.id.show_floating_charging_btn_switch) as Switch
-        setting_switch.isChecked = btnState
+        val showChargingBubbleBtnState = CIPreferences.getShowChargingBubble(this)
+        val showfloatingChargingButtonView = findViewById<Switch>(R.id.show_floating_charging_btn_switch)
+        showfloatingChargingButtonView.isChecked = showChargingBubbleBtnState
     }
 
 
@@ -287,7 +284,8 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         val on = (view as Switch).isChecked
         CIPreferences.setShowChargingBubble(this, on)
         if (on) {
-            PermissionUtils.checkSystemOverlayPermission(this)
+            val permissionHelper = PermissionHelper()
+            permissionHelper.checkToLaunchSystemOverlaySettings(this)
         }
         Log.d(TAG, "floatingChargingBtnSwitch is enabled: " + java.lang.Boolean.toString(on))
     }

@@ -5,47 +5,51 @@ package maderski.chargingindicator.ui.fragments
  */
 
 import android.app.Dialog
-import android.app.DialogFragment
 import android.app.TimePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.support.annotation.StringDef
+import android.support.v4.app.DialogFragment
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.TextView
 import android.widget.TimePicker
+import maderski.chargingindicator.utils.CITimeUtils
+import java.lang.IllegalArgumentException
 
 class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     private var timeState: String? = null
-    private var dialogListener: TimePickerDialogListener? = null
+    private var pickerTitleText: String? = null
+    private var previouslySetTime: Int = 0
+
+    private lateinit var dialogListener: TimePickerDialogListener
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        timeState = arguments.getString(ARG_PICKER_TIME_STATE)
-        val previouslySetTime = arguments.getInt(ARG_PICKER_PREVIOUSLY_SET_TIME)
-        val pickerTitle = arguments.getString(ARG_PICKER_TITLE)
-        dialogListener = if (activity is TimePickerDialogListener) activity as TimePickerDialogListener else null
-
-        //Create and set Title
-        val tpfTitle = TextView(activity)
-        tpfTitle.text = pickerTitle
-        tpfTitle.gravity = Gravity.CENTER_HORIZONTAL
-
-        //Get minutes
-        var tempToGetMinutes = previouslySetTime
-        while (tempToGetMinutes > 60) {
-            tempToGetMinutes -= 100
+        arguments?.let {
+            timeState = it.getString(ARG_PICKER_TIME_STATE)
+            previouslySetTime = it.getInt(ARG_PICKER_PREVIOUSLY_SET_TIME)
+            pickerTitleText = it.getString(ARG_PICKER_TITLE)
         }
-        val minute = tempToGetMinutes
-        //Get hour
-        val hour = (previouslySetTime - tempToGetMinutes) / 100
+        // get hour and minutes for timePickerDialog
+        val hourAndMinutes = CITimeUtils.getHourAndMinutes(previouslySetTime)
 
-        // Create a new instance of TimePickerDialog
-        val timePickerDialog = TimePickerDialog(activity, this, hour, minute,
+        // create a new instance of TimePickerDialog
+        val timePickerDialog = TimePickerDialog(activity, this, hourAndMinutes.hour, hourAndMinutes.minutes,
                 DateFormat.is24HourFormat(activity))
-        //Add title to picker
-        timePickerDialog.setCustomTitle(tpfTitle)
-        //Return TimePickerDialog
+
+        pickerTitleText?.let { titleText ->
+            // create title
+            val tpfTitle = TextView(activity)
+            tpfTitle.text = titleText
+            tpfTitle.gravity = Gravity.CENTER_HORIZONTAL
+            // add title to picker
+            timePickerDialog.setCustomTitle(tpfTitle)
+        }
+
+        // return TimePickerDialog
         return timePickerDialog
     }
 
@@ -54,8 +58,15 @@ class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener 
         val setTime = hourOfDay * 100 + minute
         Log.d(TAG, "Set time: " + Integer.toString(setTime))
 
-        if (dialogListener != null) {
-            dialogListener!!.onTimeSet(view, timeState, hourOfDay, minute)
+        dialogListener.onTimeSet(view, timeState, hourOfDay, minute)
+    }
+
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+        if (context is TimePickerDialogListener) {
+            dialogListener = context
+        } else {
+            throw IllegalArgumentException("Activity must implement TimePickerDialogListener")
         }
     }
 
