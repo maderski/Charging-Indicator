@@ -25,7 +25,7 @@ android {
         applicationId "maderski.chargingindicator"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 38
+        versionCode 39
         versionName "3.5"
     }
     buildTypes {
