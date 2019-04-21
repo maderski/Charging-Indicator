@@ -100,7 +100,7 @@ object ServiceUtils {
                 .build()
 
         if (isOngoing) {
-            notification.flags = Notification.FLAG_FOREGROUND_SERVICE
+            notification.flags = NotificationCompat.FLAG_FOREGROUND_SERVICE
         }
 
         return notification

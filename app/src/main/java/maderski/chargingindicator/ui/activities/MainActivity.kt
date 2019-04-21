@@ -80,7 +80,6 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
                 val inputMethodManager = this@MainActivity.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
                 inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
                 userChargedPercentEditText.isCursorVisible = false
-
                 true
             } else {
                 false
