@@ -44,20 +44,20 @@ android {
 }
 
 dependencies {
-    def support_lib_version = '28.0.0'
-    def work_manager_version = '1.0.1'
+    def work_manager_version = '2.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
-    implementation "com.android.support:design:$support_lib_version"
-    implementation "com.android.support:support-v4:$support_lib_version"
-    implementation "com.android.support:cardview-v7:$support_lib_version"
-    implementation "android.arch.work:work-runtime-ktx:$work_manager_version"
-    testImplementation 'junit:junit:4.12'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.cardview:cardview:1.0.0'
+    implementation "androidx.work:work-runtime-ktx:$work_manager_version"
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true
     }
     implementation project(':bubbles')
+    testImplementation 'junit:junit:4.12'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
 }
 
 apply plugin: 'com.google.gms.google-services'

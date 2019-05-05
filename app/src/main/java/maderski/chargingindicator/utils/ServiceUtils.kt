@@ -4,9 +4,9 @@ import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
-import android.support.annotation.DrawableRes
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 
 /**
  * Created by Jason on 6/17/17.
