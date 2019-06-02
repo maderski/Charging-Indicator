@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
+import maderski.chargingindicator.CIApplication
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.CIPerformActions
 import maderski.chargingindicator.actions.interfaces.PerformActions
@@ -36,6 +37,8 @@ class BatteryService : Service() {
 
     override fun onCreate() {
         super.onCreate()
+
+        CIApplication.instance.appComponent.inject(this)
 
         val title = getString(R.string.getting_battery_pct)
         val message = getString(R.string.getting_battery_info)

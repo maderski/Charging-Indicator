@@ -9,10 +9,12 @@ def junit_version = '4.12'
 def leakcanary_version = '2.0-alpha-1'
 def dagger_version = '2.22.1'
 def gson_version = '2.8.5'
+def anko_version = '0.10.8'
 
-def kotlin = [:]
-    kotlin.kotlin_stdlib_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-dep.kotlin = kotlin
+def jetbrains = [:]
+    jetbrains.kotlin_stdlib_jdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    jetbrains.anko = "org.jetbrains.anko:anko-commons:$anko_version"
+dep.jetbrains = jetbrains
 
 def androidx = [:]
     androidx.work_manager = "androidx.work:work-runtime-ktx:$work_manager_version"

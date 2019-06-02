@@ -47,8 +47,9 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // kotlin
-    implementation dep.kotlin.kotlin_stdlib_jdk7
+    // jetbrains
+    implementation dep.jetbrains.kotlin_stdlib_jdk7
+    implementation dep.jetbrains.anko
     // androidx
     implementation dep.androidx.work_manager
     implementation dep.androidx.app_compat

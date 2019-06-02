@@ -1,14 +1,17 @@
 package maderski.chargingindicator
 
 import android.app.Application
-import maderski.chargingindicator.delegatedproperties.setOnceOf
 import maderski.chargingindicator.di.AppComponent
 import maderski.chargingindicator.di.AppModule
 import maderski.chargingindicator.di.DaggerAppComponent
 
 class CIApplication : Application() {
+    lateinit var appComponent: AppComponent
+        private set
+
     override fun onCreate() {
         super.onCreate()
+        instance = this
         appComponent = createAppComponent()
         appComponent.inject(this)
     }
@@ -21,7 +24,7 @@ class CIApplication : Application() {
     }
 
     companion object {
-        var appComponent by setOnceOf<AppComponent>()
+        lateinit var instance: CIApplication
             private set
     }
 }
