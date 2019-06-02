@@ -1,4 +1,4 @@
-package maderski.chargingindicator.helpers
+package maderski.chargingindicator.helpers.bubbles
 
 import android.content.Context
 import android.util.Log
@@ -6,12 +6,11 @@ import android.view.LayoutInflater
 import com.txusballesteros.bubbles.BubblesManager
 import com.txusballesteros.bubbles.OnInitializedCallback
 import maderski.chargingindicator.R
-import maderski.chargingindicator.interfaces.LastXYCoordListener
 import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.ui.custom.CustomBubbleLayout
 
-class CIBubblesHelper(private val context: Context) : OnInitializedCallback, LastXYCoordListener {
+class CIBubblesHelper(private val context: Context) : BubblesHelper {
     // Create BubblesManager Instance
     private val bubblesManager: BubblesManager = BubblesManager.Builder(context)
             .setInitializationCallback(this)
@@ -20,9 +19,9 @@ class CIBubblesHelper(private val context: Context) : OnInitializedCallback, Las
     // Once BubblesManager is initialized add the Charging Bolt Bubble
     override fun onInitialized() = addChargingBoltBubble()
 
-    fun addBubble() = bubblesManager.initialize()
+    override fun addBubble() = bubblesManager.initialize()
 
-    fun removeBubble() = bubblesManager.recycle()
+    override fun removeBubble() = bubblesManager.recycle()
 
     private fun addChargingBoltBubble() {
         val lastXCoord = CIPreferences.getChargingBubbleX(context).toInt()

@@ -6,19 +6,21 @@ import android.content.IntentFilter
 import android.os.Build
 import android.os.IBinder
 import maderski.chargingindicator.R
-import maderski.chargingindicator.actions.PerformActions
+import maderski.chargingindicator.actions.CIPerformActions
+import maderski.chargingindicator.actions.interfaces.PerformActions
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.utils.ServiceUtils
+import javax.inject.Inject
 
 class BatteryService : Service() {
     private val batteryReceiver = BatteryReceiver()
 
-    private lateinit var performActions: PerformActions
+    @Inject
+    lateinit var performActions: PerformActions
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         val filter = IntentFilter(Intent.ACTION_BATTERY_CHANGED)
         val batteryStatus = registerReceiver(batteryReceiver, filter)
-        performActions = PerformActions(this)
         performActions.connectVibrate()
         performActions.playConnectSound(batteryStatus)
         performActions.showToast(getString(R.string.power_connected_msg))
@@ -53,18 +55,16 @@ class BatteryService : Service() {
         performActions.showToast(getString(R.string.power_disconnected_msg))
         performActions.removeBubble()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val title = this.getString(R.string.ci_service_notification_title)
-            val message = this.getString(R.string.ci_service_notification_messge)
-            ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                    title,
-                    message,
-                    this,
-                    getString(R.string.ci_channel_id),
-                    getString(R.string.ci_channel_name),
-                    R.drawable.ic_action_battery,
-                    false)
-        }
+        val title = this.getString(R.string.ci_service_notification_title)
+        val message = this.getString(R.string.ci_service_notification_messge)
+        ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                title,
+                message,
+                this,
+                getString(R.string.ci_channel_id),
+                getString(R.string.ci_channel_name),
+                R.drawable.ic_action_battery,
+                false)
 
         unregisterReceiver(batteryReceiver)
         super.onDestroy()

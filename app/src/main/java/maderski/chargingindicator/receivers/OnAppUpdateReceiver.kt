@@ -11,7 +11,6 @@ class OnAppUpdateReceiver : BroadcastReceiver() {
         if (context != null && intent != null) {
             val action = intent.action
             if (action != null && action == Intent.ACTION_MY_PACKAGE_REPLACED) {
-                // Schedule Job to run on update
                 ServiceUtils.startService(context, CIService::class.java, CIService.TAG)
             }
         }

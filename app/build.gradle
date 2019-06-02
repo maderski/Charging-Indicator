@@ -8,8 +8,10 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -44,20 +46,30 @@ android {
 }
 
 dependencies {
-    def work_manager_version = '2.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.0.2'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    implementation 'androidx.cardview:cardview:1.0.0'
-    implementation "androidx.work:work-runtime-ktx:$work_manager_version"
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    // kotlin
+    implementation dep.kotlin.kotlin_stdlib_jdk7
+    // androidx
+    implementation dep.androidx.work_manager
+    implementation dep.androidx.app_compat
+    implementation dep.androidx.legacy
+    implementation dep.androidx.cardview
+    // google
+    implementation dep.google.material
+    implementation dep.google.gson
+    // debug
+    implementation("com.crashlytics.sdk.android:crashlytics:2.6.8@aar") {
         transitive = true
     }
-    implementation project(':bubbles')
-    testImplementation 'junit:junit:4.12'
-    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.0-alpha-1'
+    debugImplementation dep.debug.leak_canary
+    // dagger
+    implementation dep.dagger.dagger_lib
+    kapt dep.dagger.dagger_compiler
+    kapt dep.dagger.dagger_android_processor
+    // junit
+    testImplementation dep.junit.junit
+    // local_library
+    implementation project(dep.local_library.bubbles)
 }
 
 apply plugin: 'com.google.gms.google-services'

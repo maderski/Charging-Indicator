@@ -5,26 +5,32 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import maderski.chargingindicator.R
-import maderski.chargingindicator.actions.PerformActions
-import maderski.chargingindicator.helpers.BatteryHelper
+import maderski.chargingindicator.actions.interfaces.PerformActions
+import maderski.chargingindicator.helpers.battery.BatteryHelper
 import maderski.chargingindicator.utils.ServiceUtils
+import javax.inject.Inject
 
 class BatteryReceiver : BroadcastReceiver() {
+    @Inject
+    lateinit var performActions: PerformActions
+
+    @Inject
+    lateinit var batteryHelper: BatteryHelper
+
     private var canChargedSoundPlay = true
 
     override fun onReceive(context: Context?, intent: Intent?) {
         intent?.let {
             val action = it.action
             if (action != null && context != null) {
-                val batteryHelper = BatteryHelper(it)
-                val isBatteryCharged = batteryHelper.isBatteryUserCharged(context)
+                val appContext = context.applicationContext
+                val isBatteryCharged = batteryHelper.isBatteryUserCharged(appContext, intent)
                 if (isBatteryCharged && canChargedSoundPlay) {
-                    val performActions = PerformActions(context)
                     performActions.batteryChargedSound()
                     canChargedSoundPlay = false
                 }
 
-                val title = "Battery Level: ${batteryHelper.batteryLevel()}"
+                val title = "Battery Level: ${batteryHelper.batteryLevel(intent)}"
                 val message = if (isBatteryCharged) "CHARGED!" else "Charging..."
                 val icon = if (isBatteryCharged) android.R.drawable.ic_lock_idle_charging else R.drawable.standardbolt
 

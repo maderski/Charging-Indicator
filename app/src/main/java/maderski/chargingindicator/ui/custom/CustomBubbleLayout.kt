@@ -6,7 +6,7 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import com.txusballesteros.bubbles.BubbleLayout
-import maderski.chargingindicator.interfaces.LastXYCoordListener
+import maderski.chargingindicator.helpers.bubbles.LastXYCoordListener
 
 class CustomBubbleLayout : BubbleLayout, View.OnTouchListener {
     constructor(context: Context) : super(context)

@@ -20,12 +20,12 @@ import android.widget.Switch
 import android.widget.TimePicker
 import android.widget.Toast
 import maderski.chargingindicator.R
-import maderski.chargingindicator.helpers.SoundHelper
+import maderski.chargingindicator.helpers.sound.CISoundHelper
 import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.services.CIService
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.ui.fragments.TimePickerFragment
-import maderski.chargingindicator.helpers.PermissionHelper
+import maderski.chargingindicator.helpers.permission.CIPermissionHelper
 import maderski.chargingindicator.utils.PowerUtils
 import maderski.chargingindicator.utils.ServiceUtils
 
@@ -149,21 +149,21 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
     fun connectSetSound(view: View) {
         val chosenRingtone = CIPreferences.getChosenConnectSound(this)
 
-        val soundHelper = SoundHelper(this)
+        val soundHelper = CISoundHelper(this)
         soundHelper.notificationList(this, chosenRingtone, 1)
     }
 
     fun disconnectSetSound(view: View) {
         val chosenRingtone = CIPreferences.getChosenDisconnectSound(this)
 
-        val soundHelper = SoundHelper(this)
+        val soundHelper = CISoundHelper(this)
         soundHelper.notificationList(this, chosenRingtone, 2)
     }
 
     fun batteryChargedSetSound(view: View) {
         val chosenRingtone = CIPreferences.getChosenBatteryChargedSound(this)
 
-        val soundHelper = SoundHelper(this)
+        val soundHelper = CISoundHelper(this)
         soundHelper.notificationList(this, chosenRingtone, 3)
     }
 
@@ -283,7 +283,7 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         val on = (view as Switch).isChecked
         CIPreferences.setShowChargingBubble(this, on)
         if (on) {
-            val permissionHelper = PermissionHelper()
+            val permissionHelper = CIPermissionHelper()
             permissionHelper.checkToLaunchSystemOverlaySettings(this)
         }
         Log.d(TAG, "floatingChargingBtnSwitch is enabled: " + java.lang.Boolean.toString(on))

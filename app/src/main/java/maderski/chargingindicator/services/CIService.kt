@@ -19,11 +19,6 @@ class CIService : Service() {
 
         registerReceiver(powerConnectionReceiver, intentFilter)
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            stopForeground(true)
-            stopSelf()
-        }
-
         return START_NOT_STICKY
     }
 
