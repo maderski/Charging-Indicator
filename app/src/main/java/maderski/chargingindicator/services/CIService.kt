@@ -34,17 +34,6 @@ class CIService : Service() {
                 getString(R.string.ci_channel_name),
                 R.drawable.ic_action_battery,
                 false)
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                    title,
-                    message,
-                    this,
-                    getString(R.string.ci_channel_id),
-                    getString(R.string.ci_channel_name),
-                    R.drawable.ic_action_battery,
-                    false)
-        }
     }
 
     override fun onDestroy() {
@@ -52,9 +41,7 @@ class CIService : Service() {
         unregisterReceiver(powerConnectionReceiver)
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
         const val TAG = "CIService"

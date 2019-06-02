@@ -11,6 +11,8 @@ import maderski.chargingindicator.actions.CIPerformActions
 import maderski.chargingindicator.actions.interfaces.PerformActions
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.utils.ServiceUtils
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 class BatteryService : Service() {
@@ -53,29 +55,30 @@ class BatteryService : Service() {
     }
 
     override fun onDestroy() {
-        performActions.disconnectVibrate()
-        performActions.disconnectSound()
-        performActions.showToast(getString(R.string.power_disconnected_msg))
-        performActions.removeBubble()
-
-        val title = this.getString(R.string.ci_service_notification_title)
-        val message = this.getString(R.string.ci_service_notification_messge)
-        ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                title,
-                message,
-                this,
-                getString(R.string.ci_channel_id),
-                getString(R.string.ci_channel_name),
-                R.drawable.ic_action_battery,
-                false)
+        doAsync {
+            performActions.disconnectVibrate()
+            performActions.disconnectSound()
+            uiThread {
+                performActions.showToast(getString(R.string.power_disconnected_msg))
+                performActions.removeBubble()
+                val title = it.getString(R.string.ci_service_notification_title)
+                val message = it.getString(R.string.ci_service_notification_messge)
+                ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+                        title,
+                        message,
+                        it,
+                        it.getString(R.string.ci_channel_id),
+                        it.getString(R.string.ci_channel_name),
+                        R.drawable.ic_action_battery,
+                        false)
+            }
+        }
 
         unregisterReceiver(batteryReceiver)
         super.onDestroy()
     }
 
-    override fun onBind(intent: Intent?): IBinder? {
-        return null
-    }
+    override fun onBind(intent: Intent?): IBinder? = null
 
     companion object {
         const val TAG = "BatteryService"
