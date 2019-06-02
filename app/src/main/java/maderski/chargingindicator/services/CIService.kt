@@ -34,6 +34,7 @@ class CIService : Service() {
                 getString(R.string.ci_channel_name),
                 R.drawable.ic_action_battery,
                 false)
+
     }
 
     override fun onDestroy() {
