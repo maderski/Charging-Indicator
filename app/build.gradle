@@ -58,7 +58,7 @@ dependencies {
     implementation dep.google.material
     implementation dep.google.gson
     // debug
-    implementation("com.crashlytics.sdk.android:crashlytics:2.6.8@aar") {
+    implementation(dep.debug.crashlytics) {
         transitive = true
     }
     debugImplementation dep.debug.leak_canary

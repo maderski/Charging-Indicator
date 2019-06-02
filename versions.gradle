@@ -5,7 +5,6 @@ def app_compat_version = '1.0.2'
 def material_version = '1.0.0'
 def legacy_support_v4_version = '1.0.0'
 def cardview_version = '1.0.0'
-def crashlytics_version = '2.6.8@aar'
 def junit_version = '4.12'
 def leakcanary_version = '2.0-alpha-1'
 def dagger_version = '2.22.1'
@@ -28,7 +27,7 @@ def google = [:]
 dep.google = google
 
 def debug = [:]
-    debug.crashlytics = "com.crashlytics.sdk.android:crashlytics:$crashlytics_version"
+    debug.crashlytics = 'com.crashlytics.sdk.android:crashlytics:2.6.8@aar'
     debug.leak_canary = "com.squareup.leakcanary:leakcanary-android:$leakcanary_version"
 dep.debug = debug
 
