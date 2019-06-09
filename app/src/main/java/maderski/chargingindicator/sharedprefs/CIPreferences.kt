@@ -2,30 +2,30 @@ package maderski.chargingindicator.sharedprefs
 
 import android.content.Context
 import android.content.SharedPreferences
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.BATTERY_CHARGED_PERCENT
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.BATTERY_CHARGED_PLAY_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.CHARGING_BUBBLE_X
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.CHARGING_BUBBLE_Y
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.CHOSEN_BATTERY_CHARGED_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.CHOSEN_CONNECT_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.CHOSEN_DISCONNECT_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.DIFF_VIBRATIONS_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.DISCONNECT_PLAY_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.DISCONNECT_VIBRATE_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.END_QUIET_TIME
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.PLAY_SOUND_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.QUIET_TIME
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.SHOW_CHARGING_BUBBLE_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.SHOW_TOAST_KEY
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.START_QUIET_TIME
+import maderski.chargingindicator.sharedprefs.CISettings.Companion.VIBRATE_KEY
 
 /**
  * Created by Jason on 6/11/16.
  */
-object CIPreferences : SettingsRepository {
+object CIPreferences : CISettings {
     private const val MY_PREFS_NAME = "CIPreferences"
-
-    private const val VIBRATE_KEY = "vibrate"
-    private const val DISCONNECT_VIBRATE_KEY = "disconnectVibrateKey"
-    private const val DIFF_VIBRATIONS_KEY = "differentVibrationsKey"
-    private const val PLAY_SOUND_KEY = "playSound"
-    private const val DISCONNECT_PLAY_SOUND_KEY = "disconnectPlaySound"
-    private const val BATTERY_CHARGED_PLAY_SOUND_KEY = "batteryChargedPlaySound"
-    private const val SHOW_TOAST_KEY = "showToast"
-    private const val CHOSEN_DISCONNECT_SOUND_KEY = "chosenDisconnectSound"
-    private const val CHOSEN_CONNECT_SOUND_KEY = "chosenConnectSound"
-    private const val CHOSEN_BATTERY_CHARGED_SOUND_KEY = "batteryChargedSound"
-    private const val QUIET_TIME = "quietTime"
-    private const val START_QUIET_TIME = "startQuietTIme"
-    private const val END_QUIET_TIME = "endQuietTime"
-    private const val SHOW_CHARGING_BUBBLE_KEY = "showChargingBubble"
-    private const val CHARGING_BUBBLE_X = "chargingBubbleX"
-    private const val CHARGING_BUBBLE_Y = "chargingBubbleY"
-    private const val BATTERY_CHARGED_PERCENT = "batteryChargedPercent"
+    private const val NONE = "None"
 
     override fun setBatteryChargedPercent(context: Context, percent: Int) = editor(context).putInt(BATTERY_CHARGED_PERCENT, percent).apply()
     override fun getBatteryCharged(context: Context): Int = reader(context).getInt(BATTERY_CHARGED_PERCENT, 100)
@@ -52,13 +52,13 @@ object CIPreferences : SettingsRepository {
     override fun getBatteryChargedPlaySound(context: Context): Boolean = reader(context).getBoolean(BATTERY_CHARGED_PLAY_SOUND_KEY, false)
 
     override fun setChosenBatteryChargedSound(context: Context, chosenSound: String) = editor(context).putString(CHOSEN_BATTERY_CHARGED_SOUND_KEY, chosenSound).apply()
-    override fun getChosenBatteryChargedSound(context: Context): String = reader(context).getString(CHOSEN_BATTERY_CHARGED_SOUND_KEY, "None")
+    override fun getChosenBatteryChargedSound(context: Context): String = reader(context).getString(CHOSEN_BATTERY_CHARGED_SOUND_KEY, NONE) ?: NONE
 
     override fun setChosenDisconnectSound(context: Context, chosenSound: String) = editor(context).putString(CHOSEN_DISCONNECT_SOUND_KEY, chosenSound).apply()
-    override fun getChosenDisconnectSound(context: Context): String = reader(context).getString(CHOSEN_DISCONNECT_SOUND_KEY, "None")
+    override fun getChosenDisconnectSound(context: Context): String = reader(context).getString(CHOSEN_DISCONNECT_SOUND_KEY, NONE) ?: NONE
 
     override fun setChosenConnectSound(context: Context, chosenSound: String) = editor(context).putString(CHOSEN_CONNECT_SOUND_KEY, chosenSound).apply()
-    override fun getChosenConnectSound(context: Context): String = reader(context).getString(CHOSEN_CONNECT_SOUND_KEY, "None")
+    override fun getChosenConnectSound(context: Context): String = reader(context).getString(CHOSEN_CONNECT_SOUND_KEY, NONE) ?: NONE
 
     override fun setDisconnectPlaySound(context: Context, enabled: Boolean) = editor(context).putBoolean(DISCONNECT_PLAY_SOUND_KEY, enabled).apply()
     override fun getDisconnectPlaySound(context: Context): Boolean = reader(context).getBoolean(DISCONNECT_PLAY_SOUND_KEY, false)
