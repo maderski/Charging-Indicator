@@ -33,4 +33,5 @@
     <string name="silence">Silence</string>
     <string name="charged_at">Charged at:</string>
     <string name="percent_symbol">%</string>
+    <string name="charging_bolt_content_desc">charging</string>
 </resources>
