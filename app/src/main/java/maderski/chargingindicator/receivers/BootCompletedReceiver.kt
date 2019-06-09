@@ -13,14 +13,9 @@ class BootCompletedReceiver : BroadcastReceiver() {
         if (context != null && intent != null) {
             val action = intent.action
             if (action == Intent.ACTION_BOOT_COMPLETED) {
-                // Set power constraint
-                val powerConstraint = Constraints.Builder()
-                        .setRequiresCharging(true)
-                        .build()
                 // Create and add work request to work manager
                 val workOnBootRequest = OneTimeWorkRequestBuilder<OnBootWorker>()
                         .addTag(OnBootWorker.TAG)
-                        .setConstraints(powerConstraint)
                         .build()
                 WorkManager.getInstance().enqueue(workOnBootRequest)
             }

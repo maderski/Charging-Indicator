@@ -3,6 +3,7 @@ package maderski.chargingindicator.utils
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
 import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
@@ -26,10 +27,33 @@ object ServiceUtils {
         }
     }
 
+    fun startBindedService(context: Context, serviceClass: Class<*>, tag: String, serviceConnection: ServiceConnection) {
+        val intent = Intent(context, serviceClass)
+        intent.addCategory(tag)
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            context.startService(intent)
+        } else {
+            context.startForegroundService(intent)
+        }
+    }
+
     fun stopService(context: Context, serviceClass: Class<*>, tag: String) {
         try {
             val intent = Intent(context, serviceClass)
             intent.addCategory(tag)
+            context.stopService(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun stopBindedService(context: Context, serviceClass: Class<*>, tag: String, serviceConnection: ServiceConnection) {
+        try {
+            val intent = Intent(context, serviceClass)
+            intent.addCategory(tag)
+            context.unbindService(serviceConnection)
             context.stopService(intent)
         } catch (e: Exception) {
             e.printStackTrace()

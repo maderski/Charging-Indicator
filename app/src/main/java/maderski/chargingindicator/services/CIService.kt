@@ -3,6 +3,7 @@ package maderski.chargingindicator.services
 import android.app.Service
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Binder
 import android.os.Build
 import android.os.IBinder
 import maderski.chargingindicator.R
@@ -10,6 +11,7 @@ import maderski.chargingindicator.receivers.PowerConnectionReceiver
 import maderski.chargingindicator.utils.ServiceUtils
 
 class CIService : Service() {
+    private val cIBinder = CIBinder()
     private val powerConnectionReceiver = PowerConnectionReceiver()
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -42,7 +44,11 @@ class CIService : Service() {
         unregisterReceiver(powerConnectionReceiver)
     }
 
-    override fun onBind(intent: Intent?): IBinder? = null
+    override fun onBind(intent: Intent?): IBinder? = cIBinder
+
+    inner class CIBinder : Binder() {
+        fun getService(): CIService = this@CIService
+    }
 
     companion object {
         const val TAG = "CIService"
