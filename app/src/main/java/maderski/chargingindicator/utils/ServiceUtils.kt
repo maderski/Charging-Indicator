@@ -104,9 +104,8 @@ object ServiceUtils {
                                 channelName: String,
                                 @DrawableRes icon: Int,
                                 isOngoing: Boolean): Notification {
-        val builder: NotificationCompat.Builder
 
-        builder = if (Build.VERSION.SDK_INT < 26) {
+        val builder = if (Build.VERSION.SDK_INT < 26) {
             NotificationCompat.Builder(context, channelId)
         } else {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -116,12 +115,17 @@ object ServiceUtils {
             NotificationCompat.Builder(context, channelId)
         }
 
-        val notification = builder
-                .setSmallIcon(icon)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setOnlyAlertOnce(true)
-                .build()
+        with(builder) {
+            setSmallIcon(icon)
+            setContentTitle(title)
+            setContentText(message)
+            setOnlyAlertOnce(true)
+
+            if (Build.VERSION.SDK_INT < 26 && !isOngoing)
+                priority = NotificationCompat.PRIORITY_MIN
+        }
+
+        val notification = builder.build()
 
         if (isOngoing) {
             notification.flags = NotificationCompat.FLAG_FOREGROUND_SERVICE
