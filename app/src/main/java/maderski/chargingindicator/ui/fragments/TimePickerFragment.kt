@@ -8,8 +8,8 @@ import android.app.Dialog
 import android.app.TimePickerDialog
 import android.content.Context
 import android.os.Bundle
-import android.support.annotation.StringDef
-import android.support.v4.app.DialogFragment
+import androidx.annotation.StringDef
+import androidx.fragment.app.DialogFragment
 import android.text.format.DateFormat
 import android.util.Log
 import android.view.Gravity
@@ -19,7 +19,7 @@ import android.widget.TimePicker
 import maderski.chargingindicator.utils.CITimeUtils
 import java.lang.IllegalArgumentException
 
-class TimePickerFragment : DialogFragment(), TimePickerDialog.OnTimeSetListener {
+class TimePickerFragment : androidx.fragment.app.DialogFragment(), TimePickerDialog.OnTimeSetListener {
 
     private var timeState: String? = null
     private var pickerTitleText: String? = null

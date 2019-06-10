@@ -1,4 +1,4 @@
-package maderski.chargingindicator.helpers
+package maderski.chargingindicator.helpers.sound
 
 import android.app.Activity
 import android.content.Context
@@ -15,9 +15,9 @@ import java.util.ArrayList
  * Created by Jason on 10/16/16.
  */
 
-class SoundHelper(private val context: Context) {
+class CISoundHelper(private val context: Context) : SoundHelper {
 
-    val notificationSounds: ArrayList<String>
+    override val notificationSounds: ArrayList<String>
         get() {
             val manager = RingtoneManager(context)
             manager.setType(RingtoneManager.TYPE_NOTIFICATION)
@@ -32,7 +32,7 @@ class SoundHelper(private val context: Context) {
             return notificationSoundList
         }
 
-    fun playDefaultNotificationSound() {
+    override fun playDefaultNotificationSound() {
         val notificationSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val ringtone = RingtoneManager.getRingtone(context, notificationSound)
         if (ringtone == null) {
@@ -42,7 +42,7 @@ class SoundHelper(private val context: Context) {
         }
     }
 
-    fun playNotificationSound(ringtoneUri: Uri) {
+    override fun playNotificationSound(ringtoneUri: Uri) {
         val ringtone = RingtoneManager.getRingtone(context, ringtoneUri)
         if (ringtone == null) {
             Toast.makeText(context, "Unable to play sound", Toast.LENGTH_LONG).show()
@@ -51,7 +51,7 @@ class SoundHelper(private val context: Context) {
         }
     }
 
-    fun notificationList(activity: Activity, chosenRingtone: String) {
+    override fun notificationList(activity: Activity, chosenRingtone: String) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone")
@@ -59,7 +59,7 @@ class SoundHelper(private val context: Context) {
         activity.startActivityForResult(intent, 7)
     }
 
-    fun notificationList(activity: Activity, chosenRingtone: String, resultCode: Int) {
+    override fun notificationList(activity: Activity, chosenRingtone: String, resultCode: Int) {
         val intent = Intent(RingtoneManager.ACTION_RINGTONE_PICKER)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TITLE, "Select Tone")

@@ -1,4 +1,4 @@
-package maderski.chargingindicator.helpers
+package maderski.chargingindicator.helpers.battery
 
 import android.content.Context
 import android.content.Intent
@@ -10,15 +10,15 @@ import java.text.NumberFormat
 /**
  * Created by Jason on 2/13/16.
  */
-class BatteryHelper(private val batteryStatus: Intent) {
+class CIBatteryHelper : BatteryHelper {
 
     // Returns true or false depending if battery is charging
-    val isBatteryCharging: Boolean
-        get() = batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING
+    override fun isBatteryCharging(batteryStatus: Intent): Boolean {
+        return batteryStatus.getIntExtra(BatteryManager.EXTRA_STATUS, -1) == BatteryManager.BATTERY_STATUS_CHARGING
+    }
 
     // Returns true or false depending if battery is plugged in
-    val isPluggedIn: Boolean
-        get() {
+    override fun isPluggedIn(batteryStatus: Intent): Boolean {
             val chargePlug = batteryStatus.getIntExtra(BatteryManager.EXTRA_PLUGGED, -1)
             val usbCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_USB
             val acCharge = chargePlug == BatteryManager.BATTERY_PLUGGED_AC
@@ -27,26 +27,21 @@ class BatteryHelper(private val batteryStatus: Intent) {
             return usbCharge || acCharge || wirelessCharge
         }
 
-    val isBatteryAt100: Boolean
-        get() = batteryPercent() == 1f
+    override fun isBatteryAt100(batteryStatus: Intent): Boolean = batteryPercent(batteryStatus) == 1f
 
-    fun isBatteryUserCharged(context: Context): Boolean = (batteryPercent() * 100).toInt() == CIPreferences.getBatteryCharged(context)
+    override fun isBatteryUserCharged(context: Context, batteryStatus: Intent): Boolean = (batteryPercent(batteryStatus) * 100).toInt() == CIPreferences.getBatteryCharged(context)
 
     // Returns battery percentage as string
-    fun batteryLevel(): String {
-        val percent = batteryPercent()
+    override fun batteryLevel(batteryStatus: Intent): String {
+        val percent = batteryPercent(batteryStatus)
         val percentFormat = NumberFormat.getPercentInstance()
         percentFormat.maximumFractionDigits = 1
         return percentFormat.format(percent.toDouble())
     }
 
-    fun batteryPercent(): Float {
+    override fun batteryPercent(batteryStatus: Intent): Float {
         val level = batteryStatus.getIntExtra(BatteryManager.EXTRA_LEVEL, -1)
         val scale = batteryStatus.getIntExtra(BatteryManager.EXTRA_SCALE, -1)
         return level / scale.toFloat()
-    }
-
-    companion object {
-        private val TAG = "Battery"
     }
 }

@@ -1,4 +1,4 @@
-package maderski.chargingindicator.helpers
+package maderski.chargingindicator.helpers.vibration
 
 import android.content.Context
 import android.os.Vibrator
@@ -7,28 +7,28 @@ import android.os.Vibrator
  * Created by Jason on 9/25/16.
  */
 
-class VibrationHelper(context: Context) {
+class CIVibrationHelper(context: Context) : VibrationHelper {
 
-    private val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
+    override val vibrator: Vibrator = context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
 
-    fun standardVibration() {
+    override fun standardVibration() {
         val pattern = longArrayOf(0, medium_buzz.toLong())
         startVibrate(pattern)
     }
 
-    fun onConnectPattern() {
+    override fun onConnectPattern() {
         val pattern = longArrayOf(0, // Start immediately
                 short_buzz.toLong(), short_gap.toLong(), short_buzz.toLong(), short_gap.toLong(), short_buzz.toLong())
         startVibrate(pattern)
     }
 
-    fun onDisconnectPattern() {
+    override fun onDisconnectPattern() {
         val pattern = longArrayOf(0, // Start immediately
                 short_buzz.toLong(), short_gap.toLong(), medium_buzz.toLong())
         startVibrate(pattern)
     }
 
-    private fun startVibrate(pattern: LongArray) {
+    override fun startVibrate(pattern: LongArray) {
         // Only perform this pattern one time (-1 means "do not repeat")
         vibrator.vibrate(pattern, -1)
     }

@@ -8,8 +8,10 @@ buildscript {
     }
 }
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
 apply plugin: 'io.fabric'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 repositories {
     maven { url 'https://maven.fabric.io/public' }
@@ -25,8 +27,8 @@ android {
         applicationId "maderski.chargingindicator"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 39
-        versionName "3.5"
+        versionCode 41
+        versionName "3.6"
     }
     buildTypes {
         release {
@@ -44,20 +46,31 @@ android {
 }
 
 dependencies {
-    def support_lib_version = '28.0.0'
-    def work_manager_version = '1.0.1'
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation "com.android.support:appcompat-v7:$support_lib_version"
-    implementation "com.android.support:design:$support_lib_version"
-    implementation "com.android.support:support-v4:$support_lib_version"
-    implementation "com.android.support:cardview-v7:$support_lib_version"
-    implementation "android.arch.work:work-runtime-ktx:$work_manager_version"
-    testImplementation 'junit:junit:4.12'
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
+    // jetbrains
+    implementation dep.jetbrains.kotlin_stdlib_jdk7
+    implementation dep.jetbrains.anko
+    // androidx
+    implementation dep.androidx.work_manager
+    implementation dep.androidx.app_compat
+    implementation dep.androidx.legacy
+    implementation dep.androidx.cardview
+    // google
+    implementation dep.google.material
+    implementation dep.google.gson
+    // debug
+    implementation(dep.debug.crashlytics) {
         transitive = true
     }
-    implementation project(':bubbles')
+    debugImplementation dep.debug.leak_canary
+    // dagger
+    implementation dep.dagger.dagger_lib
+    kapt dep.dagger.dagger_compiler
+    kapt dep.dagger.dagger_android_processor
+    // junit
+    testImplementation dep.junit.junit
+    // local_library
+    implementation project(dep.local_library.bubbles)
 }
 
 apply plugin: 'com.google.gms.google-services'

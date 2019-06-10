@@ -5,25 +5,27 @@ import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
-import maderski.chargingindicator.helpers.*
-import maderski.chargingindicator.interfaces.SoundActions
-import maderski.chargingindicator.interfaces.VibrateActions
-import maderski.chargingindicator.interfaces.VisualActions
-
-import java.util.Calendar
-
+import maderski.chargingindicator.actions.interfaces.PerformActions
+import maderski.chargingindicator.helpers.battery.BatteryHelper
+import maderski.chargingindicator.helpers.bubbles.BubblesHelper
+import maderski.chargingindicator.helpers.permission.PermissionHelper
+import maderski.chargingindicator.helpers.sound.SoundHelper
+import maderski.chargingindicator.helpers.vibration.VibrationHelper
 import maderski.chargingindicator.sharedprefs.CIPreferences
+import java.util.*
 
 /**
  * Created by Jason on 8/2/16.
  */
-class PerformActions(private val context: Context) : VibrateActions, SoundActions, VisualActions {
-    private val vibrationHelper: VibrationHelper = VibrationHelper(context)
-    private val playSoundHelper: SoundHelper = SoundHelper(context)
-    private val cIBubblesHelper: CIBubblesHelper = CIBubblesHelper(context)
-    private val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context)
+class CIPerformActions(private val context: Context,
+                       private val vibrationHelper: VibrationHelper,
+                       private val playSoundHelper: SoundHelper,
+                       private val bubblesHelper: BubblesHelper,
+                       private val batteryHelper: BatteryHelper,
+                       private val permissionHelper: PermissionHelper) : PerformActions {
 
-    private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(context)
+    private val chargedSoundEnabled get() = CIPreferences.getBatteryChargedPlaySound(context)
+    private val isBubbleShown: Boolean get() = CIPreferences.getShowChargingBubble(context)
     private val isQuietTime: Boolean
         get() {
             val quietTimeEnabled = CIPreferences.getQuietTime(context)
@@ -95,7 +97,7 @@ class PerformActions(private val context: Context) : VibrateActions, SoundAction
     // Checks if charged sound is enabled and if battery is at 100%, if both are true only play the charged sound
     override fun playConnectSound(batteryStatus: Intent?) {
         if (chargedSoundEnabled && batteryStatus != null) {
-            val isBatteryAt100 = BatteryHelper(batteryStatus).isBatteryAt100
+            val isBatteryAt100 = batteryHelper.isBatteryAt100(batteryStatus)
             if (isBatteryAt100.not()) {
                 connectSound()
             }
@@ -119,10 +121,9 @@ class PerformActions(private val context: Context) : VibrateActions, SoundAction
 
     override fun showBubble() {
         if (isBubbleShown) {
-            val permissionHelper = PermissionHelper()
             val hasOverlayPermission = permissionHelper.hasOverlayPermission(context)
             if (hasOverlayPermission) {
-                cIBubblesHelper.addBubble()
+                bubblesHelper.addBubble()
             } else {
                 CIPreferences.setShowChargingBubble(context, false)
             }
@@ -131,7 +132,7 @@ class PerformActions(private val context: Context) : VibrateActions, SoundAction
 
     override fun removeBubble() {
         if (isBubbleShown)
-            cIBubblesHelper.removeBubble()
+            bubblesHelper.removeBubble()
     }
 
     companion object {

@@ -3,10 +3,11 @@ package maderski.chargingindicator.utils
 import android.app.*
 import android.content.Context
 import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Build
-import android.support.annotation.DrawableRes
-import android.support.annotation.RequiresApi
-import android.support.v4.app.NotificationCompat
+import androidx.annotation.DrawableRes
+import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 
 /**
  * Created by Jason on 6/17/17.
@@ -26,10 +27,33 @@ object ServiceUtils {
         }
     }
 
+    fun startBindedService(context: Context, serviceClass: Class<*>, tag: String, serviceConnection: ServiceConnection) {
+        val intent = Intent(context, serviceClass)
+        intent.addCategory(tag)
+        context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            context.startService(intent)
+        } else {
+            context.startForegroundService(intent)
+        }
+    }
+
     fun stopService(context: Context, serviceClass: Class<*>, tag: String) {
         try {
             val intent = Intent(context, serviceClass)
             intent.addCategory(tag)
+            context.stopService(intent)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
+    fun stopBindedService(context: Context, serviceClass: Class<*>, tag: String, serviceConnection: ServiceConnection) {
+        try {
+            val intent = Intent(context, serviceClass)
+            intent.addCategory(tag)
+            context.unbindService(serviceConnection)
             context.stopService(intent)
         } catch (e: Exception) {
             e.printStackTrace()
@@ -80,9 +104,8 @@ object ServiceUtils {
                                 channelName: String,
                                 @DrawableRes icon: Int,
                                 isOngoing: Boolean): Notification {
-        val builder: NotificationCompat.Builder
 
-        builder = if (Build.VERSION.SDK_INT < 26) {
+        val builder = if (Build.VERSION.SDK_INT < 26) {
             NotificationCompat.Builder(context, channelId)
         } else {
             val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
@@ -92,12 +115,17 @@ object ServiceUtils {
             NotificationCompat.Builder(context, channelId)
         }
 
-        val notification = builder
-                .setSmallIcon(icon)
-                .setContentTitle(title)
-                .setContentText(message)
-                .setOnlyAlertOnce(true)
-                .build()
+        with(builder) {
+            setSmallIcon(icon)
+            setContentTitle(title)
+            setContentText(message)
+            setOnlyAlertOnce(true)
+
+            if (Build.VERSION.SDK_INT < 26 && !isOngoing)
+                priority = NotificationCompat.PRIORITY_MIN
+        }
+
+        val notification = builder.build()
 
         if (isOngoing) {
             notification.flags = NotificationCompat.FLAG_FOREGROUND_SERVICE

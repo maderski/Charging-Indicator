@@ -1,4 +1,4 @@
-package maderski.chargingindicator.interfaces
+package maderski.chargingindicator.actions.interfaces
 
 interface VibrateActions {
     fun connectVibrate()
