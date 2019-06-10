@@ -10,6 +10,8 @@ import maderski.chargingindicator.helpers.battery.BatteryHelper
 import maderski.chargingindicator.helpers.battery.CIBatteryHelper
 import maderski.chargingindicator.helpers.bubbles.BubblesHelper
 import maderski.chargingindicator.helpers.bubbles.CIBubblesHelper
+import maderski.chargingindicator.helpers.permission.CIPermissionHelper
+import maderski.chargingindicator.helpers.permission.PermissionHelper
 import maderski.chargingindicator.helpers.sound.CISoundHelper
 import maderski.chargingindicator.helpers.sound.SoundHelper
 import maderski.chargingindicator.helpers.vibration.CIVibrationHelper
@@ -40,16 +42,22 @@ class AppModule(private val application: Application) {
 
     @Singleton
     @Provides
+    fun providePermissionHelper(): PermissionHelper = CIPermissionHelper()
+
+    @Singleton
+    @Provides
     fun providePerformActions(context: Context,
                               vibrationHelper: VibrationHelper,
                               playSoundHelper: SoundHelper,
                               bubblesHelper: BubblesHelper,
-                              batteryHelper: BatteryHelper
+                              batteryHelper: BatteryHelper,
+                              permissionHelper: PermissionHelper
     ): PerformActions = CIPerformActions(
             context,
             vibrationHelper,
             playSoundHelper,
             bubblesHelper,
-            batteryHelper
+            batteryHelper,
+            permissionHelper
     )
 }

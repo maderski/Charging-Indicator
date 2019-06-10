@@ -24,7 +24,7 @@ class CIPermissionHelper : PermissionHelper {
         }
     }
 
-    private fun launchSystemOverlayPermissionSettings(activity: Activity) {
+    override fun launchSystemOverlayPermissionSettings(activity: Activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             val launchSettingsIntent = Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:${activity.packageName}"))
             activity.startActivityForResult(launchSettingsIntent, DRAW_OVER_OTHER_APPS_PERMISSION)

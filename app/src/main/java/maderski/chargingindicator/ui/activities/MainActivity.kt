@@ -6,7 +6,6 @@ import android.content.Intent
 import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -19,15 +18,21 @@ import android.widget.EditText
 import android.widget.Switch
 import android.widget.TimePicker
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import maderski.chargingindicator.CIApplication
 import maderski.chargingindicator.R
+import maderski.chargingindicator.actions.interfaces.PerformActions
+import maderski.chargingindicator.helpers.permission.CIPermissionHelper
+import maderski.chargingindicator.helpers.permission.PermissionHelper
 import maderski.chargingindicator.helpers.sound.CISoundHelper
 import maderski.chargingindicator.services.BatteryService
 import maderski.chargingindicator.services.CIService
 import maderski.chargingindicator.sharedprefs.CIPreferences
 import maderski.chargingindicator.ui.fragments.TimePickerFragment
-import maderski.chargingindicator.helpers.permission.CIPermissionHelper
 import maderski.chargingindicator.utils.PowerUtils
 import maderski.chargingindicator.utils.ServiceUtils
+import java.lang.Exception
+import javax.inject.Inject
 
 /*  Created by Jason Maderski
     Date: 12/6/2015
@@ -37,9 +42,16 @@ import maderski.chargingindicator.utils.ServiceUtils
 */
 class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogListener {
 
+    @Inject
+    lateinit var performActions: PerformActions
+
+    @Inject
+    lateinit var permissionHelper: PermissionHelper
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        CIApplication.instance.appComponent.inject(this)
         checkIfCIServiceIsRunning()
         checkIfPhoneIsPluggedIn()
         initUserChargedPercentEditText()
@@ -125,8 +137,7 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-
-        if (resultCode == Activity.RESULT_OK && data != null) {
+        if (requestCode in 1..3 && resultCode == Activity.RESULT_OK && data != null) {
             val uri: Uri = data.getParcelableExtra(RingtoneManager.EXTRA_RINGTONE_PICKED_URI)
                     ?: Uri.parse("None")
             when (requestCode) {
@@ -142,6 +153,14 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
                     CIPreferences.setChosenBatteryChargedSound(this, uri.toString())
                     Log.d(TAG, "Battery Charged Sound set: $uri")
                 }
+            }
+        } else if (requestCode == 1000) {
+
+            CIPreferences.setShowChargingBubble(this, true)
+            try {
+                performActions.showBubble()
+            } catch (e: Exception) {
+                e.message
             }
         }
     }
@@ -215,6 +234,9 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
         val showChargingBubbleBtnState = CIPreferences.getShowChargingBubble(this)
         val showfloatingChargingButtonView = findViewById<Switch>(R.id.show_floating_charging_btn_switch)
         showfloatingChargingButtonView.isChecked = showChargingBubbleBtnState
+        if (showChargingBubbleBtnState) {
+            permissionHelper.checkToLaunchSystemOverlaySettings(this)
+        }
     }
 
 
@@ -281,10 +303,17 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
 
     fun floatingChargingBtnSwitch(view: View) {
         val on = (view as Switch).isChecked
-        CIPreferences.setShowChargingBubble(this, on)
         if (on) {
-            val permissionHelper = CIPermissionHelper()
-            permissionHelper.checkToLaunchSystemOverlaySettings(this)
+            val hasOverlayPerm = permissionHelper.hasOverlayPermission(this)
+            if (hasOverlayPerm) {
+                CIPreferences.setShowChargingBubble(this, true)
+                performActions.showBubble()
+            } else {
+                permissionHelper.launchSystemOverlayPermissionSettings(this)
+            }
+        } else {
+            performActions.removeBubble()
+            CIPreferences.setShowChargingBubble(this, false)
         }
         Log.d(TAG, "floatingChargingBtnSwitch is enabled: " + java.lang.Boolean.toString(on))
     }

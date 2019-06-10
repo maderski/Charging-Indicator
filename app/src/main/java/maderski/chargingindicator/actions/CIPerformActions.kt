@@ -8,7 +8,7 @@ import android.widget.Toast
 import maderski.chargingindicator.actions.interfaces.PerformActions
 import maderski.chargingindicator.helpers.battery.BatteryHelper
 import maderski.chargingindicator.helpers.bubbles.BubblesHelper
-import maderski.chargingindicator.helpers.permission.CIPermissionHelper
+import maderski.chargingindicator.helpers.permission.PermissionHelper
 import maderski.chargingindicator.helpers.sound.SoundHelper
 import maderski.chargingindicator.helpers.vibration.VibrationHelper
 import maderski.chargingindicator.sharedprefs.CIPreferences
@@ -21,10 +21,11 @@ class CIPerformActions(private val context: Context,
                        private val vibrationHelper: VibrationHelper,
                        private val playSoundHelper: SoundHelper,
                        private val bubblesHelper: BubblesHelper,
-                       private val batteryHelper: BatteryHelper) : PerformActions {
+                       private val batteryHelper: BatteryHelper,
+                       private val permissionHelper: PermissionHelper) : PerformActions {
 
-    private val chargedSoundEnabled = CIPreferences.getBatteryChargedPlaySound(context)
-    private val isBubbleShown: Boolean = CIPreferences.getShowChargingBubble(context)
+    private val chargedSoundEnabled get() = CIPreferences.getBatteryChargedPlaySound(context)
+    private val isBubbleShown: Boolean get() = CIPreferences.getShowChargingBubble(context)
     private val isQuietTime: Boolean
         get() {
             val quietTimeEnabled = CIPreferences.getQuietTime(context)
@@ -120,7 +121,6 @@ class CIPerformActions(private val context: Context,
 
     override fun showBubble() {
         if (isBubbleShown) {
-            val permissionHelper = CIPermissionHelper()
             val hasOverlayPermission = permissionHelper.hasOverlayPermission(context)
             if (hasOverlayPermission) {
                 bubblesHelper.addBubble()
