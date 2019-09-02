@@ -304,12 +304,16 @@ class MainActivity : AppCompatActivity(), TimePickerFragment.TimePickerDialogLis
     fun floatingChargingBtnSwitch(view: View) {
         val on = (view as Switch).isChecked
         if (on) {
+            CIPreferences.setShowChargingBubble(this, true)
             val hasOverlayPerm = permissionHelper.hasOverlayPermission(this)
-            if (hasOverlayPerm) {
-                CIPreferences.setShowChargingBubble(this, true)
-                performActions.showBubble()
-            } else {
-                permissionHelper.launchSystemOverlayPermissionSettings(this)
+            val isPluggedIn = PowerUtils.isPluggedIn(this)
+            when {
+                hasOverlayPerm && isPluggedIn -> {
+                    performActions.showBubble()
+                }
+                !hasOverlayPerm -> {
+                    permissionHelper.launchSystemOverlayPermissionSettings(this)
+                }
             }
         } else {
             performActions.removeBubble()

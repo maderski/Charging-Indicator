@@ -12,6 +12,7 @@ import maderski.chargingindicator.helpers.permission.PermissionHelper
 import maderski.chargingindicator.helpers.sound.SoundHelper
 import maderski.chargingindicator.helpers.vibration.VibrationHelper
 import maderski.chargingindicator.sharedprefs.CIPreferences
+import maderski.chargingindicator.utils.PowerUtils
 import java.util.*
 
 /**
@@ -24,8 +25,8 @@ class CIPerformActions(private val context: Context,
                        private val batteryHelper: BatteryHelper,
                        private val permissionHelper: PermissionHelper) : PerformActions {
 
-    private val chargedSoundEnabled get() = CIPreferences.getBatteryChargedPlaySound(context)
-    private val isBubbleShown: Boolean get() = CIPreferences.getShowChargingBubble(context)
+    private val chargedSoundEnabled: Boolean get() = CIPreferences.getBatteryChargedPlaySound(context)
+    private val isShowBubbleEnabled: Boolean get() = CIPreferences.getShowChargingBubble(context)
     private val isQuietTime: Boolean
         get() {
             val quietTimeEnabled = CIPreferences.getQuietTime(context)
@@ -120,7 +121,7 @@ class CIPerformActions(private val context: Context,
     }
 
     override fun showBubble() {
-        if (isBubbleShown) {
+        if (isShowBubbleEnabled) {
             val hasOverlayPermission = permissionHelper.hasOverlayPermission(context)
             if (hasOverlayPermission) {
                 bubblesHelper.addBubble()
@@ -131,7 +132,7 @@ class CIPerformActions(private val context: Context,
     }
 
     override fun removeBubble() {
-        if (isBubbleShown)
+        if (isShowBubbleEnabled)
             bubblesHelper.removeBubble()
     }
 
