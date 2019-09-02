@@ -78,7 +78,8 @@ object ServiceUtils {
                                   @DrawableRes icon: Int,
                                   isOngoing: Boolean) {
 
-        val notification = getNotification(title, message, service, channelId, channelName, icon, isOngoing)
+        val notificationManager = service.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification = getNotification(service, notificationManager, title, message, channelId, channelName, icon, isOngoing)
         service.startForeground(id, notification)
     }
 
@@ -90,16 +91,15 @@ object ServiceUtils {
                                   channelName: String,
                                   @DrawableRes icon: Int,
                                   isOngoing: Boolean) {
-
-        val notification = getNotification(title, message, context, channelId, channelName, icon, isOngoing)
-
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val notification = getNotification(context, notificationManager, title, message, channelId, channelName, icon, isOngoing)
         notificationManager.notify(id, notification)
     }
 
-    private fun getNotification(title: String,
+    private fun getNotification(context: Context,
+                                notificationManager: NotificationManager,
+                                title: String,
                                 message: String,
-                                context: Context,
                                 channelId: String,
                                 channelName: String,
                                 @DrawableRes icon: Int,
@@ -108,10 +108,8 @@ object ServiceUtils {
         val builder = if (Build.VERSION.SDK_INT < 26) {
             NotificationCompat.Builder(context, channelId)
         } else {
-            val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
             val channel = getNotificationChannel(channelId, channelName)
             notificationManager.createNotificationChannel(channel)
-
             NotificationCompat.Builder(context, channelId)
         }
 
@@ -127,8 +125,10 @@ object ServiceUtils {
 
         val notification = builder.build()
 
-        if (isOngoing) {
-            notification.flags = NotificationCompat.FLAG_FOREGROUND_SERVICE
+        notification.flags = if (isOngoing) {
+            NotificationCompat.FLAG_FOREGROUND_SERVICE
+        } else {
+            NotificationCompat.PRIORITY_DEFAULT
         }
 
         return notification

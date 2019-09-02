@@ -33,7 +33,7 @@ import android.os.IBinder;
 public class BubblesManager {
     private static BubblesManager INSTANCE;
     private Context context;
-    private boolean bounded;
+    private boolean bounded = false;
     private BubblesService bubblesService;
     private int trashLayoutResourceId;
     private OnInitializedCallback listener;
@@ -78,7 +78,10 @@ public class BubblesManager {
     }
 
     public void recycle() {
-        context.unbindService(bubbleServiceConnection);
+        if (bounded) {
+            context.unbindService(bubbleServiceConnection);
+            bounded = false;
+        }
     }
 
     public void addBubble(BubbleLayout bubble, int x, int y) {
