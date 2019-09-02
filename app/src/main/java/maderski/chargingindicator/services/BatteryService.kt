@@ -1,13 +1,13 @@
 package maderski.chargingindicator.services
 
+import android.app.NotificationManager
 import android.app.Service
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.os.Build
 import android.os.IBinder
 import maderski.chargingindicator.CIApplication
 import maderski.chargingindicator.R
-import maderski.chargingindicator.actions.CIPerformActions
 import maderski.chargingindicator.actions.interfaces.PerformActions
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.utils.ServiceUtils
@@ -33,7 +33,7 @@ class BatteryService : Service() {
     }
 
     override fun stopService(name: Intent?): Boolean {
-        stopForeground(true)
+        stopForeground(false)
         return super.stopService(name)
     }
 
@@ -55,6 +55,7 @@ class BatteryService : Service() {
     }
 
     override fun onDestroy() {
+        unregisterReceiver(batteryReceiver)
         doAsync {
             performActions.disconnectVibrate()
             performActions.disconnectSound()
@@ -74,7 +75,6 @@ class BatteryService : Service() {
             }
         }
 
-        unregisterReceiver(batteryReceiver)
         super.onDestroy()
     }
 
