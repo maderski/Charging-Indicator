@@ -16,7 +16,8 @@
         android:supportsRtl="true">
         <activity
             android:name=".ui.activities.SplashActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +27,7 @@
         <activity
             android:name=".ui.activities.MainActivity"
             android:screenOrientation="portrait"
+            android:exported="true"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -35,12 +37,14 @@
             android:name=".ui.activities.AboutActivity"
             android:theme="@style/AppTheme"/>
 
-        <receiver android:name=".receivers.BootCompletedReceiver">
+        <receiver android:name=".receivers.BootCompletedReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receivers.OnAppUpdateReceiver">
+        <receiver android:name=".receivers.OnAppUpdateReceiver"
+            android:exported="false">
             <intent-filter>
                 <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
             </intent-filter>

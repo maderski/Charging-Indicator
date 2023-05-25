@@ -38,7 +38,7 @@ class AboutActivity : AppCompatActivity() {
             val versionInfo = "v" + pkgInfo.versionName
             versionTV.text = versionInfo
         } catch (e: Exception) {
-            Log.e(TAG, e.message)
+            Log.e(TAG, "${e.message}")
         }
     }
 

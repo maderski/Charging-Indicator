@@ -6,13 +6,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
+import android.widget.Toast
 import maderski.chargingindicator.CIApplication
 import maderski.chargingindicator.R
 import maderski.chargingindicator.actions.interfaces.PerformActions
 import maderski.chargingindicator.receivers.BatteryReceiver
 import maderski.chargingindicator.utils.ServiceUtils
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.uiThread
 import javax.inject.Inject
 
 class BatteryService : Service() {
@@ -26,7 +25,7 @@ class BatteryService : Service() {
         val batteryStatus = registerReceiver(batteryReceiver, filter)
         performActions.connectVibrate()
         performActions.playConnectSound(batteryStatus)
-        performActions.showToast(getString(R.string.power_connected_msg))
+        Toast.makeText(this, getString(R.string.power_connected_msg), Toast.LENGTH_LONG).show()
         performActions.showBubble()
 
         return START_NOT_STICKY
@@ -44,36 +43,38 @@ class BatteryService : Service() {
 
         val title = getString(R.string.getting_battery_pct)
         val message = getString(R.string.getting_battery_info)
-        ServiceUtils.createServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                title,
-                message,
-                this,
-                getString(R.string.ci_channel_id),
-                getString(R.string.ci_channel_name),
-                R.drawable.standardbolt,
-                true)
+        ServiceUtils.createServiceNotification(
+            ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+            title,
+            message,
+            this,
+            getString(R.string.ci_channel_id),
+            getString(R.string.ci_channel_name),
+            R.drawable.standardbolt,
+            true
+        )
     }
 
     override fun onDestroy() {
         unregisterReceiver(batteryReceiver)
-        doAsync {
-            performActions.disconnectVibrate()
-            performActions.disconnectSound()
-            uiThread {
-                performActions.showToast(getString(R.string.power_disconnected_msg))
-                performActions.removeBubble()
-                val title = it.getString(R.string.ci_service_notification_title)
-                val message = it.getString(R.string.ci_service_notification_messge)
-                ServiceUtils.updateServiceNotification(ServiceUtils.FOREGROUND_NOTIFICATION_ID,
-                        title,
-                        message,
-                        it,
-                        it.getString(R.string.ci_channel_id),
-                        it.getString(R.string.ci_channel_name),
-                        R.drawable.ic_action_battery,
-                        false)
-            }
-        }
+
+        performActions.disconnectVibrate()
+        performActions.disconnectSound()
+
+        Toast.makeText(this, getString(R.string.power_disconnected_msg), Toast.LENGTH_LONG).show()
+        performActions.removeBubble()
+        val title = getString(R.string.ci_service_notification_title)
+        val message = getString(R.string.ci_service_notification_messge)
+        ServiceUtils.updateServiceNotification(
+            ServiceUtils.FOREGROUND_NOTIFICATION_ID,
+            title,
+            message,
+            this,
+            getString(R.string.ci_channel_id),
+            getString(R.string.ci_channel_name),
+            R.drawable.ic_action_battery,
+            false
+        )
 
         super.onDestroy()
     }

@@ -5,6 +5,7 @@ import maderski.chargingindicator.di.AppComponent
 import maderski.chargingindicator.di.AppModule
 import maderski.chargingindicator.di.DaggerAppComponent
 
+
 class CIApplication : Application() {
     lateinit var appComponent: AppComponent
         private set

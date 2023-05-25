@@ -16,3 +16,4 @@ app/release/release/app.aab
 gradle/wrapper/gradle-wrapper.properties
 .idea
 projectFilesBackup/
+*.hprof
