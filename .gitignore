@@ -6,9 +6,14 @@
 .DS_Store
 /build
 /captures
+.idea
 .idea/compiler.xml
 .idea/.name
 .idea/copyright/profiles_settings.xml
 .idea/compiler.xml
+.idea/runConfigurations.xml
 app/release/release/app.aab
 gradle/wrapper/gradle-wrapper.properties
+.idea
+projectFilesBackup/
+*.hprof

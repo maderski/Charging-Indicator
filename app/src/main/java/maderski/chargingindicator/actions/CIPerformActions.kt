@@ -107,19 +107,6 @@ class CIPerformActions(private val context: Context,
         }
     }
 
-    override fun showToast(message: String) {
-        val isToastShown = CIPreferences.getShowToast(context)
-        if (isToastShown) {
-            toast?.let {
-                if (it.view.isShown) {
-                    it.cancel()
-                }
-            }
-            toast = Toast.makeText(context, message, Toast.LENGTH_LONG)
-            toast?.show()
-        }
-    }
-
     override fun showBubble() {
         if (isShowBubbleEnabled) {
             val hasOverlayPermission = permissionHelper.hasOverlayPermission(context)

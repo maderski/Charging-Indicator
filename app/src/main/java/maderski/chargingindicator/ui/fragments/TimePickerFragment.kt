@@ -61,7 +61,7 @@ class TimePickerFragment : androidx.fragment.app.DialogFragment(), TimePickerDia
         dialogListener.onTimeSet(view, timeState, hourOfDay, minute)
     }
 
-    override fun onAttach(context: Context?) {
+    override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is TimePickerDialogListener) {
             dialogListener = context
