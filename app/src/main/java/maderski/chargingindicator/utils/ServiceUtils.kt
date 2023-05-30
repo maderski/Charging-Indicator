@@ -19,12 +19,7 @@ object ServiceUtils {
     fun startService(context: Context, serviceClass: Class<*>, tag: String) {
         val intent = Intent(context, serviceClass)
         intent.addCategory(tag)
-
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            context.startService(intent)
-        } else {
-            context.startForegroundService(intent)
-        }
+        context.startForegroundService(intent)
     }
 
     fun startBindedService(context: Context, serviceClass: Class<*>, tag: String, serviceConnection: ServiceConnection) {
@@ -32,11 +27,7 @@ object ServiceUtils {
         intent.addCategory(tag)
         context.bindService(intent, serviceConnection, Context.BIND_AUTO_CREATE)
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            context.startService(intent)
-        } else {
-            context.startForegroundService(intent)
-        }
+        context.startForegroundService(intent)
     }
 
     fun stopService(context: Context, serviceClass: Class<*>, tag: String) {
@@ -105,22 +96,15 @@ object ServiceUtils {
                                 @DrawableRes icon: Int,
                                 isOngoing: Boolean): Notification {
 
-        val builder = if (Build.VERSION.SDK_INT < 26) {
-            NotificationCompat.Builder(context, channelId)
-        } else {
-            val channel = getNotificationChannel(channelId, channelName)
-            notificationManager.createNotificationChannel(channel)
-            NotificationCompat.Builder(context, channelId)
-        }
+        val channel = getNotificationChannel(channelId, channelName)
+        notificationManager.createNotificationChannel(channel)
+        val builder = NotificationCompat.Builder(context, channelId)
 
         with(builder) {
             setSmallIcon(icon)
             setContentTitle(title)
             setContentText(message)
             setOnlyAlertOnce(true)
-
-            if (Build.VERSION.SDK_INT < 26 && !isOngoing)
-                priority = NotificationCompat.PRIORITY_MIN
         }
 
         val notification = builder.build()
@@ -134,7 +118,6 @@ object ServiceUtils {
         return notification
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun getNotificationChannel(channelId: String, channelName: String): NotificationChannel {
         val notificationChannel = NotificationChannel(channelId,
                 channelName,
